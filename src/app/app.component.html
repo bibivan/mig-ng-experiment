@@ -1,0 +1,18 @@
+<div class="header">
+  <app-container>
+    <div class="content">
+      <div class="logo"></div>
+    </div>
+  </app-container>
+</div>
+
+<app-container>
+  <app-form-wrapper>
+    <p>Кек</p>
+    <app-input formControlName="email"
+               placeholder="Электронная почта"
+               errorMessage="Кек"
+               [mandatory]="false"
+    ></app-input>
+  </app-form-wrapper>
+</app-container>
