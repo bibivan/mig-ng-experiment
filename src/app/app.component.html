@@ -6,13 +6,59 @@
   </app-container>
 </div>
 
+<app-form-progress>
+
+</app-form-progress>
+
 <app-container>
-  <app-form-wrapper>
-    <p>Кек</p>
-    <app-input formControlName="email"
-               placeholder="Электронная почта"
-               errorMessage="Кек"
-               [mandatory]="false"
-    ></app-input>
+  <app-form-wrapper class="margin-top-x2 margin-bottom-x2">
+    <form action="">
+      <h1 class="headline-1 margin-bottom-x3">Выберите необходимую сумму и срок</h1>
+      <app-calculator></app-calculator>
+      <h1 class="headline-1">Заполните анкету</h1>
+      <app-input
+        [mandatory]="true"
+        errorMessage="Номер телефона"
+        formControlName="phone"
+        mask="phone"
+        placeholder="Номер телефона"
+        type="tel"
+      ></app-input>
+      <app-input
+        [mandatory]="true"
+        errorMessage="Электронная почта"
+        formControlName="email"
+        placeholder="Электронная почта"
+      ></app-input>
+      <div class="grid">
+        <div class="col w-50">
+          <app-input
+            [mandatory]="true"
+            errorMessage="Электронная почта2"
+            formControlName="email"
+            placeholder="Электронная почта2"
+          ></app-input>
+        </div>
+        <div class="col w-50">
+          <app-input
+            [mandatory]="true"
+            errorMessage="Электронная почта3"
+            formControlName="email"
+            placeholder="Электронная почта3"
+          ></app-input>
+        </div>
+      </div>
+      <app-input-checkbox>
+        Я соглашаюсь на <a href="#123">обработку персональных данных и данных об абонентах</a>
+      </app-input-checkbox>
+      <app-input-checkbox>
+        Я соглашаюсь на уступку кредитором третьим лицам прав (требований) по договору займа.
+      </app-input-checkbox>
+      <app-input-checkbox>
+        Я подтверждаю, что в настоящий момент не являюсь ответчиком в каком-либо судебном разбирательстве и не был в
+        течение последних 5 лет признан банкротом
+      </app-input-checkbox>
+    </form>
+
   </app-form-wrapper>
 </app-container>

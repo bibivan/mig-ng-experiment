@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { InputComponent } from './input.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {InputComponent} from './input.component';
 import {NgxMaskModule} from "ngx-mask";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxCurrencyModule} from "ngx-currency";
-
 
 
 @NgModule({
@@ -14,9 +13,10 @@ import {NgxCurrencyModule} from "ngx-currency";
   ],
   imports: [
     CommonModule,
-    NgxMaskModule,
+    NgxMaskModule.forRoot(),
     ReactiveFormsModule,
     NgxCurrencyModule
   ]
 })
-export class InputModule { }
+export class InputModule {
+}

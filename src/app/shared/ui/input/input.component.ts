@@ -40,13 +40,11 @@ export class InputComponent implements OnInit {
     suffix: ' ₽',
     max: 1000000
   }
-
-  private sub = new Subscription()
   formControl = new FormControl('')
+  private sub = new Subscription()
 
-  private onChange = (value: any) => { }
-  private onTouched = () => { }
   registerOnChange = (fn: (value: any) => {}) => this.onChange = fn
+
   registerOnTouched = (fn: () => {}) => this.onTouched = fn
 
   ngOnInit(): void {
@@ -66,14 +64,14 @@ export class InputComponent implements OnInit {
 
   getMaskConfig(type: maskType): MaskConfigInterface {
     if (type === 'phone') {
-      return { mask: '(000) 000-00-00', prefix: '+7 ' }
+      return {mask: '000 000 00 00', prefix: '+7 '}
     }
 
     if (type === 'date') {
-      return { mask: '00.00.0000' }
+      return {mask: '00.00.0000'}
     }
 
-    return { mask: '', prefix: '', suffix: '', thousandSeparator: '' }
+    return {mask: '', prefix: '', suffix: '', thousandSeparator: ''}
   }
 
   setDisabledState(isDisabled: boolean): void {
@@ -90,7 +88,7 @@ export class InputComponent implements OnInit {
       this.onTouched()
     }
 
-    this.formControl.setValue(obj, { emitEvent: false })
+    this.formControl.setValue(obj, {emitEvent: false})
   }
 
   onBlur(): void {
@@ -99,6 +97,12 @@ export class InputComponent implements OnInit {
 
   onFocus(): void {
     this.focused = true
+  }
+
+  private onChange = (value: any) => {
+  }
+
+  private onTouched = () => {
   }
 
 }

@@ -2,9 +2,9 @@
 @import "mediaqueries";
 
 .headline-1 {
-  font-size: 34px;
-  font-weight: 300;
-  line-height: 1.5em;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25em;
   color: $colorGrayDark;
 
   @include mobile {
@@ -14,9 +14,9 @@
 }
 
 .headline-2 {
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 1.5em;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25em;
   color: $colorGrayDark;
 
   @include mobile {
@@ -26,9 +26,9 @@
 }
 
 .headline-3 {
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 1.5em;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25em;
   color: $colorGrayDark;
 
   @include mobile {
@@ -40,7 +40,7 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 1.8em;
-  color: $colorGrayDark;
+  color: $colorGray;
 }
 
 .text-2 {
@@ -56,22 +56,4 @@
 .text-4 {
   @extend .text-1;
   font-size: 12px;
-}
-
-.caption-1 {
-  font-size: 12px;
-  line-height: 1.5em;
-  font-weight: 400;
-  color: $colorGrayDark;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.caption-2 {
-  font-size: 10px;
-  line-height: 1.2em;
-  font-weight: 700;
-  color: $colorGrayDark;
-  letter-spacing: 0.27px;
-  text-transform: uppercase;
 }

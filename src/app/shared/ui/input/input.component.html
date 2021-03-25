@@ -1,41 +1,42 @@
-<label class="field"
-       [class.empty]="!formControl.value && !focused && mask !== 'currency'"
+<label [class.empty]="!formControl.value && !focused && mask !== 'currency'"
        [class.focused]="focused"
        [class.masked-phone]="mask === 'phone'"
        [class.readonly]="readonly"
        [class.required]="mandatory"
+       class="field"
 >
   <span class="label">{{ placeholder }}</span>
 
   <ng-container *ngIf="!mask">
-    <input [formControl]="formControl"
-           [type]="type"
-           [readOnly]="readonly"
-           [maxlength]="maxlength"
+    <input (blur)="onBlur()"
            (focus)="onFocus()"
-           (blur)="onBlur()"
+           [formControl]="formControl"
+           [maxlength]="maxlength"
+           [readOnly]="readonly"
+           [type]="type"
+           class="ng-invalid"
     />
   </ng-container>
 
   <ng-container *ngIf="mask && mask !== 'currency'">
-    <input [formControl]="formControl"
-           [type]="type"
-           [readOnly]="readonly || disabled"
-           [mask]="maskConfig.mask"
-           [dropSpecialCharacters]="false"
+    <input (blur)="onBlur()"
            (focus)="onFocus()"
-           (blur)="onBlur()"
+           [dropSpecialCharacters]="false"
+           [formControl]="formControl"
+           [mask]="maskConfig.mask"
+           [readOnly]="readonly || disabled"
+           [type]="type"
     />
   </ng-container>
 
   <ng-container *ngIf="mask && mask === 'currency'">
-    <input [formControl]="formControl"
-           type="tel"
+    <input (blur)="onBlur()"
+           (focus)="onFocus()"
+           [formControl]="formControl"
+           [options]="currencyConfig"
            [readOnly]="readonly"
            currencyMask
-           [options]="currencyConfig"
-           (focus)="onFocus()"
-           (blur)="onBlur()"
+           type="tel"
     />
   </ng-container>
 </label>

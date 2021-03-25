@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FormWrapperComponent } from './form-wrapper.component';
+import {FormWrapperComponent} from './form-wrapper.component';
 
 describe('FormWrapperComponent', () => {
   let component: FormWrapperComponent;
@@ -8,9 +8,9 @@ describe('FormWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormWrapperComponent ]
+      declarations: [FormWrapperComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,0 +1,50 @@
+@import "../../../assets/scss/shared";
+
+:host {
+  display: block;
+  position: relative;
+  padding-bottom: 1px;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -100px;
+    right: -100px;
+    bottom: 0;
+    height: 1px;
+    background-color: $colorGray2;
+
+    @include mobile() {
+      left: -$indent16;
+      right: -$indent16;
+    }
+
+  }
+  .info {
+    display: block;
+    margin: $indent20 0;
+    .item {
+      display: flex;
+      flex: 1 0 100%;
+      justify-content: space-between;
+      .label {
+        @extend .text-1;
+
+        @include mobile() {
+          font-size: 14px;
+        }
+      }
+
+      .value {
+        @extend .text-1;
+        text-align: right;
+        color: $colorGrayDark;
+        font-weight: bold;
+
+        @include mobile() {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
