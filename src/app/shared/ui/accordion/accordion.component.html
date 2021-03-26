@@ -1,0 +1,18 @@
+<div class="toggle-block"
+     [class.opened]="isOpen"
+>
+  <div class="toggle" (click)="toggle()">
+    <div class="caption">{{ caption }}</div>
+
+    <div class="right">
+      <div class="arrow">
+        <app-icon name="arrow"></app-icon>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toggle-content">
+    <ng-content></ng-content>
+  </div>
+</div>

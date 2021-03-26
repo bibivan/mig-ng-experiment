@@ -17,6 +17,7 @@ import {Subscription} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputComponent implements OnInit {
+  @Input() load: boolean
   @Input() disabled: boolean
   @Input() readonly: boolean
   @Input() mandatory: boolean

@@ -1,0 +1,29 @@
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
+
+@Component({
+  selector: 'app-accordion',
+  templateUrl: './accordion.component.html',
+  styleUrls: ['./accordion.component.scss'],
+})
+export class AccordionComponent implements OnInit, OnChanges {
+  @Input() opened: boolean
+  @Input() caption: string
+
+  isOpen: boolean
+
+  ngOnInit() {
+    this.isOpen = this.opened || false
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.opened) {
+      this.isOpen = changes.opened.currentValue
+    }
+  }
+
+
+  toggle(): void {
+    this.isOpen = !this.isOpen
+  }
+
+}

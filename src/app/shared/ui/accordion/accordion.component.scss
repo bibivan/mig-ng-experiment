@@ -1,0 +1,82 @@
+@import "../../../../assets/scss/shared";
+
+.toggle {
+  display: block;
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding: $indent20 0;
+  width: 100%;
+  background: none;
+  cursor: pointer;
+  user-select: none;
+
+  @include mobile() {
+    padding-left: $indent16;
+    padding-right: $indent16;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -100px;
+    right: -100px;
+    height: 1px;
+    background-color: $colorBg;
+  }
+
+  .caption {
+    @extend .text-1;
+    color: $colorGrayDark;
+    line-height: 1.5em;
+    padding-right: 55px;
+  }
+
+  .right {
+    display: block;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: $colorLightBlue;
+    border-radius: 50%;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include mobile() {
+      right: $indent16;
+    }
+  }
+
+  .arrow {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 25% 25% 0;
+    transform: translate(-50%, -50%);
+    color:$colorPrimary;
+    margin-left: auto;
+    font-size: 17px;
+  }
+}
+
+.toggle-content {
+  display: none;
+  margin: 0;
+  padding: 1px 0;
+}
+
+.opened {
+  .toggle {
+    .arrow {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .toggle-content {
+    display: block;
+  }
+}

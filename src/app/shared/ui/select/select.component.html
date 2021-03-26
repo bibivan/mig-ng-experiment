@@ -1,0 +1,23 @@
+<ng-select appearance="outline"
+           [clearable]="false"
+           dropdownPosition="bottom"
+           notFoundText="Ничего не найдено"
+           appendTo=".body"
+           [searchable]="false"
+           [class.empty]="!formControl.value && !focused"
+           [placeholder]="placeholder"
+           [formControl]="formControl"
+           [readonly]="readonly"
+           (focus)="onFocus()"
+           (blur)="onBlur()"
+>
+  <ng-option *ngFor="let option of options;" [value]="option.id">
+    {{ option.name }}
+  </ng-option>
+</ng-select>
+
+<div class="icon">
+  <app-icon name="down1"></app-icon>
+</div>
+
+<p *ngIf="errorMessage && !focused" class="error-message">{{ errorMessage }}</p>

@@ -5,10 +5,11 @@
   position: relative;
   z-index: 10;
   margin: -1px auto;
-  padding: $indent48 100px $indent48 100px;
+  padding: $indent48 85px $indent30 85px;
   background: $colorWhite;
   box-shadow: $boxShadow;
   border-radius: $borderRadius12;
+  overflow: hidden;
 
   max-width: 768px;
 

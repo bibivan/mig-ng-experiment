@@ -1,0 +1,72 @@
+@import "./../../../assets/scss/shared";
+
+:host {
+  .step-preloader {
+    display: block;
+    padding: $indent40 73px $indent60 73px;
+    background-color: $colorWhite;
+    border-radius: $borderRadius12;
+
+    @include mobile() {
+      padding: $indent40 $indent16 $indent60 $indent16;
+      border-radius: 0;
+    }
+  }
+
+  .loader {
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin: 20px auto;
+    background-image: url('./img/loader.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .sign {
+    display: block;
+    height: 74px;
+    &.bfrs {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url('./img/BFRS.svg');
+    }
+  }
+  .quote {
+    display: block;
+    position: relative;
+    padding-top: 40px;
+    margin-top: $indent40;
+    margin-bottom: $indent30;
+    @extend .text-1;
+    line-height: 1.5em;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 23px;
+      height: 20px;
+      background-image: url('./img/quote.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .name {
+    @extend .text-2;
+    color: $colorPrimary;
+    line-height: 1em;
+    text-align: right;
+    margin-bottom: 5px;
+  }
+
+  .value {
+    @extend .text-2;
+    text-align: right;
+    line-height: 1em;
+    margin-top: 0;
+  }
+}

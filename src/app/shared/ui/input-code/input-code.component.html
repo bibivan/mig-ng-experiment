@@ -1,0 +1,13 @@
+<div class="code-input"
+     [class.error]="error"
+>
+  <code-input [codeLength]="codeLength"
+              [code]="code"
+              [isFocusingOnLastByClickIfFilled]="true"
+              [isPrevFocusableAfterClearing]="true"
+              (codeCompleted)="codeCompleted.emit($event)"
+              (click)="onClick()"
+  ></code-input>
+
+  <p *ngIf="error" class="error-message color-dangerous text-align-center">Укажите корректный код</p>
+</div>

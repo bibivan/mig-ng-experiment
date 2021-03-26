@@ -1,0 +1,11 @@
+<button [type]="type"
+        [disabled]="disabled"
+        [class.button]="true"
+        [class.display-inline]="inline"
+        [class.theme-primary]="theme === 'primary'"
+        [class.theme-get-money]="theme === 'get-money'"
+        [class.theme-return]="theme === 'return'"
+        (click)="clicked.emit($event)"
+>
+  <ng-content></ng-content>
+</button>
