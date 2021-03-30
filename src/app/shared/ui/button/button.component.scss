@@ -52,6 +52,11 @@
     }
   }
 
+  &.theme-cancel {
+    background: $colorDangerousBg;
+    color: $colorDangerous;
+  }
+
   &.theme-primary {
     background: $colorPrimary;
     border-color: $colorPrimary;
