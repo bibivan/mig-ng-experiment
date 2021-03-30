@@ -67,6 +67,10 @@
   display: none;
   margin: 0;
   padding: 1px 0;
+
+  @include mobile(){
+    padding: 1px $indent16;
+  }
 }
 
 .opened {

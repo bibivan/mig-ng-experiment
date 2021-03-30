@@ -45,6 +45,7 @@
 
       @include mobile {
         top: 2px;
+        transform: translateY(0);
       }
     }
   }
