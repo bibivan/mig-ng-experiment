@@ -25,6 +25,7 @@ import {InputAutocompleteModule} from "./shared/ui/input-autocomplete/input-auto
 import {SelectModule} from "./shared/ui/select/select.module";
 import {TextareaModule} from "./shared/ui/textarea/textarea.module";
 import {RoundIconModule} from "./shared/ui/round-icon/round-icon.module";
+import {InputRadioModule} from "./shared/ui/input-radio/input-radio.module";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {RoundIconModule} from "./shared/ui/round-icon/round-icon.module";
     InputAutocompleteModule,
     SelectModule,
     TextareaModule,
-    RoundIconModule
+    RoundIconModule,
+    InputRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
