@@ -5,7 +5,7 @@
     display: block;
     padding: $indent40 73px $indent60 73px;
     background-color: $colorWhite;
-    border-radius: $borderRadius12;
+    border-radius: $borderRadius11;
 
     @include mobile() {
       padding: $indent40 $indent16 $indent60 $indent16;

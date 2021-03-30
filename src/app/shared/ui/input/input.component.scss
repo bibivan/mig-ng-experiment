@@ -20,7 +20,7 @@
     z-index: 3;
     width: 100%;
     background: $colorWhite;
-    border-radius: $borderRadius12;
+    border-radius: $borderRadius11;
     border: 1px solid $colorGrayMedium;
 
     &.empty {
@@ -120,7 +120,7 @@
     font-weight: 400;
     text-align: left !important;
     color: $colorGrayDark;
-    border-radius: $borderRadius12;
+    border-radius: $borderRadius11;
     outline: none;
     box-sizing: border-box;
     transition: background, border-color .2s ease;
