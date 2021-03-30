@@ -5,6 +5,7 @@ import {NgxMaskModule} from "ngx-mask";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxCurrencyModule} from "ngx-currency";
 import {PreloaderModule} from "../preloader/preloader.module";
+import {IconModule} from "../icon/icon.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {PreloaderModule} from "../preloader/preloader.module";
         NgxMaskModule.forRoot(),
         ReactiveFormsModule,
         NgxCurrencyModule,
-        PreloaderModule
+        PreloaderModule,
+        IconModule
     ]
 })
 export class InputModule {

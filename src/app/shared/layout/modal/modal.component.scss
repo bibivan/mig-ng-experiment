@@ -11,10 +11,6 @@
   background: rgba(0, 0, 0, 0.8);
   overflow: auto;
 
-  @include mobile {
-    background: $colorWhite;
-  }
-
   .content-wrapper {
     display: flex;
     justify-content: flex-start;
@@ -29,6 +25,17 @@
 
     @include mobile {
       justify-content: flex-start !important;
+
+      &.mobile {
+        justify-content: flex-end!important;
+        margin-top: 0;
+        background: rgba(29, 29, 30, 0.7)!important;
+
+        .content {
+          border-radius: $indent16 $indent16 0px 0px;
+        }
+      }
+
     }
   }
 
@@ -52,6 +59,10 @@
       padding: 0 $indent16 $indent32 $indent16;
       box-shadow: none;
       border-radius: 0;
+
+      &.small {
+        padding: 0 $indent16 $indent32 $indent16;
+      }
     }
   }
 

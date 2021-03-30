@@ -16,6 +16,8 @@ export class ModalComponent {
   @Input() small: boolean
   @Input() caption: string
   @Input() centered = true
+  @Input() bottomMobile: boolean
+  @Input() buttonName: string
   @Input() closeButtonType: 'in-title' | 'in-content' = 'in-title'
   @Output() closed: EventEmitter<void> = new EventEmitter<void>()
 

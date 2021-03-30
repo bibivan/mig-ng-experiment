@@ -40,6 +40,11 @@
           >
           </app-input-autocomplete>
 
+          <app-textarea
+            placeholder="Текстареа">
+
+          </app-textarea>
+
           <app-select
             [errorMessage]=""
             [mandatory]="true"
@@ -67,6 +72,7 @@
           ></app-input>
           <app-input
             [mandatory]="true"
+            class="with-info"
             errorMessage="Электронная почта"
             formControlName="email"
             placeholder="Электронная почта"
@@ -194,5 +200,20 @@
     </app-container>
   </app-section>
 
+<!--  <app-modal-->
+<!--    caption="Тест"-->
+<!--    closeButtonType="in-content"-->
+<!--    [small]="true"-->
+<!--    [bottomMobile]="true"-->
+<!--    buttonName="Понятно"-->
+<!--    class="text-align-center"-->
+<!--  >-->
+<!--    <app-round-icon-->
+<!--      name="checked"-->
+<!--      theme="success"-->
+<!--    ></app-round-icon>-->
+<!--    <p class="headline-1 margin-top-x2">О безопасности данных</p>-->
+<!--    <p>Мы бережно относимся к персональным данным данным, а также гарантируем их защиту.</p>-->
+<!--  </app-modal>-->
 
 </div>

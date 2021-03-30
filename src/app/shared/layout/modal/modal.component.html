@@ -1,4 +1,7 @@
-<div class="content-wrapper" [class.centered]="centered">
+<div class="content-wrapper"
+     [class.centered]="centered"
+     [class.mobile]="bottomMobile"
+>
   <div class="content" [class.small]="small">
     <div class="title" *ngIf="closeButtonType === 'in-title'"
     >
@@ -12,7 +15,6 @@
         </div>
       </button>
     </div>
-
     <ng-content></ng-content>
 
     <app-button
@@ -20,7 +22,7 @@
       type="button"
       theme="primary"
       (click)="close()"
-    >Получить деньги</app-button>
+    >{{buttonName}}</app-button>
   </div>
 </div>
 

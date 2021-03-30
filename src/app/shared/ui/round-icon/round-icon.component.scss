@@ -1,0 +1,29 @@
+@import "../../../../assets/scss/shared";
+
+.round-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  margin: $indent20 auto;
+  font-size: 38px;
+  border-radius: 50%;
+
+  &.theme-primary {
+    color: $colorPrimary;
+    background-color: rgba(211, 241, 252, 0.15);
+  }
+
+  &.theme-error {
+    color: $colorDangerous;
+    font-size: 30px;
+    background-color: rgba(228, 29, 65, 0.15);
+  }
+
+  &.theme-success {
+    color: $colorSecondary;
+    font-size: 30px;
+    background-color: rgba(76, 206, 121, 0.15);
+  }
+}

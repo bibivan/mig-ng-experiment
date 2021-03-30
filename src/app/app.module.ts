@@ -23,6 +23,8 @@ import {PreloaderModule} from "./shared/ui/preloader/preloader.module";
 import {StepPreloaderModule} from "./modules/step-preloader/step-preloader.module";
 import {InputAutocompleteModule} from "./shared/ui/input-autocomplete/input-autocomplete.module";
 import {SelectModule} from "./shared/ui/select/select.module";
+import {TextareaModule} from "./shared/ui/textarea/textarea.module";
+import {RoundIconModule} from "./shared/ui/round-icon/round-icon.module";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import {SelectModule} from "./shared/ui/select/select.module";
     PreloaderModule,
     StepPreloaderModule,
     InputAutocompleteModule,
-    SelectModule
+    SelectModule,
+    TextareaModule,
+    RoundIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
