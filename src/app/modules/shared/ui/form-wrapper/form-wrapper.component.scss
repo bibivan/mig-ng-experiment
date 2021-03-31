@@ -1,0 +1,33 @@
+@import "../../../../../assets/scss/shared";
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 10;
+  margin: -1px auto;
+  padding: $indent48 85px $indent30 85px;
+  background: $colorWhite;
+  box-shadow: $boxShadow;
+  border-radius: $borderRadius11;
+  overflow: hidden;
+
+  max-width: 768px;
+
+  @include mobile {
+    max-width: calc(100% + 32px);
+    margin-left: -$indent16;
+    margin-right: -$indent16;
+    padding: 24px $indent16;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  &.load {
+    min-height: 500px;
+  }
+
+  &.fullwidth {
+    max-width: 100%;
+  }
+
+}

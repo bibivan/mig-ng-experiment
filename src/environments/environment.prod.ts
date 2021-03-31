@@ -1,3 +1,8 @@
 export const environment = {
-  production: true
-};
+  production: true,
+  mockup: true,
+  name: 't3',
+  apiUrl: 'https://apipad.internetlab.ru/api/v1',
+  siteUrl: 'https://test3.migcredit.ru',
+  padUrl: 'https://lk-test3.migcredit.ru'
+}

@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StepPreloaderComponent } from './step-preloader.component';
-
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { StepPreloaderComponent } from './step-preloader.component'
 
 
 @NgModule({
@@ -13,4 +12,4 @@ import { StepPreloaderComponent } from './step-preloader.component';
     CommonModule
   ]
 })
-export class StepPreloaderModule { }
+export class StepPreloaderModule {}

@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { StepPreloaderComponent } from './step-preloader.component';
+import { StepPreloaderComponent } from './step-preloader.component'
 
 describe('StepPreloaderComponent', () => {
-  let component: StepPreloaderComponent;
-  let fixture: ComponentFixture<StepPreloaderComponent>;
+  let component: StepPreloaderComponent
+  let fixture: ComponentFixture<StepPreloaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StepPreloaderComponent ]
+      declarations: [StepPreloaderComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StepPreloaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(StepPreloaderComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

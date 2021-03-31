@@ -3,8 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  mockup: true,
+  name: 't3',
+  apiUrl: 'https://apipad.internetlab.ru/api/v1',
+  siteUrl: 'https://test3.migcredit.ru',
+  padUrl: 'https://lk-test3.migcredit.ru'
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

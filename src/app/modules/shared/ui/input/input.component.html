@@ -1,0 +1,56 @@
+<label [class.empty]="!formControl.value && !focused && mask !== 'currency'"
+       [class.focused]="focused"
+       [class.masked-phone]="mask === 'phone'"
+       [class.readonly]="readonly"
+       [class.required]="mandatory"
+       class="field"
+>
+    <span class="label">{{ placeholder }}</span>
+
+    <ng-container *ngIf="!mask">
+        <input (blur)="onBlur()"
+               (focus)="onFocus()"
+               [formControl]="formControl"
+               [maxlength]="maxlength"
+               [readOnly]="readonly"
+               [type]="type"
+               class="ng-invalid"
+        />
+    </ng-container>
+
+    <ng-container *ngIf="mask && mask !== 'currency'">
+        <input (blur)="onBlur()"
+               (focus)="onFocus()"
+               [dropSpecialCharacters]="false"
+               [formControl]="formControl"
+               [mask]="maskConfig.mask"
+               [readOnly]="readonly || disabled"
+               [type]="type"
+        />
+    </ng-container>
+
+    <ng-container *ngIf="mask && mask === 'currency'">
+        <input (blur)="onBlur()"
+               (focus)="onFocus()"
+               [formControl]="formControl"
+               [options]="currencyConfig"
+               [readOnly]="readonly"
+               currencyMask
+               type="tel"
+        />
+    </ng-container>
+
+    <app-preloader
+            *ngIf="load"
+            forInput="true"
+    >
+    </app-preloader>
+</label>
+
+<span class="info-block">
+    <app-icon name="info">
+  </app-icon>
+  </span>
+
+
+<p *ngIf="errorMessage && !focused && !errorMessageHidden" class="error-message">{{ errorMessage }}</p>

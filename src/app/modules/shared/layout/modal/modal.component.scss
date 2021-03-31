@@ -1,0 +1,124 @@
+@import "../../../../../assets/scss/shared";
+
+:host {
+  display: block;
+  position: fixed;
+  z-index: 2147483647;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  overflow: auto;
+
+  .content-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &.centered {
+      justify-content: center;
+    }
+
+    @include mobile {
+      justify-content: flex-start !important;
+
+      &.mobile {
+        justify-content: flex-end !important;
+        margin-top: 0;
+        background: rgba(29, 29, 30, 0.7) !important;
+
+        .content {
+          border-radius: $indent16 $indent16 0px 0px;
+        }
+      }
+
+    }
+  }
+
+
+  .content {
+    margin: $indent60 auto;
+    padding: 0 $indent100 40px $indent100;
+    width: 100%;
+    max-width: 768px;
+    background: $colorWhite;
+    box-shadow: $boxShadowLight;
+    border-radius: $borderRadius11;
+
+    &.small {
+      max-width: 514px;
+      padding: 0 $indent80 40px $indent80;
+    }
+
+    @include mobile {
+      margin: 0;
+      padding: 0 $indent16 $indent32 $indent16;
+      box-shadow: none;
+      border-radius: 0;
+
+      &.small {
+        padding: 0 $indent16 $indent32 $indent16;
+      }
+    }
+  }
+
+  .title {
+    @extend .headline-2;
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: $indent20 60px 0 0;
+    min-height: 36px;
+
+    &.without-button {
+      text-align: center;
+      padding-right: 0;
+    }
+  }
+
+  .close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: -14px;
+    top: 13px;
+    margin: 0;
+    width: 64px;
+    height: 64px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    @include mobile {
+      top: 4px;
+    }
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 44px;
+      height: 44px;
+      margin: 0;
+      background: $colorGray;
+      font-size: 14px;
+      color: $colorWhite;
+      border-radius: $borderRadius16;
+    }
+
+    @include desktop {
+      &:hover {
+        .icon {
+          background: rgba(51, 51, 51, .75);
+        }
+
+      }
+    }
+  }
+}

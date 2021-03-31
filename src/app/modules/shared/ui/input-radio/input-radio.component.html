@@ -1,0 +1,16 @@
+<label [class.disabled]="disabled"
+       class="checkbox-button"
+>
+    <input (change)="switch()"
+           [checked]="value"
+           [disabled]="disabled"
+           type="radio">
+
+    <span class="icon">
+    <app-icon name="checked"></app-icon>
+  </span>
+
+    <span class="label">
+    <ng-content></ng-content>
+  </span>
+</label>

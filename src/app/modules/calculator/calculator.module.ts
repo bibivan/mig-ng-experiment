@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CalculatorComponent } from './calculator.component';
-import {InputSliderModule} from "../../shared/ui/input-slider/input-slider.module";
-
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { CalculatorComponent } from './calculator.component'
+import { InputSliderModule } from '../shared/ui/input-slider/input-slider.module'
 
 
 @NgModule({
@@ -15,4 +14,4 @@ import {InputSliderModule} from "../../shared/ui/input-slider/input-slider.modul
     InputSliderModule
   ]
 })
-export class CalculatorModule { }
+export class CalculatorModule {}

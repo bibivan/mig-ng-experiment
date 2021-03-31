@@ -4,6 +4,7 @@
   display: block;
   position: relative;
   padding-bottom: 1px;
+
   &:before {
     content: '';
     display: block;
@@ -20,13 +21,16 @@
     }
 
   }
+
   .info {
     display: block;
     margin: $indent20 0;
+
     .item {
       display: flex;
       flex: 1 0 100%;
       justify-content: space-between;
+
       .label {
         @extend .text-1;
 

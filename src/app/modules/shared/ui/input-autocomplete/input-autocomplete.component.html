@@ -1,0 +1,33 @@
+<label class="field"
+       [class.empty]="!formControl.value && !focused"
+       [class.focused]="focused"
+       [class.readonly]="readonly"
+       [class.required]="mandatory"
+       [class.disabled]="disabled"
+       [class.loading]="isLoading"
+       [class.error]="errorMessage"
+>
+    <span class="label">{{ placeholder }}</span>
+
+    <input [formControl]="formControl"
+           autocomplete="none"
+           type="text"
+           [readOnly]="readonly"
+           (focus)="onFocus()"
+           (blur)="onBlur()"
+           [matAutocomplete]="auto"
+    />
+</label>
+
+
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
+    <mat-option *ngFor="let item of autocompleteList"
+                [value]="item.name"
+                [id]="item.value"
+    >
+        {{item.name}}
+    </mat-option>
+</mat-autocomplete>
+
+
+<p *ngIf="errorMessage && !focused && !errorMessageHidden && !disabled" class="error-message">{{ errorMessage }}</p>

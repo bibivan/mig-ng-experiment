@@ -1,219 +1,29 @@
 <div class="body">
-  <div class="header">
-    <app-container>
-      <div class="content">
-        <div class="logo"></div>
-      </div>
-    </app-container>
-  </div>
-
-  <app-form-progress>
-
-  </app-form-progress>
-
-  <app-section>
-    <app-container>
-      <app-form-wrapper>
-        <app-preloader></app-preloader>
-      </app-form-wrapper>
-    </app-container>
-  </app-section>
-
-  <app-section>
-    <app-container class="small">
-      <app-step-preloader>
-
-      </app-step-preloader>
-    </app-container>
-  </app-section>
-
-  <app-section>
-    <app-container>
-      <app-form-wrapper>
-        <form action="">
-          <h1 class="headline-1 margin-bottom-x3">Выберите необходимую сумму и срок</h1>
-          <app-calculator></app-calculator>
-          <h1 class="headline-1">Заполните анкету</h1>
-          <app-input-autocomplete
-            class="street"
-            placeholder="Улица"
-          >
-          </app-input-autocomplete>
-
-          <app-textarea
-            placeholder="Текстареа">
-
-          </app-textarea>
-
-          <app-select
-            [errorMessage]=""
-            [mandatory]="true"
-            [options]="[
-      { id: 'Job', name: 'Работа по трудовому договору' },
-      { id: 'Military', name: 'Военный' },
-      { id: 'Homemaker/Decree', name: 'Домохозяйка/Декрет' },
-      { id: 'Not Working', name: 'Не работает' },
-      { id: 'Informal Work/Temporary jobs', name: 'Неофициальная работа' },
-      { id: 'Pensioner', name: 'Неработающий пенсионер' },
-      { id: 'Work', name: 'Работа по временному контракту' },
-      { id: 'Working Pensioner', name: 'Работающий пенсионер' },
-      { id: 'Student', name: 'Студент' },
-    ]"
-            placeholder="Тип занятости"
-          ></app-select>
-          <app-input
-            [load]="true"
-            [mandatory]="true"
-            errorMessage="Номер телефона"
-            formControlName="phone"
-            mask="phone"
-            placeholder="Номер телефона"
-            type="tel"
-          ></app-input>
-          <app-input
-            [mandatory]="true"
-            class="with-info"
-            errorMessage="Электронная почта"
-            formControlName="email"
-            placeholder="Электронная почта"
-          ></app-input>
-          <div class="grid">
-            <div class="col w-50">
-              <app-input
-                [mandatory]="true"
-                errorMessage="Электронная почта2"
-                formControlName="email"
-                placeholder="Электронная почта2"
-              ></app-input>
+    <div class="header" state>
+        <app-container>
+            <div class="content">
+                <div class="logo"></div>
             </div>
-            <div class="col w-50">
-              <app-input
-                [mandatory]="true"
-                errorMessage="Электронная почта3"
-                formControlName="email"
-                placeholder="Электронная почта3"
-              ></app-input>
-            </div>
-          </div>
-          <app-input-checkbox>
-            Я соглашаюсь на <a href="#123">обработку персональных данных и данных об абонентах</a>
-          </app-input-checkbox>
-          <app-input-checkbox>
-            Я соглашаюсь на уступку кредитором третьим лицам прав (требований) по договору займа.
-          </app-input-checkbox>
-          <app-input-checkbox>
-            Я подтверждаю, что в настоящий момент не являюсь ответчиком в каком-либо судебном разбирательстве и не был в
-            течение последних 5 лет признан банкротом
-          </app-input-checkbox>
+        </app-container>
+    </div>
 
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button-files
-              url="/">
-              Заявление на предоставление
-              потребительского займа
-            </app-button-files>
-          </div>
+    <div class="preloader"></div>
 
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button
-              theme="primary"
-              type="button">
-              Понятно
-            </app-button>
-          </div>
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button
-              theme="get-money"
-              type="button">
-              Получить 10 000 ₽ на 20 дней
-            </app-button>
-          </div>
+    <div class="progress-bar" state></div>
 
-        </form>
-
-      </app-form-wrapper>
-    </app-container>
-  </app-section>
-
-  <app-section>
-    <app-container class="small">
-      <app-form-wrapper class="padding-top-x2">
-        <h2 class="headline-1 text-align-center">Код из SMS</h2>
-        <p class="text-2 color-gray-dark text-align-center">
-          Мы отправили код на Ваш номер <br>
-          <span class="color-primary">+7 (927) 444-66-88</span>
-        </p>
-        <div class="margin-top-x3 margin-bottom-x3">
-          <app-input-code (codeCompleted)="$event"
-                          [codeLength]="4"
-                          [code]=""
-          ></app-input-code>
+    <div class="steps">
+        <div class="steps-module">
+            <div class="progress-bar" min="0" max="40" value></div>
         </div>
-        <div class="text-align-center margin-top-x3 margin-bottom-x3">
-          <p class="text-2">
-          <span (click)="$event"
-                class="link"
-          >Отправить код повторно</span>
-          </p>
-
-          <p class="text-2">
-          <span (click)="$event"
-                class="link"
-          >Не получили код?</span>
-          </p>
-        </div>
-        <app-accordion
-          caption="Подписывая заявление, вы подтверждаете, что ознакомились и согласны с содержанием следующих документов:"
-        >
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button-files
-              url="/">
-              Заявление на предоставление
-              потребительского займа
-            </app-button-files>
-          </div>
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button-files
-              url="/">
-              Заявление на предоставление
-              потребительского займа
-            </app-button-files>
-          </div>
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button-files
-              url="/">
-              Заявление на предоставление
-              потребительского займа
-            </app-button-files>
-          </div>
-          <div class="margin-top-x2 margin-bottom-x2">
-            <app-button-files
-              url="/">
-              Заявление на предоставление
-              потребительского займа
-            </app-button-files>
-          </div>
-        </app-accordion>
-        <app-button-back>
-        </app-button-back>
-      </app-form-wrapper>
-    </app-container>
-  </app-section>
-
-<!--  <app-modal-->
-<!--    caption="Тест"-->
-<!--    closeButtonType="in-content"-->
-<!--    [small]="true"-->
-<!--    [bottomMobile]="true"-->
-<!--    buttonName="Понятно"-->
-<!--    class="text-align-center"-->
-<!--  >-->
-<!--    <app-round-icon-->
-<!--      name="checked"-->
-<!--      theme="success"-->
-<!--    ></app-round-icon>-->
-<!--    <p class="headline-1 margin-top-x2">О безопасности данных</p>-->
-<!--    <p>Мы бережно относимся к персональным данным данным, а также гарантируем их защиту.</p>-->
-<!--  </app-modal>-->
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+        <div class="steps-module"></div>
+    </div>
 
 </div>

@@ -26,12 +26,14 @@
   .sign {
     display: block;
     height: 74px;
+
     &.bfrs {
       background-repeat: no-repeat;
       background-size: cover;
       background-image: url('./img/BFRS.svg');
     }
   }
+
   .quote {
     display: block;
     position: relative;

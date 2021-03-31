@@ -1,33 +1,21 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import { APP_INITIALIZER, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { NgxMaskModule } from 'ngx-mask'
+import localeRu from '@angular/common/locales/ru'
+import { appInitializer } from './app-initializer'
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {ContainerModule} from "./shared/layout/container/container.module";
-import {FormWrapperModule} from "./shared/ui/form-wrapper/form-wrapper.module";
-import {InputModule} from "./shared/ui/input/input.module";
-import {InputCheckboxModule} from "./shared/ui/input-checkbox/input-checkbox.module";
-import {FormProgressModule} from "./modules/form-progress/form-progress.module";
-import {InputSliderModule} from "./shared/ui/input-slider/input-slider.module";
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {CalculatorModule} from "./modules/calculator/calculator.module";
-import {ModalModule} from "./shared/layout/modal/modal.module";
-import {ButtonModule} from "./shared/ui/button/button.module";
-import {ButtonTextModule} from "./shared/ui/button-text/button-text.module";
-import {ButtonFilesModule} from "./shared/ui/button-files/button-files.module";
-import {SectionModule} from "./shared/layout/section/section.module";
-import {InputCodeModule} from "./shared/ui/input-code/input-code.module";
-import {AccordionModule} from "./shared/ui/accordion/accordion.module";
-import {ButtonBackModule} from "./shared/ui/button-back/button-back.module";
-import {PreloaderModule} from "./shared/ui/preloader/preloader.module";
-import {StepPreloaderModule} from "./modules/step-preloader/step-preloader.module";
-import {InputAutocompleteModule} from "./shared/ui/input-autocomplete/input-autocomplete.module";
-import {SelectModule} from "./shared/ui/select/select.module";
-import {TextareaModule} from "./shared/ui/textarea/textarea.module";
-import {RoundIconModule} from "./shared/ui/round-icon/round-icon.module";
-import {InputRadioModule} from "./shared/ui/input-radio/input-radio.module";
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { JwtInterceptor } from './interceptors/jwt.interceptor'
+import { ContainerModule } from './modules/shared/layout/container/container.module'
+import { FormWrapperModule } from './modules/shared/ui/form-wrapper/form-wrapper.module'
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { environment } from '../environments/environment'
+import { AuthenticationService } from './services/authentication.service'
+
+registerLocaleData(localeRu, 'ru')
 
 @NgModule({
   declarations: [
@@ -36,32 +24,27 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule,
     ContainerModule,
+    HttpClientModule,
     AppRoutingModule,
     FormWrapperModule,
-    InputModule,
-    InputCheckboxModule,
-    InputSliderModule,
-    FormProgressModule,
-    NoopAnimationsModule,
-    CalculatorModule,
-    ModalModule,
-    ButtonModule,
-    ButtonTextModule,
-    ButtonFilesModule,
-    SectionModule,
-    InputCodeModule,
-    AccordionModule,
-    ButtonBackModule,
-    PreloaderModule,
-    StepPreloaderModule,
-    InputAutocompleteModule,
-    SelectModule,
-    TextareaModule,
-    RoundIconModule,
-    InputRadioModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxMaskModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthenticationService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+    { provide: LOCALE_ID, useValue: 'ru' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'RUB' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

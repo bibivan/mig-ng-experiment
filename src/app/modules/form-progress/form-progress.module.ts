@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormProgressComponent} from './form-progress.component';
-import {ContainerModule} from "../../shared/layout/container/container.module";
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormProgressComponent } from './form-progress.component'
+import { ContainerModule } from '../shared/layout/container/container.module'
 
 
 @NgModule({
