@@ -26,6 +26,8 @@ import {SelectModule} from "./shared/ui/select/select.module";
 import {TextareaModule} from "./shared/ui/textarea/textarea.module";
 import {RoundIconModule} from "./shared/ui/round-icon/round-icon.module";
 import {InputRadioModule} from "./shared/ui/input-radio/input-radio.module";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import {InputRadioModule} from "./shared/ui/input-radio/input-radio.module";
     SelectModule,
     TextareaModule,
     RoundIconModule,
-    InputRadioModule
+    InputRadioModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
