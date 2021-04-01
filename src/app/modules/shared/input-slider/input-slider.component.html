@@ -8,18 +8,14 @@
         <input (blur)="onBlur()"
                (focus)="onFocus()"
                [formControl]="formControl"
-               [maxlength]="maxlength"
-               [readOnly]="readonly"
-               [type]="type"
-               class="ng-invalid"
+               type="tel"
         />
-    </ng-container>
-    <ng-container>
+
         <div class="slider">
             <mat-slider [min]="min"
                         [max]="max"
                         [step]=""
-                        [value]=""
+                        [value]="formControl.value"
             ></mat-slider>
             <div class="labels">
                 <div class="item">{{min}} {{unit[0]}}</div>

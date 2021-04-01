@@ -1,24 +1,69 @@
-<app-input-slider
-        placeholder="Вы берете"
-        min="3000"
-        max="15000"
-        [unit]="['₽','₽']"
-></app-input-slider>
-<app-input-slider
-        placeholder="На срок"
-        min="3"
-        max="29"
-        [unit]="['дня', 'дней']"
-></app-input-slider>
-<div class="line"></div>
-<div class="info">
-    <div class="item">
-        <div class="label">До (включительно)</div>
-        <div class="value">10 сентября 2020</div>
-    </div>
-    <div class="item">
-        <div class="label">Возвращаете</div>
-        <div class="value">11 000 ₽</div>
-    </div>
+<div class="calculator">
+    <app-preloader *ngIf="!state || state?.isLoading; else calculator;"
+                   [fullscreen]="false"
+    ></app-preloader>
+
+    <ng-template #calculator>
+        <div class="field">
+            <app-input placeholder="Вы берете"
+                       [formControl]="sumControl"
+                       mask="currency"
+                       [currencyPrecision]="0"
+                       [currencyMin]="state.sumMin"
+                       [currencyMax]="state.sumMax"
+            ></app-input>
+            <div class="slider-wrapper">
+                <mat-slider [min]="state.sumMin"
+                            [max]="state.sumMax"
+                            [step]="state.sumStep"
+                            [value]="state.sum"
+                            (input)="onChangeSum($event.value)"
+                ></mat-slider>
+            </div>
+            <p>{{ state.sumMin }}-{{ state.sumMax }}</p>
+        </div>
+
+        <div class="field">
+            <app-input placeholder="На срок"
+                       [formControl]="termControl"
+                       mask="currency"
+                       [currencyPrecision]="0"
+                       [maxlength]="2"
+                       [currencyMin]="state.termInputValueMin"
+                       [currencyMax]="state.termInputValueMax"
+                       [currencySuffix]="state.termSliderLabel"
+                       [currencyThousands]="''"
+            ></app-input>
+            <div class="slider-wrapper">
+                <mat-slider [min]="state.termMin"
+                            [max]="state.termMax"
+                            [step]="state.termStep"
+                            [value]="state.termSliderValue"
+                            (input)="onChangeTerm($event.value)"
+                ></mat-slider>
+            </div>
+
+            <p>{{ state.termInputValueMin }}-{{ state.termInputValueMax }}</p>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="info">
+            <div class="item">
+                <div class="label">До (включительно)</div>
+                <div class="value">{{ state.results?.deadline | date:'d MMMM y' }}</div>
+            </div>
+            <div class="item">
+                <div class="label">
+                    <ng-container *ngIf="state.term?.termUnit === 'day'">Возвращаете</ng-container>
+                    <ng-container *ngIf="state.term?.termUnit === 'week'">Платеж раз в 2 недели</ng-container>
+                </div>
+                <div class="value">{{ state.results?.sumReturn | currencyRub }}</div>
+            </div>
+        </div>
+    </ng-template>
+
 </div>
+
+
 

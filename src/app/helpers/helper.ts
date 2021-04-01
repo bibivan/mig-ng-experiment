@@ -1,6 +1,7 @@
 import * as sha1 from 'js-sha1'
 import * as moment from 'moment'
 import { SexByRussianName } from 'sex-by-russian-name'
+import { TermLoanInterface } from '../modules/calculator/calculator.model'
 
 // import { TermLoanInterface } from '../../core/modules/calculator/calculator.model'
 import { selectOptionsType } from '../modules/shared/select/select.model'
@@ -120,6 +121,23 @@ export function declOfNum(num: number, titles: Array<string>): string {
 
 export function sha1Encode(str = ''): string {
   return sha1(str)
+}
+
+export function getDeadlineDate(term: TermLoanInterface): Date {
+  if (!term) { return null }
+
+  const deadlineDate = new Date()
+  let days = term.value
+  if (term.termUnit === 'week') {
+    days = days * 7
+  }
+
+  if (term.termUnit === 'week') {
+    days = days + 1
+  }
+  deadlineDate.setDate(deadlineDate.getDate() + days)
+
+  return deadlineDate
 }
 
 export function getSelectOptionName(options: selectOptionsType, id: string): string {

@@ -1,84 +1,87 @@
 <app-form-progress></app-form-progress>
-<app-form-wrapper>
-    <app-calculator></app-calculator>
+<app-container>
+    <app-form-wrapper>
+        <app-calculator></app-calculator>
 
-    <h2 class="font-weight-bold">Заполните анкету</h2>
+        <h2 class="font-weight-bold">Заполните анкету</h2>
 
-    <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
-        <app-input [formControl]="mobilePhoneControl"
-                   placeholder="Мобильный телефон"
-                   mask="phone"
-                   [mandatory]="true"
-                   [errorMessage]="mobilePhoneControl.errors | errorMessage"
-        ></app-input>
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <app-input [formControl]="mobilePhoneControl"
+                       placeholder="Мобильный телефон"
+                       mask="phone"
+                       [mandatory]="true"
+                       [errorMessage]="mobilePhoneControl.errors | errorMessage"
+            ></app-input>
 
-        <app-input [formControl]="lastnameControl"
-                   placeholder="Фамилия"
-                   [mandatory]="true"
-                   [errorMessage]="lastnameControl.errors | errorMessage"
-        ></app-input>
+            <app-input [formControl]="lastnameControl"
+                       placeholder="Фамилия"
+                       [mandatory]="true"
+                       [errorMessage]="lastnameControl.errors | errorMessage"
+            ></app-input>
 
-        <app-input [formControl]="nameControl"
-                   placeholder="Имя"
-                   [mandatory]="true"
-                   [errorMessage]="nameControl.errors | errorMessage"
-        ></app-input>
+            <app-input [formControl]="nameControl"
+                       placeholder="Имя"
+                       [mandatory]="true"
+                       [errorMessage]="nameControl.errors | errorMessage"
+            ></app-input>
 
-        <p class="text-3 color-dangerous margin-bottom-x2"
-           [class.hide]="true"
-        >
-            Проверьте, пожалуйста, еще раз имя, если данные верны, то продолжите заполнение анкеты.
-        </p>
+            <p class="text-3 color-dangerous margin-bottom-x2"
+               [class.hide]="true"
+            >
+                Проверьте, пожалуйста, еще раз имя, если данные верны, то продолжите заполнение анкеты.
+            </p>
 
-        <app-input [formControl]="patronymicControl"
-                   placeholder="Отчество"
-                   [mandatory]="true"
-                   [errorMessage]="patronymicControl.errors | errorMessage"
-        ></app-input>
+            <app-input [formControl]="patronymicControl"
+                       placeholder="Отчество"
+                       [mandatory]="true"
+                       [errorMessage]="patronymicControl.errors | errorMessage"
+            ></app-input>
 
-        <p class="text-3 color-dangerous"
-           [class.hide]="true"
-        >
-            Проверьте, пожалуйста, еще раз введенные фамилию, имя и отчество,
-            если данные верны, то продолжите заполнение анкеты.
-        </p>
+            <p class="text-3 color-dangerous"
+               [class.hide]="true"
+            >
+                Проверьте, пожалуйста, еще раз введенные фамилию, имя и отчество,
+                если данные верны, то продолжите заполнение анкеты.
+            </p>
 
-        <app-input [formControl]="emailControl"
-                   placeholder="Электронная почта"
-                   [mandatory]="true"
-                   [errorMessage]="emailControl.errors | errorMessage"
-        ></app-input>
-        <p class="text-4 no-margin-top">
-            E-mail необходим для получения договора и документов об оплате.
-        </p>
+            <app-input [formControl]="emailControl"
+                       placeholder="Электронная почта"
+                       [mandatory]="true"
+                       [errorMessage]="emailControl.errors | errorMessage"
+            ></app-input>
+            <p class="text-4 no-margin-top">
+                E-mail необходим для получения договора и документов об оплате.
+            </p>
 
-        <app-input [formControl]="dateBirthdayControl"
-                   mask="date"
-                   placeholder="Дата рождения"
-                   [mandatory]="true"
-                   [errorMessage]="dateBirthdayControl.errors | errorMessage"
-        ></app-input>
+            <app-input [formControl]="dateBirthdayControl"
+                       mask="date"
+                       placeholder="Дата рождения"
+                       [mandatory]="true"
+                       [errorMessage]="dateBirthdayControl.errors | errorMessage"
+            ></app-input>
 
-        <app-input-checkbox [formControl]="acceptControl">
-            Я соглашаюсь на
-            <span class="link">обработку персональных данных и данных об абонентах</span>
-        </app-input-checkbox>
+            <app-input-checkbox [formControl]="acceptControl">
+                Я соглашаюсь на
+                <span class="link">обработку персональных данных и данных об абонентах</span>
+            </app-input-checkbox>
 
-        <app-input-checkbox [formControl]="cessionAllowedControl">
-            Я соглашаюсь на уступку кредитором третьим лицам прав (требований) по договору займа.
-        </app-input-checkbox>
+            <app-input-checkbox [formControl]="cessionAllowedControl">
+                Я соглашаюсь на уступку кредитором третьим лицам прав (требований) по договору займа.
+            </app-input-checkbox>
 
-        <app-input-checkbox [formControl]="bankruptControl">
-            Я подтверждаю, что в настоящий момент не являюсь ответчиком в каком-либо судебном разбирательстве и не был в
-            течение
-            последних 5 лет признан банкротом
-        </app-input-checkbox>
+            <app-input-checkbox [formControl]="bankruptControl">
+                Я подтверждаю, что в настоящий момент не являюсь ответчиком в каком-либо судебном разбирательстве и не был в
+                течение
+                последних 5 лет признан банкротом
+            </app-input-checkbox>
 
-        <div class="line"></div>
+            <div class="line"></div>
 
-        <app-button type="submit"
-                    theme="primary"
-        >Продолжить</app-button>
+            <app-button type="submit"
+                        theme="primary"
+            >Продолжить</app-button>
 
-    </form>
-</app-form-wrapper>
+        </form>
+    </app-form-wrapper>
+</app-container>
+

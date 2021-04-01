@@ -1,5 +1,12 @@
 export type inputType = 'text' | 'email' | 'password' | 'tel'
-export type maskType = 'phone' | 'date' | 'currency'
+export type maskType =
+  'phone'
+  | 'stacPhone'
+  | 'date'
+  | 'dateMonthYear'
+  | 'currency'
+  | 'serialNumberPassport'
+  | 'codePassport'
 
 export interface MaskConfigInterface {
   mask: string,

@@ -40,17 +40,6 @@
         />
     </ng-container>
 
-    <app-preloader
-            *ngIf="load"
-            forInput="true"
-    >
-    </app-preloader>
 </label>
 
-<!--<span class="info-block">-->
-<!--    <app-icon name="info">-->
-<!--  </app-icon>-->
-<!--  </span>-->
-
-<p>a{{ errorMessage }}a</p>
 <p *ngIf="errorMessage && !focused && !errorMessageHidden" class="error-message">{{ errorMessage }}</p>

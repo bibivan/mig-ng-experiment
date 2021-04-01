@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core'
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core'
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { inputType, MaskConfigInterface } from './input-slider.model'
 import { Subscription } from 'rxjs'
 
@@ -16,37 +16,26 @@ import { Subscription } from 'rxjs'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputSliderComponent implements OnInit {
-  @Input() disabled: boolean
-  @Input() readonly: boolean
-  @Input() mandatory: boolean
+export class InputSliderComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() placeholder = ''
-  @Input() type: inputType = 'text'
-  @Input() maxlength = 256
-  @Input() errorMessage = ''
-  @Input() errorMessageHidden = false
   @Input() min: number
   @Input() max: number
   @Input() unit: Array<string>
 
   value: any = ''
   focused = false
+  isPassword: boolean
   maskConfig: MaskConfigInterface
+  disabled: boolean
 
-  currencyConfig = {
-    align: 'left',
-    allowNegative: false,
-    prefix: '',
-    thousands: ' ',
-    decimal: ',',
-    suffix: ' ₽',
-    max: 1000000
-  }
-  formControl = new FormControl('')
+  currencyConfig = null
+
   private sub = new Subscription()
+  formControl = new FormControl('')
 
+  private onChange = (value: any) => { }
+  private onTouched = () => { }
   registerOnChange = (fn: (value: any) => {}) => this.onChange = fn
-
   registerOnTouched = (fn: () => {}) => this.onTouched = fn
 
   ngOnInit(): void {
@@ -85,12 +74,6 @@ export class InputSliderComponent implements OnInit {
 
   onFocus(): void {
     this.focused = true
-  }
-
-  private onChange = (value: any) => {
-  }
-
-  private onTouched = () => {
   }
 
 }

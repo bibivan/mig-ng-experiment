@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges
+} from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { inputType, MaskConfigInterface, maskType } from './input.model'
 import { Subscription } from 'rxjs'
@@ -16,9 +25,7 @@ import { Subscription } from 'rxjs'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() load: boolean
-  @Input() disabled: boolean
+export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValueAccessor {
   @Input() readonly: boolean
   @Input() mandatory: boolean
   @Input() placeholder = ''
@@ -27,28 +34,42 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() errorMessage = ''
   @Input() errorMessageHidden = false
   @Input() mask: maskType
+  @Input() matAutocomplete: string
+  @Input() currencyPrecision = 2
+  @Input() currencySuffix = ' ₽'
+  @Input() currencyMax = 1000000
+  @Input() currencyMin = 0
+  @Input() currencyThousands = ' '
 
   value: any = ''
   focused = false
+  isPassword: boolean
   maskConfig: MaskConfigInterface
+  disabled: boolean
 
-  currencyConfig = {
-    align: 'left',
-    allowNegative: false,
-    prefix: '',
-    thousands: ' ',
-    decimal: ',',
-    suffix: ' ₽',
-    max: 1000000
-  }
-  formControl = new FormControl('')
+  currencyConfig = null
+
   private sub = new Subscription()
+  formControl = new FormControl('')
 
+  private onChange = (value: any) => { }
+  private onTouched = () => { }
   registerOnChange = (fn: (value: any) => {}) => this.onChange = fn
-
   registerOnTouched = (fn: () => {}) => this.onTouched = fn
 
   ngOnInit(): void {
+    this.currencyConfig = {
+      align: 'left',
+      allowNegative: false,
+      prefix: '',
+      thousands: this.currencyThousands,
+      decimal: ',',
+      suffix: this.currencySuffix,
+      min: this.currencyMin,
+      max: this.currencyMax,
+      precision: this.currencyPrecision
+    }
+
     this.sub = this.formControl.valueChanges.subscribe(value => {
       this.onTouched()
       this.onChange(value)
@@ -56,6 +77,7 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
       this.value = value
     })
 
+    this.isPassword = this.type === 'password'
     this.maskConfig = this.getMaskConfig(this.mask)
   }
 
@@ -63,13 +85,37 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
     this.sub?.unsubscribe()
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.currencySuffix && this.currencyConfig) {
+      this.currencyConfig.suffix = changes.currencySuffix.currentValue
+    }
+  }
+
   getMaskConfig(type: maskType): MaskConfigInterface {
     if (type === 'phone') {
       return { mask: '(000) 000-00-00', prefix: '+7 ' }
     }
 
+    if (type === 'stacPhone') {
+      return { mask: '0000000000', prefix: '+7 ' }
+    }
+
     if (type === 'date') {
       return { mask: '00.00.0000' }
+    }
+
+    if (type === 'dateMonthYear') {
+      return { mask: '00.0000' }
+    }
+
+    // @ts-ignore
+    if (type === 'serialNumberPassport') {
+      return { mask: '0000 000000' }
+    }
+
+    // @ts-ignore
+    if (type === 'codePassport') {
+      return { mask: '000-000' }
     }
 
     return { mask: '', prefix: '', suffix: '', thousandSeparator: '' }
@@ -100,10 +146,11 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
     this.focused = true
   }
 
-  private onChange = (value: any) => {
+  togglePassword(): void {
+    if (this.type === 'password') {
+      this.type = 'text'
+    } else {
+      this.type = 'password'
+    }
   }
-
-  private onTouched = () => {
-  }
-
 }
