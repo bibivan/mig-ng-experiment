@@ -1,0 +1,163 @@
+@import "../../../../assets/scss/shared";
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 5;
+  margin: 0 0 $indent20 !important;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .field {
+    display: block;
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    background: $colorWhite;
+    border-radius: $borderRadius11;
+    border: 1px solid $colorGrayMedium;
+
+    &.empty {
+      background: $colorBg;
+      border-color: $colorBg;
+
+      .label {
+        top: 14px;
+        font-size: 20px;
+        line-height: 1em;
+        color: $colorGrayDark;
+      }
+
+      textarea {
+        color: #ffffff;
+        -webkit-box-shadow: inset 0 0 0 50px transparent;
+
+        .icon {
+          display: none;
+        }
+      }
+    }
+
+    &.focused {
+      border-color: $colorWhite !important;
+      box-shadow: 0 0 0 4px rgba(0, 173, 238, 0.5);
+    }
+
+    &.readonly {
+      border-color: $colorGrayMedium !important;
+      background-color: $colorWhite !important;
+      box-shadow: none !important;
+
+      textarea {
+        color: $colorGrayMedium !important;
+        -webkit-text-fill-color: $colorGrayMedium !important;
+      }
+
+      .label {
+        color: $colorGrayMedium !important;
+      }
+    }
+  }
+
+
+  .label {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    left: $indent16;
+    right: $indent16;
+    top: 6px;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: 400;
+    color: $colorGray;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: all .1s ease;
+
+    &:after {
+      content: "";
+      color: $colorDangerous;
+    }
+  }
+
+  textarea {
+    display: block;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 30px $indent14 0 $indent14;
+    width: 100%;
+    height: 140px;
+    background: none;
+    border: none;
+    font-family: 'Proxima Nova', sans-serif;;
+    font-size: 20px;
+    line-height: 1em;
+    font-weight: 400;
+    text-align: left !important;
+    color: $colorGrayDark;
+    border-radius: $borderRadius11;
+    outline: none;
+    box-sizing: border-box;
+    transition: background, border-color .2s ease;
+    resize: none;
+
+    -webkit-box-shadow: inset 0 0 0 50px $colorWhite;
+    -webkit-text-fill-color: $colorGrayDark;
+    -webkit-appearance: none;
+
+    &:-webkit-autofill {
+      -webkit-animation-name: autofill;
+      -webkit-animation-fill-mode: both;
+      background: transparent;
+    }
+  }
+
+  .error-message {
+    display: none;
+    margin: $indent4 0 0 0;
+    font-size: 12px;
+    line-height: 1.2em;
+    font-weight: 400;
+    color: $colorDangerous;
+  }
+
+  @include desktop() {
+    &:hover {
+      .field {
+        border-color: $colorGrayMedium;
+      }
+    }
+  }
+
+  &.ng-invalid.ng-touched {
+    .field:not(.focused) {
+      border-color: $colorDangerous;
+    }
+
+    .error-message {
+      display: block;
+    }
+  }
+
+  &.ng-valid.ng-touched {
+    .field {
+      border-color: $colorGrayMedium;
+    }
+  }
+
+}
+
+@-webkit-keyframes autofill {
+  to {
+    background: #ffffff;
+  }
+}

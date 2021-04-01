@@ -1,0 +1,13 @@
+@import "../assets/scss/shared";
+
+.preloader {
+  display: block;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: 0 0 0 -33px;
+  width: 66px;
+  height: 66px;
+  background: $colorWhite;
+  border-radius: $borderRadius16;
+}

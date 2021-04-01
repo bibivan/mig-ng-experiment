@@ -21,6 +21,10 @@ body, .app-root {
   margin: 0;
   background: $colorBg;
   overflow-x: hidden;
+
+  @include mobile {
+    background: $colorWhite;
+  }
 }
 
 * {

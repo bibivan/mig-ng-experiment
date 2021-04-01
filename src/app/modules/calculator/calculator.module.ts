@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { CalculatorComponent } from './calculator.component'
-import { InputSliderModule } from '../shared/ui/input-slider/input-slider.module'
+import { InputSliderModule } from '../shared/input-slider/input-slider.module'
 
 
 @NgModule({

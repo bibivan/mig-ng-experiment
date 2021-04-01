@@ -2,8 +2,8 @@ import * as sha1 from 'js-sha1'
 import * as moment from 'moment'
 import { SexByRussianName } from 'sex-by-russian-name'
 
-import { TermLoanInterface } from '../../core/modules/calculator/calculator.model'
-import { selectOptionsType } from '../modules/shared/ui/select/select.model'
+// import { TermLoanInterface } from '../../core/modules/calculator/calculator.model'
+import { selectOptionsType } from '../modules/shared/select/select.model'
 
 
 export const regNum = /^\d+$/
@@ -122,23 +122,6 @@ export function sha1Encode(str = ''): string {
   return sha1(str)
 }
 
-export function getDeadlineDate(term: TermLoanInterface): Date {
-  if (!term) { return null }
-
-  const deadlineDate = new Date()
-  let days = term.value
-  if (term.termUnit === 'week') {
-    days = days * 7
-  }
-
-  if (term.termUnit === 'week') {
-    days = days + 1
-  }
-  deadlineDate.setDate(deadlineDate.getDate() + days)
-
-  return deadlineDate
-}
-
 export function getSelectOptionName(options: selectOptionsType, id: string): string {
   if (!options || !options.length) {
     return ''
@@ -146,7 +129,7 @@ export function getSelectOptionName(options: selectOptionsType, id: string): str
 
   const resultIndex = options.findIndex(option => option.id === id)
   if (resultIndex !== -1) {
-    return options[resultIndex]['name']
+    return options[resultIndex].name
   }
 
   return ''
@@ -187,20 +170,12 @@ export function getMomentDate(value = ''): moment.Moment {
   return moment([year, month, day])
 }
 
-
-/**
- * Определение пола по ФИО
- * @param {String} lastname - фамилия
- * @param {String} name - имя
- * @param {String} patronymic - отчество
- * @return {number} 1 - мужской, 2 - женский, все неопределенные идут как 1))
- */
 export function getGenderByFIO(lastname = '', name = '', patronymic = ''): number {
   const sexByRussianName = new SexByRussianName()
   let gender = +sexByRussianName.getSex({
     firstName: name,
     lastName: lastname,
-    patronymic: patronymic
+    patronymic
   })
   if (gender === 0) {
     gender = 2

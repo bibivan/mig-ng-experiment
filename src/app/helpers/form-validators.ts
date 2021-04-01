@@ -20,7 +20,8 @@ export interface ErrorObject {
 
 export class FormValidators {
   static required(control: FormControl): ErrorObject {
-    if (control.value === '' || control.value.toString().trim() === '') {
+    const value = control.value ? control.value.toString().trim() : ''
+    if (value === '') {
       return { required: 'Поле обязательно для заполнения' }
     }
 
@@ -38,7 +39,7 @@ export class FormValidators {
   static password(control: FormControl): ErrorObject {
     const regPass = /^[a-zA-Z0-9]+$/i
 
-    const value = control.value || ''
+    const value = control.value ? control.value.toString().trim() : ''
 
     if (!value) {
       return { password: 'Латинские буквы, не менее 8 знаков, минимум 1 заглавная буква и 1 цифра' }
@@ -172,7 +173,7 @@ export class FormValidators {
   }
 
   static date(control: FormControl): ErrorObject {
-    const value = control.value.toString()
+    const value = control.value ? control.value.toString().trim() : ''
 
     if (!value) {
       return null
@@ -192,7 +193,7 @@ export class FormValidators {
   }
 
   static dateBirthday(control: FormControl): ErrorObject {
-    const value = control.value.toString()
+    const value = control.value ? control.value.toString().trim() : ''
     if (!value) { return null }
 
     const validateResultDate = FormValidators.date(control)
@@ -258,7 +259,7 @@ export class FormValidators {
 
   static dateWorkStart(dateBirthdayControl: FormControl): any {
     return (control: FormControl): ErrorObject => {
-      const value = control.value.toString()
+      const value = control.value ? control.value.toString().trim() : ''
       if (!value) { return null }
 
       const validateDateBirthday = FormValidators.dateBirthday(dateBirthdayControl) || FormValidators.required(dateBirthdayControl)
@@ -291,7 +292,7 @@ export class FormValidators {
 
   static passportCode(control: FormControl): ErrorObject {
     const regPassportCode = /(\d{3}-\d{3})/
-    const value = control.value.toString()
+    const value = control.value ? control.value.toString().trim() : ''
     if (value && value.search(regPassportCode) === -1) {
       return { passportCode: 'Укажите корректные данные' }
     }
@@ -300,7 +301,7 @@ export class FormValidators {
 
   static passportSerialNumber(control: FormControl): ErrorObject {
     const regPassportSerialNumber = /(\d{10})/
-    const value = control.value.toString().replace(/[-\s]/g, '')
+    const value = control.value ? control.value.toString().replace(/[-\s]/g, '') : ''
     if (value && value.search(regPassportSerialNumber) === -1) {
       return { passportSerialNumber: 'Укажите корректные данные' }
     }
@@ -310,7 +311,7 @@ export class FormValidators {
 
   static noneEnglish(control: FormControl): ErrorObject {
     const regNoneEnglish = /[a-zA-Z]/i
-    const value = control.value.toString()
+    const value = control.value ? control.value.toString().trim() : ''
     if (value && value.search(regNoneEnglish) !== -1) {
       return { noneEnglish: 'Только русские буквы' }
     }
@@ -320,7 +321,7 @@ export class FormValidators {
 
   static textRus(control: FormControl): ErrorObject {
     const regNameRus = /^[А-Яа-яЁё\-'\s]+$/i
-    const value = control.value.toString().trim()
+    const value = control.value ? control.value.toString().trim() : ''
 
     if (!value) { return null }
 

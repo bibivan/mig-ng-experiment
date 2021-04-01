@@ -15,6 +15,7 @@ export class ApiService {
     private http: HttpClient
   ) {}
 
+
   get(data: ApiInterface): Observable<any> {
     if (this.mockup) {
       return data.mockupData || EMPTY

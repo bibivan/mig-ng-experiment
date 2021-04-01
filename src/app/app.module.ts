@@ -9,10 +9,14 @@ import { appInitializer } from './app-initializer'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { JwtInterceptor } from './interceptors/jwt.interceptor'
-import { ContainerModule } from './modules/shared/layout/container/container.module'
-import { FormWrapperModule } from './modules/shared/ui/form-wrapper/form-wrapper.module'
+import { AnketaModule } from './modules/anketa/anketa.module'
+import { HeaderModule } from './modules/header/header.module'
+import { ContainerModule } from './modules/shared/container/container.module'
+import { SectionModule } from './modules/shared/section/section.module'
+import { FormWrapperModule } from './modules/shared/form-wrapper/form-wrapper.module'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
+import { PreloaderModule } from './modules/shared/preloader/preloader.module'
 import { AuthenticationService } from './services/authentication.service'
 
 registerLocaleData(localeRu, 'ru')
@@ -28,7 +32,11 @@ registerLocaleData(localeRu, 'ru')
     AppRoutingModule,
     FormWrapperModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    HeaderModule,
+    PreloaderModule,
+    SectionModule,
+    AnketaModule
   ],
   providers: [
     {

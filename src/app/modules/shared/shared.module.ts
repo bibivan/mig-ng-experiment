@@ -10,9 +10,9 @@ import { ErrorMessagePipe } from '../../pipes/error-message.pipe'
 import { MobilePhonePipe } from '../../pipes/mobile-phone.pipe'
 import { TermLoanPipe } from '../../pipes/term-loan.pipe'
 import { TimerTimePipe } from '../../pipes/timer-time.pipe'
-import { ButtonTextModule } from './ui/button-text/button-text.module'
-import { ButtonModule } from './ui/button/button.module'
-import { IconModule } from './ui/icon/icon.module'
+import { ButtonTextModule } from './button-text/button-text.module'
+import { ButtonModule } from './button/button.module'
+import { IconModule } from './icon/icon.module'
 
 @NgModule({
   declarations: [

@@ -1,29 +1,18 @@
 <div class="body">
-    <div class="header" state>
-        <app-container>
-            <div class="content">
-                <div class="logo"></div>
-            </div>
-        </app-container>
-    </div>
+    <app-header></app-header>
 
-    <div class="preloader"></div>
-
-    <div class="progress-bar" state></div>
-
-    <div class="steps">
-        <div class="steps-module">
-            <div class="progress-bar" min="0" max="40" value></div>
+    <ng-container *ngIf="!state || !state.isInit; else form">
+        <div class="preloader">
+            <app-preloader></app-preloader>
         </div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-        <div class="steps-module"></div>
-    </div>
+    </ng-container>
 
+    <ng-template #form>
+            <div [ngSwitch]="state.page">
+                <app-anketa *ngSwitchCase="'anketa'"></app-anketa>
+
+
+            </div>
+
+    </ng-template>
 </div>
