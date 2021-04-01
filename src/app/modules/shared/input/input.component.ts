@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Input, OnInit } from '@angular/core'
-import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { ChangeDetectionStrategy, Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core'
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { inputType, MaskConfigInterface, maskType } from './input.model'
 import { Subscription } from 'rxjs'
 
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() load: boolean
   @Input() disabled: boolean
   @Input() readonly: boolean
@@ -65,7 +65,7 @@ export class InputComponent implements OnInit {
 
   getMaskConfig(type: maskType): MaskConfigInterface {
     if (type === 'phone') {
-      return { mask: '000 000 00 00', prefix: '+7 ' }
+      return { mask: '(000) 000-00-00', prefix: '+7 ' }
     }
 
     if (type === 'date') {
