@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs'
-import { declOfNum, getDeadlineDate } from '../../helpers/helper'
+import { declOfNum, getDeadlineDate } from '../../../helpers/helper'
 import { CalculatorApiService } from './calculator-api.service'
 import {
-  CalculatorDataInterface, CalculatorInitSettingsInterface,
+  CalculatorDataInterface,
   CalculatorStateInterface,
   CalculatorTermSettingsInterface,
   termUnitIdType

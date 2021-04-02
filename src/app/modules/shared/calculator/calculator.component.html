@@ -9,8 +9,8 @@
                        [formControl]="sumControl"
                        mask="currency"
                        [currencyPrecision]="0"
-                       [currencyMin]="state.sumMin"
-                       [currencyMax]="state.sumMax"
+                       [inputSlider]="true"
+                       (blurEvent)="onChangeSumControl()"
             ></app-input>
             <div class="slider-wrapper">
                 <mat-slider [min]="state.sumMin"
@@ -29,10 +29,11 @@
                        mask="currency"
                        [currencyPrecision]="0"
                        [maxlength]="2"
-                       [currencyMin]="state.termInputValueMin"
-                       [currencyMax]="state.termInputValueMax"
-                       [currencySuffix]="state.termSliderLabel"
                        [currencyThousands]="''"
+                       [currencyMax]="99"
+                       [currencySuffix]="state.termSliderLabel"
+                       [inputSlider]="true"
+                       (blurEvent)="onChangeTermControl()"
             ></app-input>
             <div class="slider-wrapper">
                 <mat-slider [min]="state.termMin"

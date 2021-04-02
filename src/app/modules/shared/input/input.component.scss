@@ -67,22 +67,13 @@
 
     &.focused {
       border-color: $colorPrimary !important;
-      box-shadow: 0px 0px 0px 3.5px rgba(0, 173, 238, 0.5);
+      box-shadow: 0 0 0 3.5px rgba(0, 173, 238, 0.5);
     }
 
     &.readonly {
-      border-color: $colorGrayMedium !important;
+      border-color: $colorSecondary !important;
       background-color: $colorWhite !important;
       box-shadow: none !important;
-
-      input {
-        color: $colorGrayMedium !important;
-        -webkit-text-fill-color: $colorGrayMedium !important;
-      }
-
-      .label {
-        color: $colorGrayMedium !important;
-      }
     }
   }
 
@@ -192,7 +183,7 @@
 
   &.ng-valid.ng-touched {
     .field {
-      border-color: $colorGrayMedium;
+      border-color: $colorSecondary;
     }
   }
 }

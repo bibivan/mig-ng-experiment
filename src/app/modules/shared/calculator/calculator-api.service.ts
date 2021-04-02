@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
-import { ApiInterface } from '../../services/api.model'
-import { ApiService } from '../../services/api.service'
-import { getMockup } from '../../services/get-mockup'
+import { ApiInterface } from '../../../services/api.model'
+import { ApiService } from '../../../services/api.service'
+import { getMockup } from '../../../services/get-mockup'
 import { CalculatorMockup } from './calculator.mockup'
 import { CalculatorDataInterface } from './calculator.model'
 

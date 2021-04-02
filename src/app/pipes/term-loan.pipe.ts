@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core'
 import { declOfNum } from '../helpers/helper'
-import { TermLoanInterface } from '../modules/calculator/calculator.model'
+import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
 
 @Pipe({
   name: 'termLoan'

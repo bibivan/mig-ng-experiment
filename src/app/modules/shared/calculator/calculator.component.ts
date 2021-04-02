@@ -23,8 +23,8 @@ export class CalculatorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.init()
 
-    this.sumControl.valueChanges.subscribe(this.onChangeSumControl.bind(this))
-    this.termControl.valueChanges.subscribe(this.onChangeTermControl.bind(this))
+    // this.sumControl.valueChanges.subscribe(this.onChangeSumControl.bind(this))
+    // this.termControl.valueChanges.subscribe(this.onChangeTermControl.bind(this))
   }
 
   ngOnDestroy(): void {
@@ -59,30 +59,45 @@ export class CalculatorComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onChangeSumControl(value): void {
-    let sum = +value
+  onChangeSumControl(): void {
+    const value = +this.sumControl.value
+
+    const { sumMin, sumMax } = this.state
+    let sum = value
     const sumStep = this.state?.sumStep || 1000
+    const sumStepMiddle = sumStep / 2
 
     const ost = sum % sumStep
-    const ostMiddle = ost / 2
 
     if (ost > 0) {
-      if (ost >= ostMiddle) {
-        sum = Math.ceil(sum / ostMiddle) * ostMiddle
+      if (ost >= sumStepMiddle) {
+        sum = Math.ceil(sum / sumStep) * sumStep
       } else if (ost < 500) {
-        sum = Math.round(sum / ostMiddle) * ostMiddle
+        sum = Math.round(sum / sumStep) * sumStep
       }
+    }
+
+    if (sum > sumMax) { sum = sumMax }
+    if (sum < sumMin) { sum = sumMin }
+
+    if (sum !== value) {
+      this.sumControl.setValue(sum)
     }
 
     this.calculator.changeSum(sum)
   }
 
-  private onChangeTermControl(value): void {
-    let term = +value
+  onChangeTermControl(): void {
+    const value = +this.termControl.value
+    let term = value
 
     const { termInputValueMin, termInputValueMax } = this.state
     if (term < termInputValueMin) { term = termInputValueMin }
     if (term > termInputValueMax) { term = termInputValueMax }
+
+    if (term !== value) {
+      this.termControl.setValue(term)
+    }
 
     this.calculator.changeTermFromInput(term)
   }

@@ -1,4 +1,14 @@
-export type appPagesType = 'preloader' | 'anketa' | 'sms' | 'passport' | 'employment_and_income' | 'personal_info' | 'products' | 'snils' | 'contract' | 'final'
+export type appPagesType =
+  'preloader'
+  | 'anketa'
+  | 'sms'
+  | 'passport'
+  | 'employment_and_income'
+  | 'personal_info'
+  | 'products'
+  | 'snils'
+  | 'contract'
+  | 'final'
 
 export interface AppStateInterface {
   isInit: boolean,

@@ -1,7 +1,7 @@
 import * as sha1 from 'js-sha1'
 import * as moment from 'moment'
 import { SexByRussianName } from 'sex-by-russian-name'
-import { TermLoanInterface } from '../modules/calculator/calculator.model'
+import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
 
 // import { TermLoanInterface } from '../../core/modules/calculator/calculator.model'
 import { selectOptionsType } from '../modules/shared/select/select.model'

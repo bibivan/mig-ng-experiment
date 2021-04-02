@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, EventEmitter,
   forwardRef,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   SimpleChanges
 } from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
@@ -40,6 +40,8 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
   @Input() currencyMax = 1000000
   @Input() currencyMin = 0
   @Input() currencyThousands = ' '
+  @Input() inputSlider = false
+  @Output() blurEvent: EventEmitter<any> = new EventEmitter<any>()
 
   value: any = ''
   focused = false
@@ -140,6 +142,7 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
 
   onBlur(): void {
     this.focused = false
+    this.blurEvent.emit()
   }
 
   onFocus(): void {
