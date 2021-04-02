@@ -151,7 +151,19 @@ ol {
   display: block;
   margin: 0;
   height: 1px;
-  background: $colorGrayLight;
+  background: $colorBg;
+}
+
+.form-divider {
+  display: block;
+  margin: 0 -85px;
+  height: 1px;
+  background: $colorBg;
+
+  @include mobile {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .highlight {

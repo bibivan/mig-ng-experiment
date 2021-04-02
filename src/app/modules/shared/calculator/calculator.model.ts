@@ -24,6 +24,7 @@ export interface CalculatorStateInterface {
   termSliderLabel: string,
   termInputValueMin: number,
   termInputValueMax: number,
+  isDiscount: boolean,
   results: {
     sumReturn: number,
     deadline: Date

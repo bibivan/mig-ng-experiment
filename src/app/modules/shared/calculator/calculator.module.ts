@@ -6,7 +6,6 @@ import { InputModule } from '../input/input.module'
 import { PreloaderModule } from '../preloader/preloader.module'
 import { SharedModule } from '../shared.module'
 import { CalculatorComponent } from './calculator.component'
-import { InputSliderModule } from '../input-slider/input-slider.module'
 
 
 @NgModule({
@@ -16,7 +15,6 @@ import { InputSliderModule } from '../input-slider/input-slider.module'
   ],
   imports: [
     CommonModule,
-    InputSliderModule,
     PreloaderModule,
     SharedModule,
     MatSliderModule,

@@ -5,10 +5,13 @@
 
     <ng-template #calculator>
         <div class="field">
+            <span *ngIf="state.isDiscount" class="discount-percent">0%</span>
+
             <app-input placeholder="Вы берете"
                        [formControl]="sumControl"
                        mask="currency"
                        [currencyPrecision]="0"
+                       [currencyMax]="99000"
                        [inputSlider]="true"
                        (blurEvent)="onChangeSumControl()"
             ></app-input>
@@ -20,7 +23,14 @@
                             (input)="onChangeSum($event.value)"
                 ></mat-slider>
             </div>
-            <p>{{ state.sumMin }}-{{ state.sumMax }}</p>
+            <div class="slider-info">
+                <span>
+                    {{ state.sumMin | currencyRub }}
+                </span>
+                <span>
+                    {{ state.sumMax | currencyRub }}
+                </span>
+            </div>
         </div>
 
         <div class="field">
@@ -44,26 +54,41 @@
                 ></mat-slider>
             </div>
 
-            <p>{{ state.termInputValueMin }}-{{ state.termInputValueMax }}</p>
+            <div class="slider-info">
+                <span>
+                    {{ { value: state.termInputValueMin, termUnit: state.term.termUnit } | termLoan }}
+                </span>
+                <span>
+                    {{ { value: state.termInputValueMax, termUnit: state.term.termUnit } | termLoan }}
+                </span>
+            </div>
         </div>
 
         <div class="line"></div>
 
         <div class="info">
             <div class="item">
-                <div class="label">До (включительно)</div>
-                <div class="value">{{ state.results?.deadline | date:'d MMMM y' }}</div>
-            </div>
-            <div class="item">
                 <div class="label">
                     <ng-container *ngIf="state.term?.termUnit === 'day'">Возвращаете</ng-container>
                     <ng-container *ngIf="state.term?.termUnit === 'week'">Платеж раз в 2 недели</ng-container>
                 </div>
-                <div class="value">{{ state.results?.sumReturn | currencyRub }}</div>
+                <div class="value">
+                    <span *ngIf="!this.state.isDiscount; else discountSum">
+                        {{ state.results?.sumReturn | currencyRub }}
+                    </span>
+                    <ng-template #discountSum>
+                        <span class="old">{{ state.results?.sumReturn | currencyRub }}</span>
+                        <span class="new">{{ state.sum | currencyRub }}</span>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="item">
+                <div class="label">До (включительно)</div>
+                <div class="value">{{ state.results?.deadline | date:'d MMMM y' }}</div>
             </div>
         </div>
-    </ng-template>
 
+    </ng-template>
 </div>
 
 

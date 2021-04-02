@@ -3,6 +3,8 @@
     <app-form-wrapper>
         <app-calculator></app-calculator>
 
+        <div class="form-divider"></div>
+
         <h2 class="font-weight-bold">Заполните анкету</h2>
 
         <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
@@ -11,7 +13,13 @@
                        mask="phone"
                        [mandatory]="true"
                        [errorMessage]="mobilePhoneControl.errors | errorMessage"
+                       class="no-margin-bottom"
             ></app-input>
+
+            <p class="text-4 margin-top-x1">
+                Обращаем внимание, что на этот номер будут отправлены подтверждающие SMS.
+                Ваш номер также является логином для входа в личный кабинет.
+            </p>
 
             <app-input [formControl]="lastnameControl"
                        placeholder="Фамилия"
@@ -48,8 +56,9 @@
                        placeholder="Электронная почта"
                        [mandatory]="true"
                        [errorMessage]="emailControl.errors | errorMessage"
+                       class="no-margin-bottom"
             ></app-input>
-            <p class="text-4 no-margin-top">
+            <p class="text-4 margin-top-x1">
                 E-mail необходим для получения договора и документов об оплате.
             </p>
 
@@ -76,7 +85,7 @@
                 последних 5 лет признан банкротом
             </app-input-checkbox>
 
-            <div class="line"></div>
+            <div class="form-divider margin-bottom-x2"></div>
 
             <app-button type="submit"
                         theme="primary"

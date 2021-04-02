@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-form-progress',
   templateUrl: './form-progress.component.html',
-  styleUrls: ['./form-progress.component.scss']
+  styleUrls: ['./form-progress.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormProgressComponent implements OnInit {
 

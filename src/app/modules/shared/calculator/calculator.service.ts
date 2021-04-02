@@ -32,6 +32,7 @@ export class CalculatorService {
     termSliderLabel: '',
     termInputValueMin: 0,
     termInputValueMax: 0,
+    isDiscount: false,
     results: {
       sumReturn: 0,
       deadline: new Date(),
@@ -93,6 +94,7 @@ export class CalculatorService {
       this.setTermSettings(currentTermSettings)
     }
 
+    this.updateDiscount()
     this.setResults()
     this.refreshState()
   }
@@ -107,6 +109,7 @@ export class CalculatorService {
     this.state.termSliderValue = term
     this.updateTermSliderLabel(+values[term])
 
+    this.updateDiscount()
     this.setResults()
     this.refreshState()
   }
@@ -163,6 +166,7 @@ export class CalculatorService {
   private initCalculator(): void {
     this.state.isLoading = false
     this.setResults()
+    this.updateDiscount()
     this.refreshState()
   }
 
@@ -184,12 +188,20 @@ export class CalculatorService {
     )
   }
 
-  private refreshState(): void {
-    this.state$.next(this.state)
-  }
-
   private updateTermSliderLabel(termValue): void {
     const termLabels = this.state.term.termUnit === 'week' ? ['неделя', 'недели', 'недель'] : ['день', 'дня', 'дней']
     this.state.termSliderLabel = ' ' + declOfNum(termValue, termLabels)
+  }
+
+  private updateDiscount(): void {
+    let isDiscount = false
+    if (this.state.sum <= 5000 && this.state.term.value <= 10) {
+      isDiscount = true
+    }
+    this.state.isDiscount = isDiscount
+  }
+
+  private refreshState(): void {
+    this.state$.next(this.state)
   }
 }

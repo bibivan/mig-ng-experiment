@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
+import { log } from 'util'
 import { CalculatorStateInterface } from './calculator.model'
 import { CalculatorService } from './calculator.service'
 
@@ -22,9 +23,6 @@ export class CalculatorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.init()
-
-    // this.sumControl.valueChanges.subscribe(this.onChangeSumControl.bind(this))
-    // this.termControl.valueChanges.subscribe(this.onChangeTermControl.bind(this))
   }
 
   ngOnDestroy(): void {
@@ -44,19 +42,13 @@ export class CalculatorComponent implements OnInit, OnDestroy {
 
   onChangeTerm(term: number): void {
     this.calculator.changeTerm(term)
-    this.termControl.setValue(term)
   }
 
   refreshState(data: CalculatorStateInterface): void {
     this.state = Object.assign({}, data)
 
-    if (!this.sumControl.value) {
-      this.sumControl.setValue(data.sum)
-    }
-
-    if (!this.termControl.value) {
-      this.termControl.setValue(data.term.value)
-    }
+    this.sumControl.setValue(data.sum)
+    this.termControl.setValue(data.term.value)
   }
 
   onChangeSumControl(): void {
