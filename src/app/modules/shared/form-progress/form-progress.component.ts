@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+
+
+export interface StepInfoInterface {
+  min: number,
+  max: number,
+  num: number
+}
 
 @Component({
   selector: 'app-form-progress',
@@ -7,7 +14,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormProgressComponent implements OnInit {
-
+  @Input() currentPercent: number // текущий процент
+  @Input() stepInfo: StepInfoInterface
   constructor() {
   }
 
