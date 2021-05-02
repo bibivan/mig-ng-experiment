@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { any } from 'codelyzer/util/function'
 import { FormValidators } from '../../helpers/form-validators'
 import { ABTestInterface, OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
@@ -11,6 +12,8 @@ import { AnketaFormInterface } from './anketa.model'
   styleUrls: ['./anketa.component.scss']
 })
 export class AnketaComponent implements OnInit {
+  @Output() submitted: EventEmitter<any> = new EventEmitter<any>()
+
   order: OrderInterface
   form: FormGroup
 
@@ -24,7 +27,10 @@ export class AnketaComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('submit')
+    this.form.markAllAsTouched()
+    if (this.form.invalid) { return }
+
+    this.submitted.emit(this.form.value)
   }
 
   buildForm(): void {

@@ -1,9 +1,10 @@
 <div class="calculator">
-    <app-preloader *ngIf="!state || state?.isLoading; else calculator;"
-                   [fullscreen]="false"
-    ></app-preloader>
+    <div *ngIf="!state || state?.isLoading; else calculator;" class="preloader">
+        <app-preloader></app-preloader>
+    </div>
 
     <ng-template #calculator>
+        <h2 class="font-weight-bold">Выберите необходимую сумму и срок</h2>
         <div class="field">
             <span *ngIf="state.isDiscount" class="discount-percent">0%</span>
 
