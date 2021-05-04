@@ -85,8 +85,6 @@ export class AnketaComponent implements OnInit {
       percent += this.formProgress.getFieldPercent('email')
     }
 
-    console.log(percent)
-
     this.formProgressValue = percent
   }
 
