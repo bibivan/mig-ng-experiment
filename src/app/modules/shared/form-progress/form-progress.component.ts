@@ -16,6 +16,7 @@ export interface StepInfoInterface {
 export class FormProgressComponent implements OnInit {
   @Input() currentPercent: number // текущий процент
   @Input() stepInfo: StepInfoInterface
+
   constructor() {
   }
 

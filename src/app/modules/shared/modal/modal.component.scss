@@ -39,10 +39,9 @@
     }
   }
 
-
   .content {
     margin: $indent60 auto;
-    padding: 0 $indent100 40px $indent100;
+    padding: $indent30 $indent100 $indent30 $indent100;
     width: 100%;
     max-width: 768px;
     background: $colorWhite;
@@ -51,17 +50,17 @@
 
     &.small {
       max-width: 514px;
-      padding: 0 $indent80 40px $indent80;
+      padding: $indent30 $indent80 $indent30 $indent80;
     }
 
     @include mobile {
       margin: 0;
-      padding: 0 $indent16 $indent32 $indent16;
+      padding: $indent30 $indent16 $indent30 $indent16;
       box-shadow: none;
       border-radius: 0;
 
       &.small {
-        padding: 0 $indent16 $indent32 $indent16;
+        padding: $indent30 $indent16 $indent30 $indent16;
       }
     }
   }

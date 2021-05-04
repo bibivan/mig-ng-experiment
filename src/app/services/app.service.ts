@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Subject, timer } from 'rxjs'
-import { AnketaFormInterface } from '../modules/anketa/anketa.model'
-import { InitOrderFormResponseInterface } from './app-api.model'
+import { InitOrderFormResponseInterface, SaveAnketaRequestInterface } from './app-api.model'
 import { AppApiService } from './app-api.service'
-import { appPagesType, AppStateInterface } from './app.model'
+import { appPagesType, AppStateInterface, OrderInterface } from './app.model'
 import { GetTokenResponseInterface } from './authentication.model'
 import { AuthenticationService } from './authentication.service'
 
@@ -47,7 +46,7 @@ export class AppService {
   init(): void {
     this.api.initOrderForm().subscribe(
       (data: InitOrderFormResponseInterface) => {
-        this.state.order = Object.assign({}, data.order)
+        this.updateOrder(data.order)
         this.initCompleted()
         // процесс дозаписи
         this.setPage('anketa')
@@ -61,8 +60,21 @@ export class AppService {
     this.refreshState()
   }
 
-  saveAnketa(data: AnketaFormInterface): void {
-    console.log('saveAnketa', data)
+  saveAnketa(data: SaveAnketaRequestInterface): void {
+    this.showPreloader()
+    this.updateOrder(data)
+
+    this.api.saveAnketa(data).subscribe(
+      () => {
+        this.setPage('sms')
+      },
+      () => this.errorHandler(this.saveAnketa.bind(this))
+    )
+  }
+
+  updateOrder(data: any): void {
+    this.state.order = Object.assign({}, this.state.order, data)
+    this.refreshState()
   }
 
   private executeRequest(method: any, time = 2000): void {
@@ -72,7 +84,7 @@ export class AppService {
   private errorHandler(repeat: any): void {
     this.countError++
     if (this.countError > 3) {
-      this.setErrorPage()
+      this.setErrorPage('99')
       this.resetCountError()
       return
     }
@@ -86,7 +98,7 @@ export class AppService {
     this.countError = 0
   }
 
-  private setErrorPage(status = '99'): void {
+  private setErrorPage(status: string): void {
     this.state.status = status
     this.setPage('final')
   }

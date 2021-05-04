@@ -6,8 +6,10 @@ import { FormProgressModule } from '../shared/form-progress/form-progress.module
 import { ButtonModule } from '../shared/button/button.module'
 import { ContainerModule } from '../shared/container/container.module'
 import { FormWrapperModule } from '../shared/form-wrapper/form-wrapper.module'
+import { IconModule } from '../shared/icon/icon.module'
 import { InputCheckboxModule } from '../shared/input-checkbox/input-checkbox.module'
 import { InputModule } from '../shared/input/input.module'
+import { ModalModule } from '../shared/modal/modal.module'
 import { SharedModule } from '../shared/shared.module'
 import { AnketaComponent } from './anketa.component'
 
@@ -27,7 +29,9 @@ import { AnketaComponent } from './anketa.component'
     InputModule,
     InputCheckboxModule,
     ButtonModule,
-    ContainerModule
+    ContainerModule,
+    ModalModule,
+    IconModule
   ]
 })
 export class AnketaModule {}

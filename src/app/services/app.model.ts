@@ -1,3 +1,5 @@
+import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
+
 export type appPagesType =
   'preloader'
   | 'anketa'
@@ -28,15 +30,46 @@ export interface ABTestItemInterface {
 
 export interface OrderInterface {
   ABTest: ABTestInterface,
-  accept: boolean,
+  action: string,
+  // address: {
+  //   Fact: KladrAddressInterface,
+  //   Registration: KladrAddressInterface,
+  //   Work: KladrAddressInterface,
+  // },
   bankrupt: boolean,
-  cessionAllowed: boolean,
+  codePassport: string,
+  companyName: string,
+  companyStart: string,
+  companyView: string,
+  contactsName: string,
+  contactsPhone: string,
+  contactsStatus: string,
   dateBirthday: string,
+  datePassport: string,
+  education: string,
   email: string,
+  familyStatus: string,
+  incomeAdd: number,
+  incomeWork: number,
   lastname: string,
+  liveRegFlag: boolean
   mobilePhone: string,
   name: string,
+  numberChild: number,
+  numberPassport: string,
+  orderStatus: string,
   patronymic: string,
+  paymentCredit: number,
+  placeBirthday: string,
+  prevLastname: string,
+  serialPassport: string,
+  sex?: string,
+  sum: number,
+  term: TermLoanInterface,
+  stacPhone: string,
+  typeWork: string,
+  wherePassport: string,
+  workPhone: string,
 }
 
 

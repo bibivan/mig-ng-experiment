@@ -9,9 +9,11 @@
 
     <ng-template #form>
         <div [ngSwitch]="state.page">
-            <app-anketa *ngSwitchCase="'anketa'"></app-anketa>
+            <app-step-preloader *ngSwitchCase="'preloader'"></app-step-preloader>
 
+            <app-anketa *ngSwitchCase="'anketa'" [state]="state"></app-anketa>
 
+            <app-sms *ngSwitchCase="'sms'"></app-sms>
         </div>
 
     </ng-template>

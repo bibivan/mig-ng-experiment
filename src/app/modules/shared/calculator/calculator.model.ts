@@ -1,4 +1,4 @@
-export type termUnitType = 'week' | 'day'
+export type termUnitType = 'Week' | 'Day'
 export type termUnitIdType = 'day' | 'weekShort' | 'weekFull'
 
 export interface CalculatorDataInterface {
@@ -52,4 +52,9 @@ export interface CalculatorInitSettingsInterface {
   term?: TermLoanInterface,
   sumMin?: number,
   sumMax?: number
+}
+
+export interface CalculatorValueInterface {
+  sum?: number,
+  term?: TermLoanInterface
 }

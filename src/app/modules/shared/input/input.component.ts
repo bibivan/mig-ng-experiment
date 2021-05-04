@@ -42,6 +42,7 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
   @Input() currencyThousands = ' '
   @Input() inputSlider = false
   @Output() blurEvent: EventEmitter<any> = new EventEmitter<any>()
+  @Output() focusEvent: EventEmitter<any> = new EventEmitter<any>()
 
   value: any = ''
   focused = false
@@ -142,11 +143,12 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
 
   onBlur(): void {
     this.focused = false
-    this.blurEvent.emit()
+    this.blurEvent.emit(this.value)
   }
 
   onFocus(): void {
     this.focused = true
+    this.focusEvent.emit(this.value)
   }
 
   togglePassword(): void {

@@ -17,6 +17,8 @@ import { FormWrapperModule } from './modules/shared/form-wrapper/form-wrapper.mo
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { PreloaderModule } from './modules/shared/preloader/preloader.module'
+import { SmsModule } from './modules/sms/sms.module'
+import { StepPreloaderModule } from './modules/step-preloader/step-preloader.module'
 import { AuthenticationService } from './services/authentication.service'
 
 registerLocaleData(localeRu, 'ru')
@@ -36,7 +38,9 @@ registerLocaleData(localeRu, 'ru')
     HeaderModule,
     PreloaderModule,
     SectionModule,
-    AnketaModule
+    AnketaModule,
+    StepPreloaderModule,
+    SmsModule
   ],
   providers: [
     {

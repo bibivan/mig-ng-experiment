@@ -2,9 +2,18 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { any } from 'codelyzer/util/function'
 import { FormValidators } from '../../helpers/form-validators'
-import { ABTestInterface, OrderInterface } from '../../services/app.model'
+import { clearMaskedValue } from '../../helpers/helper'
+import { ApiService } from '../../services/api.service'
+import {
+  CheckPhoneRequestInterface,
+  CheckPhoneResponseInterface,
+  SaveAnketaRequestInterface
+} from '../../services/app-api.model'
+import { AppApiService } from '../../services/app-api.service'
+import { ABTestInterface, AppStateInterface, OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
-import { AnketaFormInterface } from './anketa.model'
+import { CalculatorService } from '../shared/calculator/calculator.service'
+import { checkPhoneTemplateType } from './anketa.model'
 
 @Component({
   selector: 'app-anketa',
@@ -12,25 +21,33 @@ import { AnketaFormInterface } from './anketa.model'
   styleUrls: ['./anketa.component.scss']
 })
 export class AnketaComponent implements OnInit {
-  @Output() submitted: EventEmitter<any> = new EventEmitter<any>()
+  @Input() state: AppStateInterface
 
   order: OrderInterface
   form: FormGroup
 
+  isAvailableSubmit: boolean
+
+  isOpenModalCheckPhone: boolean
+  templateModalCheckPhone: checkPhoneTemplateType
+
+  checkPhoneStatus: string
+  checkPhonePromotions: boolean
+  checkPhoneModalAvailableStatuses = ['107', '114']
+
   constructor(
     private app: AppService,
-    private fb: FormBuilder
+    private appApi: AppApiService,
+    private calculator: CalculatorService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.order = Object.assign({}, this.state.order)
     this.buildForm()
-  }
 
-  submit(): void {
-    this.form.markAllAsTouched()
-    if (this.form.invalid) { return }
-
-    this.submitted.emit(this.form.value)
+    this.mobilePhoneControl.valueChanges.subscribe(() => { this.isAvailableSubmit = false })
+    this.checkPhone(this.mobilePhoneControl.value)
   }
 
   buildForm(): void {
@@ -45,6 +62,83 @@ export class AnketaComponent implements OnInit {
       accept: [true, [FormValidators.requiredCheckbox]],
       cessionAllowed: [true],
     })
+  }
+
+  submit(): void {
+    this.form.markAllAsTouched()
+    if (this.form.invalid) { return }
+
+    const data: SaveAnketaRequestInterface = Object.assign({},
+      { ABTest: this.order.ABTest },
+      this.calculator.getCalculatorValue(),
+      this.form.value
+    )
+    this.app.saveAnketa(data)
+  }
+
+  checkPhone(phone: string): void {
+    this.isAvailableSubmit = false
+
+    if (this.mobilePhoneControl.invalid) {
+      return
+    }
+
+    const body: CheckPhoneRequestInterface = {
+      phone: clearMaskedValue(phone)
+    }
+    this.appApi.checkPhone(body).subscribe(
+      (data: CheckPhoneResponseInterface) => {
+        if (!data) {
+          this.openErrorModalCheckPhone()
+          return
+        }
+
+        this.checkPhoneStatus = data.order.status
+        this.checkPhonePromotions = data.promotions
+
+        if (this.checkPhoneModalAvailableStatuses.includes(this.checkPhoneStatus)) {
+          this.openModalCheckPhone()
+        }
+
+        this.updateAvailableSubmit()
+      },
+      () => this.openErrorModalCheckPhone()
+    )
+  }
+
+  updateAvailableSubmit(): void {
+    if (this.checkPhoneStatus === '1') {
+      this.isAvailableSubmit = true
+    } else {
+      this.isAvailableSubmit = false
+    }
+  }
+
+  openErrorModalCheckPhone(): void {
+    this.checkPhoneStatus = null
+    this.checkPhonePromotions = null
+    this.openModalCheckPhone()
+  }
+
+  openModalCheckPhone(): void {
+    let template = 'error'
+
+    if (this.checkPhoneModalAvailableStatuses.includes(this.checkPhoneStatus)) {
+      if (this.checkPhonePromotions) {
+        template = 'promotions'
+      } else if (this.checkPhoneStatus === '107') {
+        template = 'unfinishedApplication'
+      } else if (this.checkPhoneStatus === '114') {
+        template = 'activeCurrentAccount'
+      }
+    }
+
+    this.templateModalCheckPhone = template as checkPhoneTemplateType
+    this.isOpenModalCheckPhone = true
+  }
+
+  closeModalCheckPhone(): void {
+    this.isOpenModalCheckPhone = false
   }
 
   get mobilePhoneControl(): FormControl {

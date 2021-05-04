@@ -4,7 +4,7 @@
     </div>
 
     <ng-template #calculator>
-        <h2 class="font-weight-bold">Выберите необходимую сумму и срок</h2>
+        <h2 class="font-weight-bold margin-bottom-x3">Выберите необходимую сумму и срок</h2>
         <div class="field">
             <span *ngIf="state.isDiscount" class="discount-percent">0%</span>
 
@@ -70,8 +70,8 @@
         <div class="info">
             <div class="item">
                 <div class="label">
-                    <ng-container *ngIf="state.term?.termUnit === 'day'">Возвращаете</ng-container>
-                    <ng-container *ngIf="state.term?.termUnit === 'week'">Платеж раз в 2 недели</ng-container>
+                    <ng-container *ngIf="state.term?.termUnit === 'Day'">Возвращаете</ng-container>
+                    <ng-container *ngIf="state.term?.termUnit === 'Week'">Платеж раз в 2 недели</ng-container>
                 </div>
                 <div class="value">
                     <span *ngIf="!this.state.isDiscount; else discountSum">

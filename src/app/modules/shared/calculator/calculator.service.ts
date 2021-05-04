@@ -5,7 +5,7 @@ import { CalculatorApiService } from './calculator-api.service'
 import {
   CalculatorDataInterface,
   CalculatorStateInterface,
-  CalculatorTermSettingsInterface,
+  CalculatorTermSettingsInterface, CalculatorValueInterface,
   termUnitIdType
 } from './calculator.model'
 
@@ -73,9 +73,11 @@ export class CalculatorService {
     private api: CalculatorApiService,
   ) {}
 
-  init(): void {
+  init(value: CalculatorValueInterface): void {
     const currentTermSettings = this.getTermSettings()
     this.setTermSettings(currentTermSettings)
+
+    this.setCalculatorValue(value)
 
     if (!this.calculatorData || !Object.keys(this.calculatorData).length) {
       this.getCalculatorData()
@@ -124,6 +126,18 @@ export class CalculatorService {
 
     this.setResults()
     this.refreshState()
+  }
+
+  getCalculatorValue(): CalculatorValueInterface {
+    return {
+      sum: this.state.sum,
+      term: Object.assign({}, this.state.term)
+    }
+  }
+
+  setCalculatorValue(value: CalculatorValueInterface): void {
+    this.state.sum = value.sum
+    this.state.term = Object.assign({}, value.term)
   }
 
   private getTermSettings(): CalculatorTermSettingsInterface {
@@ -189,7 +203,7 @@ export class CalculatorService {
   }
 
   private updateTermSliderLabel(termValue): void {
-    const termLabels = this.state.term.termUnit === 'week' ? ['неделя', 'недели', 'недель'] : ['день', 'дня', 'дней']
+    const termLabels = this.state.term.termUnit === 'Week' ? ['неделя', 'недели', 'недель'] : ['день', 'дня', 'дней']
     this.state.termSliderLabel = ' ' + declOfNum(termValue, termLabels)
   }
 

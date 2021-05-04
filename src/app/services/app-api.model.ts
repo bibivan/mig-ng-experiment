@@ -1,3 +1,4 @@
+import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
 import { ABTestInterface, OrderInterface } from './app.model'
 
 export interface InitOrderFormResponseInterface {
@@ -6,6 +7,13 @@ export interface InitOrderFormResponseInterface {
 
 export interface CheckPhoneRequestInterface {
   phone: string
+}
+
+export interface CheckPhoneResponseInterface {
+  order: {
+    status: string
+  },
+  promotions?: boolean,
 }
 
 export interface SaveAnketaRequestInterface {
@@ -19,4 +27,6 @@ export interface SaveAnketaRequestInterface {
   mobilePhone: string,
   name: string,
   patronymic: string,
+  sum: number,
+  term: TermLoanInterface
 }

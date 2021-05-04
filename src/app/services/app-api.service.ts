@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { ApiService } from './api.service'
 import { AppApiMockup } from './app-api.mockup'
-import { CheckPhoneRequestInterface, InitOrderFormResponseInterface } from './app-api.model'
-import { OrderInterface } from './app.model'
+import {
+  CheckPhoneRequestInterface,
+  CheckPhoneResponseInterface,
+  InitOrderFormResponseInterface, SaveAnketaRequestInterface
+} from './app-api.model'
 import { getMockup } from './get-mockup'
 
 @Injectable({
@@ -25,8 +28,15 @@ export class AppApiService {
     return this.api.get(requestData)
   }
 
-  checkPhone(body: CheckPhoneRequestInterface): Observable<any> {
-    const mockupData = getMockup('/checkPhone', AppApiMockup.checkPhone.success, body)
+  checkPhone(body: CheckPhoneRequestInterface): Observable<CheckPhoneResponseInterface> {
+    const phone = body.phone
+    let mockupType = 'success'
+    if (phone === '9999999107') { mockupType = 'successActiveCurrentAccount' }
+    if (phone === '9999999114') { mockupType = 'successUnfinishedApplication' }
+    if (phone === '9999999111') { mockupType = 'successPromotions' }
+
+    const mockupData = getMockup('/checkPhone', AppApiMockup.checkPhone[mockupType], body)
+
     const requestData = {
       path: '/checkPhone',
       mockupData,
@@ -36,14 +46,15 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
-  saveAnketa(): Observable<any> {
-    const mockupData = getMockup('/saveAnketa', AppApiMockup.saveAnketa.success)
+  saveAnketa(body: SaveAnketaRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveAnketa', AppApiMockup.saveAnketa.success, body)
     const requestData = {
       path: '/saveAnketa',
-      mockupData
+      mockupData,
+      body
     }
 
-    return this.api.get(requestData)
+    return this.api.post(requestData)
   }
 
 

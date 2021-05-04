@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
 import { log } from 'util'
-import { CalculatorStateInterface } from './calculator.model'
+import { CalculatorStateInterface, CalculatorValueInterface } from './calculator.model'
 import { CalculatorService } from './calculator.service'
 
 @Component({
@@ -11,6 +11,8 @@ import { CalculatorService } from './calculator.service'
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorComponent implements OnInit, OnDestroy {
+  @Input() defaultValue: CalculatorValueInterface
+
   state: CalculatorStateInterface
   stateSub: Subscription
 
@@ -22,17 +24,17 @@ export class CalculatorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.init()
+    this.init(this.defaultValue)
   }
 
   ngOnDestroy(): void {
     this.stateSub?.unsubscribe()
   }
 
-  init(): void {
+  init(value: CalculatorValueInterface): void {
     this.stateSub = this.calculator.state$.subscribe(this.refreshState.bind(this))
 
-    this.calculator.init()
+    this.calculator.init(value)
   }
 
   onChangeSum(sum: number): void {
