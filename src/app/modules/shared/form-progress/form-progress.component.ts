@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
-
-
-export interface StepInfoInterface {
-  min: number,
-  max: number,
-  num: number
-}
+import { formProgressStepsType, StepInfoInterface } from './form-progress.model'
+import { FormProgressService } from './form-progress.service'
 
 @Component({
   selector: 'app-form-progress',
@@ -14,13 +9,21 @@ export interface StepInfoInterface {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormProgressComponent implements OnInit {
-  @Input() currentPercent: number // текущий процент
-  @Input() stepInfo: StepInfoInterface
+  @Input() stepPercent: number
+  @Input() stepId: formProgressStepsType
 
-  constructor() {
-  }
+  stepInfo: StepInfoInterface
+
+  constructor(
+    private formProgress: FormProgressService
+  ) {}
 
   ngOnInit(): void {
+    this.stepInfo = this.formProgress.getStepInfo(this.stepId)
+  }
+
+  get percent(): number {
+    return this.stepInfo.minPercent + this.stepPercent
   }
 
 }

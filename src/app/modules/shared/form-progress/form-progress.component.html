@@ -2,18 +2,27 @@
     <app-container>
         <div class="content">
             <div class="percent-info">
-                <div class="value">+42%</div>
-                <div class="text">к вероятности одобрения за первый шаг</div>
+                <ng-container *ngIf="percent === 0; else progress">
+                    <div class="value">+{{ stepInfo.maxPercent }}%</div>
+                    <div class="text">к вероятности одобрения за первый шаг</div>
+                </ng-container>
+
+                <ng-template #progress>
+                    <div class="value">{{ percent }}%</div>
+                    <div class="text">вероятность одобрения займа</div>
+                </ng-template>
+
             </div>
             <div class="progress-bar">
-                <div class="line" style="width: 30%"></div>
+                <div class="line" [ngStyle]="{ 'width': percent + '%' }"></div>
+                <div class="line step-max" [ngStyle]="{ 'width': stepInfo.maxPercent + '%' }"></div>
             </div>
             <div class="step-info">
                 <div class="value">
-                    Шаг <span>1</span> из 4
+                    Шаг {{ stepInfo.num }} из 4
                 </div>
-                <div class="text">
-                    + 30% за следующий шаг
+                <div *ngIf="percent === stepInfo.maxPercent && stepInfo.nextStepPercent" class="text">
+                    +{{ stepInfo.nextStepPercent }}% за следующий шаг
                 </div>
             </div>
         </div>

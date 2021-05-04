@@ -83,13 +83,20 @@
     .line {
       display: block;
       position: absolute;
+      z-index: 5;
       height: 100%;
       top: 0;
       left: 0;
       bottom: 0;
       width: 0;
+      min-width: 8px;
       border-radius: $borderRadius4;
       background-color: $colorPrimary;
+
+      &.step-max {
+        z-index: 1;
+        background: $colorLightBlue;
+      }
     }
   }
 }

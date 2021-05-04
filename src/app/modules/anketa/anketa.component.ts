@@ -13,6 +13,7 @@ import { AppApiService } from '../../services/app-api.service'
 import { ABTestInterface, AppStateInterface, OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { CalculatorService } from '../shared/calculator/calculator.service'
+import { FormProgressService } from '../shared/form-progress/form-progress.service'
 import { checkPhoneTemplateType } from './anketa.model'
 
 @Component({
@@ -35,10 +36,13 @@ export class AnketaComponent implements OnInit {
   checkPhonePromotions: boolean
   checkPhoneModalAvailableStatuses = ['107', '114']
 
+  formProgressValue = 0
+
   constructor(
     private app: AppService,
     private appApi: AppApiService,
     private calculator: CalculatorService,
+    private formProgress: FormProgressService,
     private fb: FormBuilder,
   ) { }
 
@@ -46,8 +50,42 @@ export class AnketaComponent implements OnInit {
     this.order = Object.assign({}, this.state.order)
     this.buildForm()
 
+    this.form.valueChanges.subscribe(this.updateFormProgressValue.bind(this))
+    this.updateFormProgressValue()
+
     this.mobilePhoneControl.valueChanges.subscribe(() => { this.isAvailableSubmit = false })
     this.checkPhone(this.mobilePhoneControl.value)
+  }
+
+  updateFormProgressValue(): void {
+    let percent = 0
+    if (this.mobilePhoneControl.valid) {
+      percent += this.formProgress.getFieldPercent('mobilePhone')
+    }
+
+    if (this.lastnameControl.valid) {
+      percent += this.formProgress.getFieldPercent('lastname')
+    }
+
+    if (this.nameControl.valid) {
+      percent += this.formProgress.getFieldPercent('name')
+    }
+
+    if (this.patronymicControl.valid) {
+      percent += this.formProgress.getFieldPercent('patronymic')
+    }
+
+    if (this.dateBirthdayControl.valid) {
+      percent += this.formProgress.getFieldPercent('dateBirthday')
+    }
+
+    if (this.emailControl.valid) {
+      percent += this.formProgress.getFieldPercent('email')
+    }
+
+    console.log(percent)
+
+    this.formProgressValue = percent
   }
 
   buildForm(): void {

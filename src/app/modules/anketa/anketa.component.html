@@ -1,4 +1,6 @@
-<app-form-progress></app-form-progress>
+<app-form-progress [stepPercent]="formProgressValue"
+                   stepId="anketa"
+></app-form-progress>
 <app-container>
     <app-form-wrapper>
         <app-calculator [defaultValue]="{ sum: order.sum, term: order.term }"></app-calculator>
@@ -109,12 +111,13 @@
                 <div *ngSwitchCase="'activeCurrentAccount'">
                     <p class="h1">Найдена незавершенная заявка</p>
                     <p class="text-2 color-gray">
-                         Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные
+                        Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные
                     </p>
                 </div>
                 <div *ngSwitchCase="'unfinishedApplication'">
                     <p class="h1">Найдена учетная запись</p>
-                    <p class="text-2 color-gray">Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные</p>
+                    <p class="text-2 color-gray">Войдите, пожалуйста, в личный кабинет или скорректируйте введенные
+                        данные</p>
                 </div>
                 <div *ngSwitchCase="'promotions'">
                     <p class="h1">Найдена учетная запись</p>
