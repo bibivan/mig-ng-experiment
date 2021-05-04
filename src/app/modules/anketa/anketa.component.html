@@ -103,26 +103,67 @@
            [small]="true"
            [centered]="true"
 >
-    <div class="text-align-center">
-        <p class="h1">Найдена учетная запись</p>
+    <div [ngSwitch]="templateModalCheckPhone" class="text-align-center">
+        <div *ngSwitchCase="'activeCurrentAccount'">
+            <p class="h1">Найдена учетная запись</p>
+            <p class="text-2 color-gray">Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные</p>
+            <div class="edit-phone" (click)="closeModalCheckPhone()">
+                <app-input [formControl]="mobilePhoneControl"
+                           placeholder="Номер телефона"
+                           mask="phone"
+                           [readonly]="true"
+                ></app-input>
 
-        <div [ngSwitch]="templateModalCheckPhone">
-            <div *ngSwitchCase="'currentLoan'"></div>
-        </div>
-        <p class="text-2 color-gray">Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные</p>
-        <div class="edit-phone" (click)="closeModalCheckPhone()">
-            <app-input [formControl]="mobilePhoneControl"
-                       placeholder="Номер телефона"
-                       mask="phone"
-                       [readonly]="true"
-            ></app-input>
-
-            <div class="icon">
-                <app-icon name="edit"></app-icon>
+                <div class="icon">
+                    <app-icon name="edit"></app-icon>
+                </div>
+            </div>
+            <div class="margin-top-x2">
+                <app-button>Войти в личный кабинет</app-button>
+            </div>
+            <div class="margin-top-x2">
+                <app-button-text (clicked)="closeModalCheckPhone()">Изменить номер телефона</app-button-text>
             </div>
         </div>
 
+        <div *ngSwitchCase="'unfinishedApplication'">
+            <p class="h1">Незавершенная заявка</p>
+            <p class="text-2 color-gray">Найдена незавершенная заявка для этого номера. Войдите, пожалуйста, в личный кабинет или скорректируйте введенные данные</p>
+            <div class="edit-phone" (click)="closeModalCheckPhone()">
+                <app-input [formControl]="mobilePhoneControl"
+                           placeholder="Номер телефона"
+                           mask="phone"
+                           [readonly]="true"
+                ></app-input>
 
+                <div class="icon">
+                    <app-icon name="edit"></app-icon>
+                </div>
+            </div>
+            <div class="margin-top-x2">
+                <app-button>Войти в личный кабинет</app-button>
+            </div>
+            <div class="margin-top-x2">
+                <app-button-text (clicked)="closeModalCheckPhone()">Изменить номер телефона</app-button-text>
+            </div>
+        </div>
+
+        <div *ngSwitchCase="'promotions'">
+            <p class="h1">Найдена учетная запись</p>
+            <p class="text-2 color-gray">В Личном кабинете для Вас сформировано персональное предложение</p>
+            <div class="margin-top-x2">
+                <app-button>Войти в личный кабинет</app-button>
+            </div>
+            <div class="margin-top-x2">
+                <app-button-text (clicked)="closeModalCheckPhone()">Изменить номер телефона</app-button-text>
+            </div>
+        </div>
+
+        <div *ngSwitchDefault>
+            <p class="h1">Ошибка</p>
+            <p class="text-2 color-gray">Ошибка проверки номера телефона, повторите ввод</p>
+            <app-button-text (clicked)="closeModalCheckPhone()">Повторить ввод</app-button-text>
+        </div>
     </div>
 
 </app-modal>

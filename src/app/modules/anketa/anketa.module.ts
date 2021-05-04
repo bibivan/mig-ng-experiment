@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule } from '@angular/forms'
+import { ButtonTextModule } from '../shared/button-text/button-text.module'
 import { CalculatorModule } from '../shared/calculator/calculator.module'
 import { FormProgressModule } from '../shared/form-progress/form-progress.module'
 import { ButtonModule } from '../shared/button/button.module'
@@ -31,7 +32,8 @@ import { AnketaComponent } from './anketa.component'
     ButtonModule,
     ContainerModule,
     ModalModule,
-    IconModule
+    IconModule,
+    ButtonTextModule
   ]
 })
 export class AnketaModule {}

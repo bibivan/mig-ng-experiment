@@ -141,6 +141,10 @@ export class AnketaComponent implements OnInit {
     this.isOpenModalCheckPhone = false
   }
 
+  onClickAuthButton(): void {
+    console.log('auth')
+  }
+
   get mobilePhoneControl(): FormControl {
     return this.form.get('mobilePhone') as FormControl
   }

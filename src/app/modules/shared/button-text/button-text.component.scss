@@ -14,7 +14,7 @@
   font-size: 14px;
   line-height: 1.2em;
   font-weight: 500;
-  color: $colorGray;
+  color: $colorPrimary;
   cursor: pointer;
   text-align: center;
   text-transform: none;
@@ -30,7 +30,7 @@
 
   @include desktop {
     &:hover {
-      color: $colorPrimary;
+      text-decoration: none;
     }
   }
 
