@@ -27,6 +27,8 @@ export class AnketaComponent implements OnInit {
   order: OrderInterface
   form: FormGroup
 
+  formProgressValue = 0
+
   isAvailableSubmit: boolean
 
   isOpenModalCheckPhone: boolean
@@ -36,7 +38,7 @@ export class AnketaComponent implements OnInit {
   checkPhonePromotions: boolean
   checkPhoneModalAvailableStatuses = ['107', '114']
 
-  formProgressValue = 0
+  isOpenAcceptModal: boolean
 
   constructor(
     private app: AppService,
@@ -177,6 +179,15 @@ export class AnketaComponent implements OnInit {
 
   closeModalCheckPhone(): void {
     this.isOpenModalCheckPhone = false
+  }
+
+  openAcceptModal(event: any): void {
+    event.preventDefault()
+    this.isOpenAcceptModal = true
+  }
+
+  closeAcceptModal(): void {
+    this.isOpenAcceptModal = false
   }
 
   onClickAuthButton(): void {

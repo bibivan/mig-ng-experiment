@@ -3,6 +3,15 @@
      [class.mobile]="bottomMobile"
 >
     <div class="content" [class.small]="small">
+        <div *ngIf="caption" class="title">
+            {{ caption }}
+            <div class="close" (click)="close()">
+                <div class="icon">
+                    <app-icon name="close"></app-icon>
+                </div>
+
+            </div>
+        </div>
         <ng-content></ng-content>
     </div>
 </div>
