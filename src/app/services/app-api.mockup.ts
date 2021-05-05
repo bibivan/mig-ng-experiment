@@ -130,4 +130,40 @@ export class AppApiMockup {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
+
+  static sendSMS = {
+    success: {
+      order: {},
+      repeatSendSMS: true,
+      smsSeconds: 300,
+    },
+    successDisableSendSMS: {
+      order: {},
+      repeatSendSMS: false,
+    },
+    successLimit: {
+      order: {
+        status: '2.3'
+      },
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static checkSMS = {
+    success: {
+      checkSMS: true,
+      order: {}
+    },
+    successInvalidCode: {
+      checkSMS: false,
+      order: {}
+    },
+    successLimit: {
+      checkSMS: false,
+      order: {
+        status: '2.3'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
 }

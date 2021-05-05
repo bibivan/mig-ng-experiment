@@ -30,3 +30,22 @@ export interface SaveAnketaRequestInterface {
   sum: number,
   term: TermLoanInterface
 }
+
+export interface SendSMSResponseInterface {
+  order: {
+    status: string // 2.3 - COUCA_2_3 -> limit
+  },
+  repeatSendSMS?: boolean,
+  smsSeconds?: number,
+}
+
+export interface CheckSMSRequestInterface {
+  code: string
+}
+
+export interface CheckSMSResponseInterface {
+  checkSMS: boolean,
+  order: {
+    status: string // 2.3 - COUCA_2_3 -> limit
+  },
+}

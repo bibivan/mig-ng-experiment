@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs'
 import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
 
 export type appPagesType =
@@ -13,10 +14,11 @@ export type appPagesType =
   | 'final'
 
 export interface AppStateInterface {
+  anketaSMS: SMSSettingsInterface
   isInit: boolean,
+  order: OrderInterface,
   page: appPagesType,
   status: string,
-  order: OrderInterface
 }
 
 export interface ABTestInterface {
@@ -72,4 +74,9 @@ export interface OrderInterface {
   workPhone: string,
 }
 
+export interface SMSSettingsInterface {
+  code: string,
+  limit: boolean,
+  seconds: number,
+}
 

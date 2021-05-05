@@ -1,1 +1,57 @@
-<p>sms works!</p>
+<app-container class="small" *ngIf="state">
+    <app-form-wrapper>
+        <div class="smscode-text">
+            <h2 class="h1">Код из SMS</h2>
+            <p class="text-2 color-gray-dark">
+                Мы отправили код на Ваш номер <br>
+                <span class="color-primary nobr">+7 (927) 444-66-88</span>
+            </p>
+        </div>
+
+        <div class="margin-top-x3 margin-bottom-x3">
+            <app-input-code (codeCompleted)="onCodeCompleted($event)"
+                            [codeLength]="4"
+                            [code]=""
+            ></app-input-code>
+        </div>
+        <div *ngIf="!state.anketaSMS.limit" class="text-align-center margin-top-x3 margin-bottom-x3">
+            <p class="text-2">
+                <span *ngIf="state.anketaSMS.seconds" class="color-gray">
+                    Отправить код повторно через {{ state.anketaSMS.seconds | timerTime }}
+                </span>
+                <span *ngIf="!state.anketaSMS.seconds" class="link" (click)="sendSMS()">
+                    Отправить код повторно
+                </span>
+            </p>
+        </div>
+
+        <app-accordion
+                caption="Подписывая заявление, вы подтверждаете, что ознакомились и согласны с содержанием следующих документов:">
+            <div class="margin-bottom-x2">
+                <app-button-files url="/">
+                    Заявление на предоставление
+                    потребительского займа
+                </app-button-files>
+            </div>
+            <div class="margin-top-x2 margin-bottom-x2">
+                <app-button-files url="/">
+                    Заявление на предоставление
+                    потребительского займа
+                </app-button-files>
+            </div>
+            <div class="margin-top-x2 margin-bottom-x2">
+                <app-button-files url="/">
+                    Заявление на предоставление
+                    потребительского займа
+                </app-button-files>
+            </div>
+            <div class="margin-top-x2 margin-bottom-x2">
+                <app-button-files url="/">
+                    Заявление на предоставление
+                    потребительского займа
+                </app-button-files>
+            </div>
+        </app-accordion>
+        <app-button-back name="Вернуться назад"></app-button-back>
+    </app-form-wrapper>
+</app-container>

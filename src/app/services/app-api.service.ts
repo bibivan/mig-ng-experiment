@@ -4,8 +4,8 @@ import { ApiService } from './api.service'
 import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
-  CheckPhoneResponseInterface,
-  InitOrderFormResponseInterface, SaveAnketaRequestInterface
+  CheckPhoneResponseInterface, CheckSMSRequestInterface,
+  InitOrderFormResponseInterface, SaveAnketaRequestInterface, SendSMSResponseInterface
 } from './app-api.model'
 import { getMockup } from './get-mockup'
 
@@ -57,5 +57,29 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  sendSMS(): Observable<SendSMSResponseInterface> {
+    const mockupData = getMockup('/sendSMS', AppApiMockup.sendSMS.success)
+    const requestData = {
+      path: '/sendSMS',
+      mockupData,
+    }
 
+    return this.api.post(requestData)
+  }
+
+  checkSMS(body: CheckSMSRequestInterface): Observable<SendSMSResponseInterface> {
+    const code = body.code
+    let mockupType = 'success'
+    if (code === '0000') { mockupType = 'successInvalidCode' }
+    if (code === '1111') { mockupType = 'successLimit' }
+
+    const mockupData = getMockup('/checkSMS', AppApiMockup.checkSMS[mockupType], body)
+    const requestData = {
+      path: '/checkSMS',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
 }

@@ -11,9 +11,13 @@
         <div [ngSwitch]="state.page">
             <app-step-preloader *ngSwitchCase="'preloader'"></app-step-preloader>
 
-            <app-anketa *ngSwitchCase="'anketa'" [state]="state"></app-anketa>
+            <app-anketa *ngSwitchCase="'anketa'"
+                        [state]="state"
+            ></app-anketa>
 
-            <app-sms *ngSwitchCase="'sms'"></app-sms>
+            <app-sms *ngSwitchCase="'sms'"
+                     [state]="state"
+            ></app-sms>
         </div>
 
     </ng-template>

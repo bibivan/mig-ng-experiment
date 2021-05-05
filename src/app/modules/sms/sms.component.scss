@@ -1,0 +1,8 @@
+@import "../../../assets/scss/shared";
+
+.smscode-text {
+  margin: 0 $indent16;
+  @include desktop {
+    text-align: center;
+  } 
+}
