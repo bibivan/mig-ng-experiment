@@ -8,6 +8,7 @@ import { FormWrapperModule } from '../shared/form-wrapper/form-wrapper.module'
 import { InputCodeModule } from '../shared/input-code/input-code.module'
 import { SectionModule } from '../shared/section/section.module'
 import { SharedModule } from '../shared/shared.module'
+import { ToastModule } from '../shared/toast/toast.module'
 import { SmsComponent } from './sms.component'
 
 
@@ -27,7 +28,8 @@ import { SmsComponent } from './sms.component'
     ButtonFilesModule,
     AccordionModule,
     InputCodeModule,
-    SharedModule
+    SharedModule,
+    ToastModule
   ]
 })
 export class SmsModule {}

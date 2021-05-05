@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core'
 import { interval, Subject, Subscription, timer } from 'rxjs'
-import { InitOrderFormResponseInterface, SaveAnketaRequestInterface } from './app-api.model'
+import {
+  CheckSMSRequestInterface,
+  CheckSMSResponseInterface,
+  InitOrderFormResponseInterface,
+  SaveAnketaRequestInterface
+} from './app-api.model'
 import { AppApiService } from './app-api.service'
 import { appPagesType, AppStateInterface, OrderInterface, SMSSettingsInterface } from './app.model'
 import { GetTokenResponseInterface } from './authentication.model'
@@ -11,15 +16,16 @@ import { AuthenticationService } from './authentication.service'
 })
 export class AppService {
   private state: AppStateInterface = {
-    isInit: false,
-    page: null,
-    status: 'string',
-    order: null,
     anketaSMS: {
       code: '',
       limit: false,
       seconds: 0,
-    }
+    },
+    isInit: false,
+    isOpenToastAnketaSMS: false,
+    order: null,
+    page: null,
+    status: 'string',
   }
 
   state$: Subject<AppStateInterface> = new Subject<AppStateInterface>()
@@ -27,6 +33,7 @@ export class AppService {
   countError = 0
 
   timerAnketaSMSSub: Subscription
+  timerToastSMSSub: Subscription
 
   constructor(
     private api: AppApiService,
@@ -74,7 +81,7 @@ export class AppService {
 
     this.api.saveAnketa(data).subscribe(
       () => {
-        this.setPage('sms')
+        this.sendSMS()
       },
       () => this.errorHandler(this.saveAnketa.bind(this))
     )
@@ -94,13 +101,38 @@ export class AppService {
         this.state.anketaSMS.code = ''
         this.updateTimerAnketaSMS()
         this.setPage('sms')
+        this.openToastAnketaSMS()
       },
       () => this.errorHandler(this.sendSMS.bind(this))
     )
   }
 
+  checkSMS(code: string): void {
+    this.showPreloader()
+
+    const body: CheckSMSRequestInterface = { code }
+    this.api.checkSMS(body).subscribe(
+      (data: CheckSMSResponseInterface) => {
+        this.setPage('passport')
+      },
+      () => this.errorHandler(this.checkSMS.bind(this))
+    )
+  }
+
   updateOrder(data: any): void {
     this.state.order = Object.assign({}, this.state.order, data)
+    this.refreshState()
+  }
+
+  openToastAnketaSMS(): void {
+    this.state.isOpenToastAnketaSMS = true
+    this.timerToastSMSSub = timer(5000).subscribe(this.closeToastAnketaSMS.bind(this))
+    this.refreshState()
+  }
+
+  closeToastAnketaSMS(): void {
+    this.state.isOpenToastAnketaSMS = false
+    this.timerToastSMSSub?.unsubscribe()
     this.refreshState()
   }
 

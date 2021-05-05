@@ -1,0 +1,17 @@
+<app-form-progress stepId="passport" [stepPercent]="formProgressValue"></app-form-progress>
+
+<app-container>
+    <app-form-wrapper>
+        <h2 class="font-weight-bold">Паспортные данные</h2>
+        <div class="grid">
+            <div class="col w-50">
+                <app-input [formControl]="serialNumberPassportControl"
+                           mask="serialNumberPassport"
+                           placeholder="Серия и номер паспорта"
+                           [mandatory]="true"
+                           [errorMessage]="serialNumberPassportControl.errors | errorMessage"
+                ></app-input>
+            </div>
+        </div>
+    </app-form-wrapper>
+</app-container>

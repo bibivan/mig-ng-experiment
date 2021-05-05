@@ -1,0 +1,8 @@
+<div class="toast"
+     @toastAnimation
+>
+    <p *ngIf="caption" class="caption">{{ caption }}</p>
+    <p>
+        <ng-content></ng-content>
+    </p>
+</div>

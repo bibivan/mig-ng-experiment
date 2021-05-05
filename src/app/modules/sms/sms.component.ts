@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Subscription, timer } from 'rxjs'
 import { AppStateInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 
@@ -7,21 +8,22 @@ import { AppService } from '../../services/app.service'
   templateUrl: './sms.component.html',
   styleUrls: ['./sms.component.scss']
 })
-export class SmsComponent implements OnInit {
+export class SmsComponent implements OnDestroy {
   @Input() state: AppStateInterface
 
   constructor(
     private app: AppService
   ) { }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.app.closeToastAnketaSMS()
   }
 
   onCodeCompleted(code: string): void {
-    console.log('code', code)
+    this.app.checkSMS(code)
   }
 
-  clickedBack(): void {
+  onClickBack(): void {
     this.app.setPage('anketa')
   }
 

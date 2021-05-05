@@ -5,6 +5,8 @@
         <div class="preloader">
             <app-preloader></app-preloader>
         </div>
+
+
     </ng-container>
 
     <ng-template #form>
@@ -18,7 +20,22 @@
             <app-sms *ngSwitchCase="'sms'"
                      [state]="state"
             ></app-sms>
+
+            <app-passport *ngSwitchCase="'passport'"
+                          [state]="state"
+            ></app-passport>
+
+            <app-final *ngSwitchCase="'final'"
+                       [state]="state"
+            ></app-final>
         </div>
 
+        <app-toast *ngIf="state.isOpenToastAnketaSMS" caption="Введите код из SMS">
+            Мы отправили код вам на номер
+            <span class="nobr">{{ state.order.mobilePhone | mobilePhone }}</span>
+        </app-toast>
     </ng-template>
 </div>
+
+
+

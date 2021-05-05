@@ -16,6 +16,7 @@ export type appPagesType =
 export interface AppStateInterface {
   anketaSMS: SMSSettingsInterface
   isInit: boolean,
+  isOpenToastAnketaSMS: boolean,
   order: OrderInterface,
   page: appPagesType,
   status: string,

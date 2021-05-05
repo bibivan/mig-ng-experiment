@@ -135,7 +135,7 @@ export class AppApiMockup {
     success: {
       order: {},
       repeatSendSMS: true,
-      smsSeconds: 300,
+      smsSeconds: 30,
     },
     successDisableSendSMS: {
       order: {},
