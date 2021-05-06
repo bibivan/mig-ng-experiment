@@ -1,0 +1,21 @@
+@import "../../../assets/scss/shared";
+
+.preloader {
+  display: block;
+  position: absolute;
+  z-index: 2147483647;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: transparent url('img/loader.svg') center center no-repeat;
+  background-size: 52px 52px;
+  border-radius: $borderRadius8;
+
+  &.fullscreen {
+    position: fixed;
+    z-index: 2147483647;
+    background-color: $colorGrayLight;
+  }
+
+}

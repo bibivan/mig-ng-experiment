@@ -1,4 +1,4 @@
-import { selectOptionsType } from '../modules/shared/select/select.model'
+import { selectOptionsType } from '../shared/select/select.model'
 
 export class ClassificatorSelectOptions {
   static get regions(): selectOptionsType {

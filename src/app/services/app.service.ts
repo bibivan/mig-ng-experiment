@@ -64,7 +64,7 @@ export class AppService {
         this.initCompleted()
 
         // процесс дозаписи
-        this.sendSMS()
+        this.setPage('passport')
       },
       () => this.errorHandler(this.getToken.bind(this))
     )

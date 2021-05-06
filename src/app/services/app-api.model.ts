@@ -1,4 +1,4 @@
-import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
+import { TermLoanInterface } from '../shared/calculator/calculator.model'
 import { ABTestInterface, OrderInterface } from './app.model'
 
 export interface InitOrderFormResponseInterface {

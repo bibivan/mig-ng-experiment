@@ -1,0 +1,39 @@
+@import "../../../assets/scss/shared";
+
+.header {
+  display: block;
+  margin: 0;
+  background: $colorWhite;
+  border-bottom: 1px solid $colorGrayLight;
+
+  .content {
+    display: block;
+    position: relative;
+    margin: -1px 0;
+    padding: 0;
+    height: 69px;
+
+    @include mobile() {
+      height: 59px;
+    }
+  }
+}
+
+.logo {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin: -20px 0 0 0;
+  width: 140px;
+  height: 40px;
+  background: url("img/logo.svg") center center no-repeat;
+  background-size: contain;
+
+  @include mobile() {
+    width: 96px;
+    height: 29px;
+    margin: -14.5px 0 0 0;
+  }
+
+}

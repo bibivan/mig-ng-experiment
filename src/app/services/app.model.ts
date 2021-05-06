@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs'
-import { TermLoanInterface } from '../modules/shared/calculator/calculator.model'
+import { TermLoanInterface } from '../shared/calculator/calculator.model'
 
 export type appPagesType =
   'preloader'

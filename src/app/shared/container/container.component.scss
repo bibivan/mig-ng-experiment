@@ -1,0 +1,21 @@
+@import "../../../assets/scss/shared";
+
+:host {
+
+  display: block;
+  margin: 0 auto;
+  padding: 1px 0;
+  max-width: 768px;
+
+  @include mobile {
+    padding: 1px $indent16;
+  }
+
+  &.small {
+    max-width: 514px;
+
+    @include mobile {
+      padding: 1px 0;
+    }
+  }
+}
