@@ -3,8 +3,8 @@ import { interval, Subject, Subscription, timer } from 'rxjs'
 import {
   CheckSMSRequestInterface,
   CheckSMSResponseInterface,
-  InitOrderFormResponseInterface,
-  SaveAnketaRequestInterface
+  InitOrderFormResponseInterface, SaveAdditionalContactRequestInterface,
+  SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface, SavePassportRequestInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
 import { appPagesType, AppStateInterface, OrderInterface, SMSSettingsInterface } from './app.model'
@@ -65,7 +65,7 @@ export class AppService {
         this.initCompleted()
 
         // процесс дозаписи
-        this.setPage('passport')
+        this.setPage('employment_and_income')
       },
       () => this.errorHandler(this.getToken.bind(this))
     )
@@ -118,6 +118,42 @@ export class AppService {
         this.openPersonalAccountHint()
       },
       () => this.errorHandler(this.checkSMS.bind(this))
+    )
+  }
+
+  savePassport(data: SavePassportRequestInterface): void {
+    this.showPreloader()
+    this.updateOrder(data)
+
+    this.api.savePassport(data).subscribe(
+      () => {
+        this.setPage('employment_and_income')
+      },
+      () => this.errorHandler(this.savePassport.bind(this))
+    )
+  }
+
+  saveEmploymentAndIncome(data: SaveEmploymentAndIncomeRequestInterface): void {
+    this.showPreloader()
+    this.updateOrder(data)
+
+    this.api.saveEmploymentAndIncome(data).subscribe(
+      () => {
+        this.setPage('additional_contact')
+      },
+      () => this.errorHandler(this.saveEmploymentAndIncome.bind(this))
+    )
+  }
+
+  saveAdditionalContact(data: SaveAdditionalContactRequestInterface): void {
+    this.showPreloader()
+    this.updateOrder(data)
+
+    this.api.saveAdditionalContact(data).subscribe(
+      () => {
+        this.setPage('products')
+      },
+      () => this.errorHandler(this.saveAdditionalContact.bind(this))
     )
   }
 

@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs'
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
 
@@ -8,7 +7,7 @@ export type appPagesType =
   | 'sms'
   | 'passport'
   | 'employment_and_income'
-  | 'personal_info'
+  | 'additional_contact'
   | 'products'
   | 'snils'
   | 'contract'
@@ -46,7 +45,9 @@ export interface OrderInterface {
   companyName: string,
   companyStart: string,
   companyView: string,
+  contactsLastname: string,
   contactsName: string,
+  contactsPatronymic: string,
   contactsPhone: string,
   contactsStatus: string,
   dateBirthday: string,

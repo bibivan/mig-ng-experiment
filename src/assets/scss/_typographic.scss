@@ -174,3 +174,12 @@ ol {
   margin-top: -10px;
   @extend .text-4;
 }
+
+.back-button-text {
+  @extend .text-1;
+  margin-top: 14px;
+  
+  @include mobile {
+    text-align: center;
+  }
+}

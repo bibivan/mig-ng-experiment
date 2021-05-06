@@ -25,10 +25,10 @@ export class FormProgressService {
       maxPercent: 81,
       nextStepPercent: 5
     },
-    personal_info: {
+    additional_contact: {
       num: 4,
       minPercent: 81,
-      maxPercent: 100,
+      maxPercent: 86,
       nextStepPercent: 0
     },
   }

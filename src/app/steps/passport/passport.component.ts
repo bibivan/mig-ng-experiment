@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { ClassificatorSelectOptions } from '../../helpers/classificator-select-options'
 import { ClassificatorValidateRules } from '../../helpers/classificator-validate-rules'
 import { FormValidators } from '../../helpers/form-validators'
-import { getGenderByFIO } from '../../helpers/helper'
+import { getGenderByFIO, getSerialAndNumberPassport } from '../../helpers/helper'
+import { SavePassportRequestInterface } from '../../services/app-api.model'
 import { AppStateInterface, OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { FormProgressService } from '../../shared/form-progress/form-progress.service'
@@ -20,7 +22,6 @@ export class PassportComponent implements OnInit {
   order: OrderInterface
   form: FormGroup
   formTouched = 0
-
   formProgressValue = 0
 
   isOpenSnilsModal: boolean
@@ -88,7 +89,7 @@ export class PassportComponent implements OnInit {
 
     if (this.form.invalid) { return }
 
-    console.log('submit', this.form.value)
+    this.app.savePassport(this.serializeForm())
   }
 
   updateFormProgressValue(): void {
@@ -145,6 +146,30 @@ export class PassportComponent implements OnInit {
 
   closeSnilsModal(): void {
     this.isOpenSnilsModal = false
+  }
+
+  private serializeForm(): SavePassportRequestInterface {
+    const serialNumberPassport = getSerialAndNumberPassport(this.serialNumberPassportControl.value)
+    const numberPassport = serialNumberPassport.numberPassport
+    const serialPassport = serialNumberPassport.serialPassport
+
+    const result: SavePassportRequestInterface = {
+      address: {
+        Registration: this.addressRegistrationGroup.value,
+        Fact: this.addressFactGroup.value,
+      },
+      codePassport: this.codePassportControl.value,
+      datePassport: this.datePassportControl.value,
+      liveRegFlag: this.liveRegFlagControl.value,
+      numberPassport,
+      placeBirthday: this.placeBirthdayControl.value,
+      prevLastname: this.prevLastnameControl.value,
+      serialPassport,
+      snils: this.snilsControl.value,
+      stacPhone: this.stacPhoneControl.value,
+      wherePassport: this.wherePassportControl.value,
+    }
+    return result
   }
 
   private updateValidateStacPhone(): void {

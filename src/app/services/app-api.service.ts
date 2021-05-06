@@ -4,8 +4,13 @@ import { ApiService } from './api.service'
 import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
-  CheckPhoneResponseInterface, CheckSMSRequestInterface,
-  InitOrderFormResponseInterface, SaveAnketaRequestInterface, SendSMSResponseInterface
+  CheckPhoneResponseInterface,
+  CheckSMSRequestInterface,
+  InitOrderFormResponseInterface,
+  SaveAdditionalContactRequestInterface,
+  SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface,
+  SavePassportRequestInterface,
+  SendSMSResponseInterface
 } from './app-api.model'
 import { getMockup } from './get-mockup'
 
@@ -82,4 +87,39 @@ export class AppApiService {
 
     return this.api.post(requestData)
   }
+
+  savePassport(body: SavePassportRequestInterface): Observable<any> {
+    const mockupData = getMockup('/savePassport', AppApiMockup.savePassport.success, body)
+    const requestData = {
+      path: '/savePassport',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  saveEmploymentAndIncome(body: SaveEmploymentAndIncomeRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveEmploymentAndIncome', AppApiMockup.saveEmploymentAndIncome.success, body)
+    const requestData = {
+      path: '/saveEmploymentAndIncome',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  saveAdditionalContact(body: SaveAdditionalContactRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveAdditionalContact', AppApiMockup.saveAdditionalContact.success, body)
+    const requestData = {
+      path: '/saveAdditionalContact',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+
 }

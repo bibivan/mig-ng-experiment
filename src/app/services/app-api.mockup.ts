@@ -32,37 +32,15 @@ export class AppApiMockup {
             streetCode: '0',
             type: 'Registration',
           } as KladrAddressInterface,
-          // Work: {
-          //   flat: '2',
-          //   home: '6',
-          //   korp: '32',
-          //   punkt: 'Город Москва',
-          //   punktCode: '7700000000000,7700000000000',
-          //   region: '7700000000000',
-          //   str: '1',
-          //   street: 'БЕСКУДНИКОВСКИЙ БУЛЬВАР',
-          //   streetCode: '0',
-          //   type: 'Work',
-          // } as KladrAddressInterface,
-          // Work: {
-          //   flat: '',
-          //   home: '',
-          //   korp: '',
-          //   punkt: '',
-          //   punktCode: '',
-          //   region: '',
-          //   str: '',
-          //   street: '',
-          //   streetCode: '',
-          //   type: 'Work',
-          // } as KladrAddressInterface,
         },
         bankrupt: true,
         codePassport: '770-015',
         companyName: 'МигКредит',
         companyStart: '10.2015',
         companyView: 'Transportation',
-        contactsName: 'Петров Петр',
+        contactsLastname: 'Петров',
+        contactsName: 'Петр',
+        contactsPatronymic: 'Петрович',
         contactsPhone: '9876543299',
         contactsStatus: 'Parent',
         dateBirthday: '17.04.1982',
@@ -166,6 +144,21 @@ export class AppApiMockup {
         status: '2.3'
       }
     },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static savePassport = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveEmploymentAndIncome = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveAdditionalContact = {
+    success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 }

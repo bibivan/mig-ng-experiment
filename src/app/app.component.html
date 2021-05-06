@@ -27,9 +27,11 @@
 
             <app-employment-and-income *ngSwitchCase="'employment_and_income'"
                                        [state]="state"
-            >
+            ></app-employment-and-income>
 
-            </app-employment-and-income>
+            <app-additional-contact *ngSwitchCase="'additional_contact'"
+                                    [state]="state"
+            ></app-additional-contact>
 
             <app-final *ngSwitchCase="'final'"
                        [state]="state"

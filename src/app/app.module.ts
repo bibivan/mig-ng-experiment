@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { JwtInterceptor } from './interceptors/jwt.interceptor'
 import { ModalModule } from './shared/modal/modal.module'
+import { AdditionalContactModule } from './steps/additional-contact/additional-contact.module'
 import { AnketaModule } from './steps/anketa/anketa.module'
 import { EmploymentAndIncomeModule } from './steps/employment-and-income/employment-and-income.module'
 import { FinalModule } from './steps/final/final.module'
@@ -56,7 +57,8 @@ registerLocaleData(localeRu, 'ru')
     SharedModule,
     ModalModule,
     PersonalAccountHintModule,
-    EmploymentAndIncomeModule
+    EmploymentAndIncomeModule,
+    AdditionalContactModule
   ],
   providers: [
     {

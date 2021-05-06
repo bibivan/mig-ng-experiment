@@ -1,10 +1,10 @@
 import { FormValidators } from './form-validators'
 
 export interface WorkBlockValidatorsInterface {
-  addressWork: KladrValidatorsInterface,
   companyName: Array<any>,
-  companyView: Array<any>,
   companyStart: Array<any>,
+  incomeWork: Array<any>,
+  paymentCredit: Array<any>,
   workPhone: Array<any>,
 }
 
@@ -45,17 +45,19 @@ export class ClassificatorValidateRules {
   static workBlock(empty = false): WorkBlockValidatorsInterface {
     if (empty) {
       return {
-        addressWork: ClassificatorValidateRules.kladrAddress(empty),
-        companyName: null, companyView: null, companyStart: null,
-        workPhone: null
+        companyName: null,
+        companyStart: null,
+        incomeWork: null,
+        paymentCredit: null,
+        workPhone: null,
       }
     }
 
     return {
-      addressWork: ClassificatorValidateRules.kladrAddress(empty),
       companyName: [FormValidators.required],
-      companyView: [FormValidators.required],
       companyStart: [], // устанавливается отдельно тк завязан на дату рождения
+      incomeWork: [FormValidators.money(0)],
+      paymentCredit: [FormValidators.money(0)],
       workPhone: [FormValidators.mobilePhone],
     }
   }

@@ -1,4 +1,5 @@
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
+import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
 import { ABTestInterface, OrderInterface } from './app.model'
 
 export interface InitOrderFormResponseInterface {
@@ -48,4 +49,38 @@ export interface CheckSMSResponseInterface {
   order: {
     status: string // 2.3 - COUCA_2_3 -> limit
   },
+}
+
+export interface SavePassportRequestInterface {
+  address: {
+    Fact: KladrAddressInterface,
+    Registration: KladrAddressInterface,
+  },
+  codePassport: string,
+  datePassport: string,
+  liveRegFlag: boolean,
+  numberPassport: string,
+  placeBirthday: string,
+  prevLastname: string,
+  serialPassport: string,
+  snils: string,
+  stacPhone: string,
+  wherePassport: string,
+}
+
+export interface SaveEmploymentAndIncomeRequestInterface {
+  typeWork: string,
+  companyName: string,
+  workPhone: string,
+  companyStart: string,
+  incomeWork: string,
+  paymentCredit: string
+}
+
+export interface SaveAdditionalContactRequestInterface {
+  contactsLastname: string,
+  contactsName: string,
+  contactsPatronymic: string,
+  contactsPhone: string,
+  contactsStatus: string,
 }

@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms'
 
-export type formProgressStepsType = 'anketa' | 'passport' | 'employment_and_income' | 'personal_info'
+export type formProgressStepsType = 'anketa' | 'passport' | 'employment_and_income' | 'additional_contact'
 
 export interface StepInfoInterface {
   num: number,
