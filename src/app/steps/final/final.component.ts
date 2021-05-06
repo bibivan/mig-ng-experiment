@@ -12,6 +12,7 @@ export class FinalComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    document.body.scrollTop = 0
   }
 
 }

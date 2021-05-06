@@ -13,7 +13,7 @@ export class InvalidControlFocusDirective {
   ) { }
 
   @HostListener('submit')
-  onFormSubmit() {
+  onFormSubmit(): void {
     const selectors = [
       'app-textarea.ng-invalid textarea',
       'app-input.ng-invalid input',

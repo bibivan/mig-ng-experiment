@@ -65,7 +65,8 @@ export class AppService {
         this.initCompleted()
 
         // процесс дозаписи
-        this.setPage('employment_and_income')
+        this.setPage('sms')
+        this.openToastAnketaSMS()
       },
       () => this.errorHandler(this.getToken.bind(this))
     )

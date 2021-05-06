@@ -29,7 +29,12 @@
   }
 
   @include mobile {
-    display: none;
+    left: 16px;
+    right: 16px;
+    top: 80px;
+    width: auto;
+    padding-top: $indent4;
+    padding-bottom: $indent4;
   }
 }
 

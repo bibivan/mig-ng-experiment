@@ -57,6 +57,8 @@ export class AnketaComponent implements OnInit {
 
     this.mobilePhoneControl.valueChanges.subscribe(() => { this.isAvailableSubmit = false })
     this.checkPhone(this.mobilePhoneControl.value)
+
+    document.body.scrollTop = 0
   }
 
   buildForm(): void {

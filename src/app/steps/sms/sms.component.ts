@@ -8,12 +8,16 @@ import { AppService } from '../../services/app.service'
   templateUrl: './sms.component.html',
   styleUrls: ['./sms.component.scss']
 })
-export class SmsComponent implements OnDestroy {
+export class SmsComponent implements OnInit, OnDestroy {
   @Input() state: AppStateInterface
 
   constructor(
     private app: AppService
   ) { }
+
+  ngOnInit(): void {
+    document.body.scrollTop = 0
+  }
 
   ngOnDestroy(): void {
     this.app.closeToastAnketaSMS()

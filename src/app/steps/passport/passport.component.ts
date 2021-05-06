@@ -42,6 +42,8 @@ export class PassportComponent implements OnInit {
 
     this.form.valueChanges.subscribe(this.updateFormProgressValue.bind(this))
     this.updateFormProgressValue()
+
+    document.body.scrollTop = 0
   }
 
   buildForm(): void {

@@ -10,6 +10,7 @@ export class StepPreloaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    document.body.scrollTop = 0
   }
 
 }
