@@ -4,7 +4,7 @@
   display: block;
   position: relative;
   z-index: 5;
-  margin: 0 0 $indent20 0;
+  margin: 0 0 $indent20 0 !important;
 
   &:first-child {
     margin-top: 0;
@@ -75,6 +75,21 @@
       box-shadow: none !important;
     }
 
+    &.disabled {
+      .label {
+        opacity: .3;
+      }
+    }
+
+    &.required {
+      .label {
+        &:after {
+          content: " *";
+          color: $colorDangerous;
+        }
+      }
+    }
+
     &.for-slider {
       border-color: $colorBg !important;
       background-color: $colorBg !important;
@@ -98,7 +113,6 @@
       }
     }
   }
-
 
   .label {
     display: block;

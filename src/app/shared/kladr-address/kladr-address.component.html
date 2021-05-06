@@ -1,0 +1,83 @@
+<form [formGroup]="form">
+    <app-select formControlName="region"
+                [options]="regionOptions"
+                placeholder="Регион"
+                [mandatory]="true"
+                [errorMessage]="regionControl.errors | errorMessage"
+    ></app-select>
+
+    <app-input-autocomplete class="punkt"
+                            formControlName="punkt"
+                            placeholder="Населенный пункт"
+                            [mandatory]="true"
+                            [errorMessage]="(punktCodeControl.invalid && !isLoadingPunktList) ? 'Выберите населенный пункт из списка' : ''"
+                            [autocompleteList]="punktList"
+                            [isLoading]="isLoadingPunktList"
+                            [class.error]="punktCodeControl.invalid"
+    ></app-input-autocomplete>
+
+    <app-input-autocomplete class="street"
+                            formControlName="street"
+                            placeholder="Улица"
+                            [mandatory]="true"
+                            [errorMessage]="streetControl.errors | errorMessage"
+                            [autocompleteList]="streetList"
+                            [isLoading]="isLoadingStreetList"
+    ></app-input-autocomplete>
+
+    <ng-container *ngIf="type !== 'Work'; else work">
+        <div class="grid">
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="home"
+                           placeholder="Дом"
+                           [mandatory]="true"
+                           [errorMessage]="homeControl.errors | errorMessage"
+                ></app-input>
+            </div>
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="flat"
+                           placeholder="Квартира"
+                           [errorMessage]="flatControl.errors | errorMessage"
+                ></app-input>
+            </div>
+
+        </div>
+
+        <div class="grid">
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="korp"
+                           placeholder="Корпус"
+                           [errorMessage]="korpControl.errors | errorMessage"
+                ></app-input>
+            </div>
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="str"
+                           placeholder="Строение"
+                           [errorMessage]="strControl.errors | errorMessage"
+                ></app-input>
+            </div>
+
+        </div>
+    </ng-container>
+
+
+    <ng-template #work>
+        <div class="grid">
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="home"
+                           placeholder="Дом"
+                           [mandatory]="true"
+                           [errorMessage]="homeControl.errors | errorMessage"
+                ></app-input>
+            </div>
+            <div class="col w-50 w-50-mobile">
+                <app-input formControlName="korp"
+                           placeholder="Стр./ Корп."
+                           [errorMessage]="korpControl.errors | errorMessage"
+                ></app-input>
+            </div>
+        </div>
+    </ng-template>
+
+</form>
+

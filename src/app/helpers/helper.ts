@@ -188,18 +188,86 @@ export function getMomentDate(value = ''): moment.Moment {
   return moment([year, month, day])
 }
 
-export function getGenderByFIO(lastname = '', name = '', patronymic = ''): number {
+export function getGenderByFIO(lastname = '', name = '', patronymic = ''): string {
   const sexByRussianName = new SexByRussianName()
-  let gender = +sexByRussianName.getSex({
+  const gender = sexByRussianName.getSex({
     firstName: name,
     lastName: lastname,
     patronymic
   })
-  if (gender === 0) {
-    gender = 2
-  } else {
-    gender = 1
+
+  return (gender === 'female') ? 'F' : 'M'
+}
+
+/** Получение серии и номера паспорта из одной строки */
+export function getSerialAndNumberPassport(value: string): { serialPassport: string, numberPassport: string } {
+  let numberPassport = ''
+  let serialPassport = ''
+
+  if (value) {
+    serialPassport = value.slice(0, 4)
+    numberPassport = value.slice(-6)
   }
 
-  return gender
+  return { serialPassport, numberPassport }
+}
+
+export function getClearValue(value: string): string {
+  let result = ''
+  if (value !== '' && value !== undefined && value !== null) {
+    result = value.toString().trim()
+  }
+  return result
+}
+
+export function getClearMaskedValue(value: string): string {
+  if (!value) { return '' }
+
+  let result = value
+
+  result = result.replace(/[\s()-]/g, '')
+  result = result.replace('+7', '')
+
+  return result
+}
+
+
+export function validateSnils(snils: string): boolean {
+  if (!snils) { return false }
+
+  const clearSnils = getClearMaskedValue(snils)
+
+  if (clearSnils.search(regNum) === -1 || clearSnils.length !== 11) {
+    return false
+  }
+
+  if (+clearSnils <= 1001998) {
+    return true
+  }
+
+  // расчитываем контрольное число
+  const snilsArray = clearSnils.split('')
+  const snilsDigit = +clearSnils.slice(-2)
+
+  // контрольное число
+  let checkDigit = 0
+
+  let sum = 0
+  for (let i = 0; i < 9; i++) {
+    sum += +snilsArray[i] * (9 - i)
+  }
+
+  if (sum < 100) {
+    checkDigit = sum
+  } else if (sum > 101) {
+    checkDigit = (sum % 101) * 1
+  }
+
+  if (checkDigit === 100 || checkDigit === 101) {
+    checkDigit = 0
+  }
+
+  if (checkDigit !== snilsDigit) { return false }
+
+  return true
 }

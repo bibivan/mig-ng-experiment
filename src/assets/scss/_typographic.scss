@@ -161,8 +161,8 @@ ol {
   background: $colorBg;
 
   @include mobile {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: -$indent16;
+    margin-right: -$indent16;
   }
 }
 
@@ -170,3 +170,7 @@ ol {
   color: $colorPrimary;
 }
 
+.remark-field {
+  margin-top: -10px;
+  @extend .text-4;
+}

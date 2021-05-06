@@ -1,6 +1,6 @@
 <label [class.empty]="!formControl.value && !focused && mask !== 'currency'"
        [class.focused]="focused"
-       [class.masked-phone]="mask === 'phone'"
+       [class.masked-phone]="mask === 'phone' || mask === 'stacPhone'"
        [class.readonly]="readonly"
        [class.required]="mandatory"
        [class.for-slider]="inputSlider"

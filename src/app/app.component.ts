@@ -25,6 +25,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.stateSub?.unsubscribe()
   }
 
+  closePersonalAccountHint(): void {
+    this.app.closePersonalAccountHint()
+  }
+
   private refreshState(data: AppStateInterface): void {
     this.state = Object.assign({}, data)
   }

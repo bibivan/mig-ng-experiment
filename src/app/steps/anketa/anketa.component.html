@@ -6,7 +6,7 @@
 
         <div class="form-divider"></div>
 
-        <h2 class="font-weight-bold">Заполните анкету</h2>
+        <h1 class="font-weight-bold">Заполните анкету</h1>
 
         <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
             <app-input [formControl]="mobilePhoneControl"
@@ -18,7 +18,7 @@
                        (blurEvent)="checkPhone($event)"
             ></app-input>
 
-            <p class="text-4 margin-top-x1">
+            <p class="remark-field">
                 Обращаем внимание, что на этот номер будут отправлены подтверждающие SMS.
                 Ваш номер также является логином для входа в личный кабинет.
             </p>
@@ -60,7 +60,7 @@
                        [errorMessage]="emailControl.errors | errorMessage"
                        class="no-margin-bottom"
             ></app-input>
-            <p class="text-4 margin-top-x1">
+            <p class="remark-field">
                 E-mail необходим для получения договора и документов об оплате.
             </p>
 

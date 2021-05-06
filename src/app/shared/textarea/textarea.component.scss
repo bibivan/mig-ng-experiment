@@ -63,6 +63,15 @@
         color: $colorGrayMedium !important;
       }
     }
+
+    &.required {
+      .label {
+        &:after {
+          content: " *";
+          color: $colorDangerous;
+        }
+      }
+    }
   }
 
 

@@ -1,5 +1,6 @@
 import { Subscription } from 'rxjs'
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
+import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
 
 export type appPagesType =
   'preloader'
@@ -16,6 +17,7 @@ export type appPagesType =
 export interface AppStateInterface {
   anketaSMS: SMSSettingsInterface
   isInit: boolean,
+  isOpenPersonalAccountHint: boolean,
   isOpenToastAnketaSMS: boolean,
   order: OrderInterface,
   page: appPagesType,
@@ -34,11 +36,11 @@ export interface ABTestItemInterface {
 export interface OrderInterface {
   ABTest: ABTestInterface,
   action: string,
-  // address: {
-  //   Fact: KladrAddressInterface,
-  //   Registration: KladrAddressInterface,
-  //   Work: KladrAddressInterface,
-  // },
+  address: {
+    Fact: KladrAddressInterface,
+    Registration: KladrAddressInterface,
+    // Work: KladrAddressInterface,
+  },
   bankrupt: boolean,
   codePassport: string,
   companyName: string,
@@ -68,6 +70,7 @@ export interface OrderInterface {
   serialPassport: string,
   sex?: string,
   sum: number,
+  snils: string,
   term: TermLoanInterface,
   stacPhone: string,
   typeWork: string,

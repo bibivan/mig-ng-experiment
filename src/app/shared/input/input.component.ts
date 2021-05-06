@@ -9,6 +9,7 @@ import {
   SimpleChanges
 } from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { CurrencyMaskInputMode } from 'ngx-currency'
 import { inputType, MaskConfigInterface, maskType } from './input.model'
 import { Subscription } from 'rxjs'
 
@@ -40,6 +41,7 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
   @Input() currencyMax = 1000000
   @Input() currencyMin = 0
   @Input() currencyThousands = ' '
+  @Input() currencyInputModeNatural = false
   @Input() inputSlider = false
   @Output() blurEvent: EventEmitter<any> = new EventEmitter<any>()
   @Output() focusEvent: EventEmitter<any> = new EventEmitter<any>()
@@ -70,7 +72,9 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
       suffix: this.currencySuffix,
       min: this.currencyMin,
       max: this.currencyMax,
-      precision: this.currencyPrecision
+      precision: this.currencyPrecision,
+      nullable: true,
+      inputMode: this.currencyInputModeNatural ? CurrencyMaskInputMode.NATURAL : CurrencyMaskInputMode.FINANCIAL
     }
 
     this.sub = this.formControl.valueChanges.subscribe(value => {
@@ -111,14 +115,16 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
       return { mask: '00.0000' }
     }
 
-    // @ts-ignore
     if (type === 'serialNumberPassport') {
       return { mask: '0000 000000' }
     }
 
-    // @ts-ignore
     if (type === 'codePassport') {
       return { mask: '000-000' }
+    }
+
+    if (type === 'snils') {
+      return { mask: '000-000-000 00' }
     }
 
     return { mask: '', prefix: '', suffix: '', thousandSeparator: '' }

@@ -7,6 +7,7 @@ export type maskType =
   | 'currency'
   | 'serialNumberPassport'
   | 'codePassport'
+  | 'snils'
 
 export interface MaskConfigInterface {
   mask: string,

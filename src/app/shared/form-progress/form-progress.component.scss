@@ -92,6 +92,7 @@
       min-width: 8px;
       border-radius: $borderRadius4;
       background-color: $colorPrimary;
+      transition: width .4s ease;
 
       &.step-max {
         z-index: 1;

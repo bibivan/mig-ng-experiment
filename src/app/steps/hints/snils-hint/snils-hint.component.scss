@@ -1,0 +1,9 @@
+@import "../../../../assets/scss/shared";
+
+.img-snils {
+  display: block;
+  margin-bottom: $indent20;
+  height: 163px;
+  background: url("img/snils.png") center no-repeat;
+  background-size: contain;
+}

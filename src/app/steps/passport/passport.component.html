@@ -2,16 +2,112 @@
 
 <app-container>
     <app-form-wrapper>
-        <h2 class="font-weight-bold">Паспортные данные</h2>
-        <div class="grid">
-            <div class="col w-50">
-                <app-input [formControl]="serialNumberPassportControl"
-                           mask="serialNumberPassport"
-                           placeholder="Серия и номер паспорта"
-                           [mandatory]="true"
-                           [errorMessage]="serialNumberPassportControl.errors | errorMessage"
+        <h1 class="font-weight-bold">Паспортные данные</h1>
+
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <div class="grid">
+                <div class="col w-50">
+                    <app-input [formControl]="serialNumberPassportControl"
+                               mask="serialNumberPassport"
+                               placeholder="Серия и номер паспорта"
+                               [mandatory]="true"
+                               [errorMessage]="serialNumberPassportControl.errors | errorMessage"
+                    ></app-input>
+                </div>
+                <div class="col w-50">
+                    <app-input [formControl]="datePassportControl"
+                               mask="date"
+                               placeholder="Дата выдачи"
+                               [mandatory]="true"
+                               [errorMessage]="datePassportControl.errors | errorMessage"
+                    ></app-input>
+                </div>
+            </div>
+
+            <app-input [formControl]="codePassportControl"
+                       mask="codePassport"
+                       placeholder="Код подразделения"
+                       [mandatory]="true"
+                       [errorMessage]="codePassportControl.errors | errorMessage"
+            ></app-input>
+
+            <app-textarea [formControl]="wherePassportControl"
+                          placeholder="Кем выдан"
+                          [mandatory]="true"
+                          [errorMessage]="wherePassportControl.errors | errorMessage"
+            ></app-textarea>
+
+            <app-input [formControl]="placeBirthdayControl"
+                       placeholder="Место рождения"
+                       [mandatory]="true"
+                       [errorMessage]="placeBirthdayControl.errors | errorMessage"
+            ></app-input>
+
+            <app-input [formControl]="snilsControl"
+                       placeholder="СНИЛС"
+                       mask="snils"
+                       [mandatory]="true"
+                       [errorMessage]="snilsControl.errors | errorMessage"
+            ></app-input>
+            <div class="snils-hint-button" (click)="openSnilsModal()">
+                <span>
+                    Номер СНИЛС необходим для вашей идентификации
+                </span>
+                <div class="icon">
+                    <app-icon name="info"></app-icon>
+                </div>
+            </div>
+
+            <app-input-checkbox [formControl]="changeLastnameFlagControl">
+                Я менял(а) фамилию
+            </app-input-checkbox>
+
+            <div [class.hide]="!changeLastnameFlagControl.value">
+                <app-input [formControl]="prevLastnameControl"
+                           placeholder="Предыдущая фамилия"
+                           [errorMessage]="prevLastnameControl.errors | errorMessage"
                 ></app-input>
             </div>
-        </div>
+
+            <div class="form-divider margin-top-x2 margin-bottom-x2"></div>
+
+            <h2 class="h1 font-weight-bold">Адрес регистрации</h2>
+            <app-kladr-address type="live"
+                               [address]="order.address.Fact"
+                               [touched]="formTouched"
+                               (changed)="saveKladrAddress($event)"
+            ></app-kladr-address>
+
+            <app-input [formControl]="stacPhoneControl"
+                       placeholder="Домашний телефон"
+                       mask="stacPhone"
+                       [mandatory]="true"
+                       [errorMessage]="stacPhoneControl.errors | errorMessage"
+            ></app-input>
+
+            <app-input-checkbox [formControl]="liveRegFlagControl">
+                Мой адрес проживания не отличается от адреса регистрации
+            </app-input-checkbox>
+
+            <div [class.hide]="liveRegFlagControl.value">
+                <h3 class="font-weight-bold">Адрес регистрации</h3>
+                <app-kladr-address type="reg"
+                                   [address]="order.address.Registration"
+                                   [touched]="formTouched"
+                                   (changed)="saveKladrAddress($event)"
+                ></app-kladr-address>
+            </div>
+
+            <app-security-message class="hide-mobile margin-bottom-x2"></app-security-message>
+            <div>
+                <app-button type="submit">Продолжить</app-button>
+            </div>
+            <app-security-message class="hide-desktop margin-top-x2"></app-security-message>
+        </form>
+
     </app-form-wrapper>
 </app-container>
+
+<app-modal *ngIf="isOpenSnilsModal" [small]="true" [bottomMobile]="true">
+    <app-snils-hint (clickedButton)="closeSnilsModal()"></app-snils-hint>
+</app-modal>

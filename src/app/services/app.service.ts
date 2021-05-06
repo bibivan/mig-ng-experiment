@@ -22,6 +22,7 @@ export class AppService {
       seconds: 0,
     },
     isInit: false,
+    isOpenPersonalAccountHint: false,
     isOpenToastAnketaSMS: false,
     order: null,
     page: null,
@@ -114,6 +115,7 @@ export class AppService {
     this.api.checkSMS(body).subscribe(
       (data: CheckSMSResponseInterface) => {
         this.setPage('passport')
+        this.openPersonalAccountHint()
       },
       () => this.errorHandler(this.checkSMS.bind(this))
     )
@@ -133,6 +135,16 @@ export class AppService {
   closeToastAnketaSMS(): void {
     this.state.isOpenToastAnketaSMS = false
     this.timerToastSMSSub?.unsubscribe()
+    this.refreshState()
+  }
+
+  openPersonalAccountHint(): void {
+    this.state.isOpenPersonalAccountHint = true
+    this.refreshState()
+  }
+
+  closePersonalAccountHint(): void {
+    this.state.isOpenPersonalAccountHint = false
     this.refreshState()
   }
 

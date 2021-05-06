@@ -25,6 +25,12 @@
                           [state]="state"
             ></app-passport>
 
+            <app-employment-and-income *ngSwitchCase="'employment_and_income'"
+                                       [state]="state"
+            >
+
+            </app-employment-and-income>
+
             <app-final *ngSwitchCase="'final'"
                        [state]="state"
             ></app-final>
@@ -34,6 +40,10 @@
             Мы отправили код вам на номер
             <span class="nobr">{{ state.order.mobilePhone | mobilePhone }}</span>
         </app-toast>
+
+        <app-modal *ngIf="state.isOpenPersonalAccountHint" [small]="true" [bottomMobile]="true">
+            <app-personal-account-hint (clickedButton)="closePersonalAccountHint()"></app-personal-account-hint>
+        </app-modal>
     </ng-template>
 </div>
 

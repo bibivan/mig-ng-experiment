@@ -10,8 +10,11 @@ import { appInitializer } from './app-initializer'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { JwtInterceptor } from './interceptors/jwt.interceptor'
+import { ModalModule } from './shared/modal/modal.module'
 import { AnketaModule } from './steps/anketa/anketa.module'
+import { EmploymentAndIncomeModule } from './steps/employment-and-income/employment-and-income.module'
 import { FinalModule } from './steps/final/final.module'
+import { PersonalAccountHintModule } from './steps/hints/personal-account-hint/personal-account-hint.module'
 import { PassportModule } from './steps/passport/passport.module'
 import { HeaderModule } from './shared/header/header.module'
 import { ContainerModule } from './shared/container/container.module'
@@ -50,7 +53,10 @@ registerLocaleData(localeRu, 'ru')
     FinalModule,
     PassportModule,
     ToastModule,
-    SharedModule
+    SharedModule,
+    ModalModule,
+    PersonalAccountHintModule,
+    EmploymentAndIncomeModule
   ],
   providers: [
     {

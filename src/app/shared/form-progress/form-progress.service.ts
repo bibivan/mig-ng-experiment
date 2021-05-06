@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { formProgressStepsType, StepInfoInterface } from './form-progress.model'
+import { FormControl } from '@angular/forms'
+import { formProgressControlListInterface, formProgressStepsType, StepInfoInterface } from './form-progress.model'
 
 @Injectable({
   providedIn: 'root'
@@ -33,19 +34,6 @@ export class FormProgressService {
   }
 
   private readonly fields = {
-    mobilePhone: 10,
-    lastname: 5,
-    name: 5,
-    patronymic: 5,
-    dateBirthday: 8,
-    email: 7,
-    serialNumberPassport: 4,
-    datePassport: 4,
-    codePassport: 4,
-    wherePassport: 0,
-    placeBirthday: 0,
-    prevLastname: 0,
-    snils: 10,
     addressFactFlat: 1,
     addressFactHome: 1,
     addressFactKorp: 0,
@@ -64,13 +52,26 @@ export class FormProgressService {
     addressRegistrationStr: 0,
     addressRegistrationStreet: 1,
     addressRegistrationStreetCode: 0,
+    codePassport: 4,
+    companyName: 1,
+    companyStart: 1,
+    dateBirthday: 8,
+    datePassport: 4,
+    email: 7,
+    incomeWork: 1,
+    lastname: 5,
+    mobilePhone: 10,
+    name: 5,
+    patronymic: 5,
+    paymentCredit: 1,
+    placeBirthday: 0,
+    prevLastname: 0,
+    serialNumberPassport: 4,
+    snils: 10,
     stacPhone: 2,
     typeWork: 1,
-    companyName: 1,
+    wherePassport: 0,
     workPhone: 1,
-    companyStart: 1,
-    incomeWork: 1,
-    paymentCredit: 1
   }
 
   getStepInfo(stepId: formProgressStepsType): StepInfoInterface {
@@ -79,5 +80,14 @@ export class FormProgressService {
 
   getFieldPercent(field: string): number {
     return this.fields[field] || 0
+  }
+
+  getFormStepPercent(fields: formProgressControlListInterface): number {
+    return fields.reduce((percent, item) => {
+      if (item.control.valid) {
+        return percent + this.getFieldPercent(item.id)
+      }
+      return percent
+    }, 0)
   }
 }

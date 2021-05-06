@@ -172,7 +172,7 @@
     ::ng-deep {
       .ng-select:not(.ng-select-opened) {
         .ng-select-container {
-          border-color: $colorGrayMedium;
+          border-color: $colorSecondary;
         }
       }
     }
@@ -208,10 +208,11 @@
 
     .ng-option {
       display: block;
-      margin: 0 0 1px 0;
+      margin: 0;
       padding: $indent8 $indent16;
       background: $colorWhite;
       @extend .text-2;
+      color: $colorGrayDark;
 
       &:last-child {
         margin-bottom: 0;

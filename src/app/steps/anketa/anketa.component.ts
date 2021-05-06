@@ -59,35 +59,6 @@ export class AnketaComponent implements OnInit {
     this.checkPhone(this.mobilePhoneControl.value)
   }
 
-  updateFormProgressValue(): void {
-    let percent = 0
-    if (this.mobilePhoneControl.valid) {
-      percent += this.formProgress.getFieldPercent('mobilePhone')
-    }
-
-    if (this.lastnameControl.valid) {
-      percent += this.formProgress.getFieldPercent('lastname')
-    }
-
-    if (this.nameControl.valid) {
-      percent += this.formProgress.getFieldPercent('name')
-    }
-
-    if (this.patronymicControl.valid) {
-      percent += this.formProgress.getFieldPercent('patronymic')
-    }
-
-    if (this.dateBirthdayControl.valid) {
-      percent += this.formProgress.getFieldPercent('dateBirthday')
-    }
-
-    if (this.emailControl.valid) {
-      percent += this.formProgress.getFieldPercent('email')
-    }
-
-    this.formProgressValue = percent
-  }
-
   buildForm(): void {
     this.form = this.fb.group({
       mobilePhone: [this.order?.mobilePhone, [FormValidators.required, FormValidators.mobilePhone]],
@@ -112,6 +83,19 @@ export class AnketaComponent implements OnInit {
       this.form.value
     )
     this.app.saveAnketa(data)
+  }
+
+  updateFormProgressValue(): void {
+    const fields = [
+      { control: this.mobilePhoneControl, id: 'mobilePhone' },
+      { control: this.lastnameControl, id: 'lastname' },
+      { control: this.nameControl, id: 'name' },
+      { control: this.patronymicControl, id: 'patronymic' },
+      { control: this.dateBirthdayControl, id: 'dateBirthday' },
+      { control: this.emailControl, id: 'email' },
+    ]
+
+    this.formProgressValue = this.formProgress.getFormStepPercent(fields)
   }
 
   checkPhone(phone: string): void {

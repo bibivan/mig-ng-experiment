@@ -1,0 +1,21 @@
+@import "../../../assets/scss/shared";
+
+.snils-hint-button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: -12px 0 $indent20 0;
+  cursor: pointer;
+  @extend .text-2;
+  color: $colorGrayDark;
+
+  @include mobile {
+    justify-content: space-between;
+  }
+
+  .icon {
+    margin-left: $indent12;
+    color: $colorPrimary;
+    font-size: 19px;
+  }
+}
