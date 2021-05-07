@@ -1,11 +1,11 @@
-<ng-container *ngIf="state">
+<ng-container *ngIf="order && smsSettings">
     <app-container class="small">
         <app-form-wrapper>
             <div class="smscode-text">
                 <h2 class="h1">Код из SMS</h2>
                 <p class="text-2 color-gray-dark">
                     Мы отправили код на Ваш номер <br>
-                    <span class="color-primary nobr">{{ state.order.mobilePhone | mobilePhone }}</span>
+                    <span class="color-primary nobr">{{ order.mobilePhone | mobilePhone }}</span>
                 </p>
             </div>
 
@@ -15,12 +15,12 @@
                                 [code]=""
                 ></app-input-code>
             </div>
-            <div *ngIf="!state.anketaSMS.limit" class="text-align-center margin-top-x3 margin-bottom-x3">
+            <div *ngIf="!smsSettings.limit" class="text-align-center margin-top-x3 margin-bottom-x3">
                 <p class="text-2">
-                <span *ngIf="state.anketaSMS.seconds" class="color-gray">
-                    Отправить код повторно через {{ state.anketaSMS.seconds | timerTime }}
+                <span *ngIf="smsSettings.seconds" class="color-gray">
+                    Отправить код повторно через {{ smsSettings.seconds | timerTime }}
                 </span>
-                    <span *ngIf="!state.anketaSMS.seconds" class="link" (click)="sendSMS()">
+                    <span *ngIf="!smsSettings.seconds" class="link" (click)="sendSMS()">
                     Отправить код повторно
                 </span>
                 </p>

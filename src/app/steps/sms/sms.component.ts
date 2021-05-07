@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Subscription, timer } from 'rxjs'
-import { AppStateInterface } from '../../services/app.model'
+import { AppStateInterface, OrderInterface, SMSSettingsInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 
 @Component({
@@ -9,7 +9,8 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./sms.component.scss']
 })
 export class SmsComponent implements OnInit, OnDestroy {
-  @Input() state: AppStateInterface
+  @Input() order: OrderInterface
+  @Input() smsSettings: SMSSettingsInterface
 
   constructor(
     private app: AppService

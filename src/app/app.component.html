@@ -5,8 +5,6 @@
         <div class="preloader">
             <app-preloader></app-preloader>
         </div>
-
-
     </ng-container>
 
     <ng-template #form>
@@ -14,27 +12,34 @@
             <app-step-preloader *ngSwitchCase="'preloader'"></app-step-preloader>
 
             <app-anketa *ngSwitchCase="'anketa'"
-                        [state]="state"
+                        [order]="state.order"
             ></app-anketa>
 
             <app-sms *ngSwitchCase="'sms'"
-                     [state]="state"
+                     [order]="state.order"
+                     [smsSettings]="state.anketaSMS"
             ></app-sms>
 
             <app-passport *ngSwitchCase="'passport'"
-                          [state]="state"
+                          [order]="state.order"
             ></app-passport>
 
             <app-employment-and-income *ngSwitchCase="'employment_and_income'"
-                                       [state]="state"
+                                       [order]="state.order"
             ></app-employment-and-income>
 
             <app-additional-contact *ngSwitchCase="'additional_contact'"
-                                    [state]="state"
+                                    [order]="state.order"
             ></app-additional-contact>
 
+            <app-products *ngSwitchCase="'products'"
+                          [order]="state.order"
+            ></app-products>
+
+            <app-contract *ngSwitchCase="'contract'"></app-contract>
+
             <app-final *ngSwitchCase="'final'"
-                       [state]="state"
+                       [order]="state.order"
             ></app-final>
         </div>
 

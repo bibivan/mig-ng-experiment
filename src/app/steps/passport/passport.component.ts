@@ -17,9 +17,8 @@ import { KladrAddressService } from '../../shared/kladr-address/kladr-address.se
   styleUrls: ['./passport.component.scss']
 })
 export class PassportComponent implements OnInit {
-  @Input() state: AppStateInterface
+  @Input() order: OrderInterface
 
-  order: OrderInterface
   form: FormGroup
   formTouched = 0
   formProgressValue = 0
@@ -34,8 +33,6 @@ export class PassportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.order = Object.assign({}, this.state.order)
-
     this.buildForm()
 
     this.liveRegFlagControl.valueChanges.subscribe(this.toggleLiveRegFlag.bind(this))

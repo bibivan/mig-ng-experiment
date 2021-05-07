@@ -16,9 +16,8 @@ import { selectOptionsType } from '../../shared/select/select.model'
   styleUrls: ['./employment-and-income.component.scss']
 })
 export class EmploymentAndIncomeComponent implements OnInit {
-  @Input() state: AppStateInterface
+  @Input() order: OrderInterface
 
-  order: OrderInterface
   form: FormGroup
   formProgressValue = 0
 
@@ -32,8 +31,6 @@ export class EmploymentAndIncomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.order = Object.assign({}, this.state.order)
-
     this.buildForm()
 
     this.form.valueChanges.subscribe(this.updateFormProgressValue.bind(this))

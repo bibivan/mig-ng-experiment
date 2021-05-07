@@ -13,6 +13,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor'
 import { ModalModule } from './shared/modal/modal.module'
 import { AdditionalContactModule } from './steps/additional-contact/additional-contact.module'
 import { AnketaModule } from './steps/anketa/anketa.module'
+import { ContractModule } from './steps/contract/contract.module'
 import { EmploymentAndIncomeModule } from './steps/employment-and-income/employment-and-income.module'
 import { FinalModule } from './steps/final/final.module'
 import { PersonalAccountHintModule } from './steps/hints/personal-account-hint/personal-account-hint.module'
@@ -26,15 +27,16 @@ import { environment } from '../environments/environment'
 import { PreloaderModule } from './shared/preloader/preloader.module'
 import { SharedModule } from './shared/shared.module'
 import { ToastModule } from './shared/toast/toast.module'
+import { ProductsModule } from './steps/products/products.module'
 import { SmsModule } from './steps/sms/sms.module'
 import { StepPreloaderModule } from './steps/step-preloader/step-preloader.module'
-import { AuthenticationService } from './services/authentication.service'
+import { AuthenticationService } from './services/authentication.service';
 
 registerLocaleData(localeRu, 'ru')
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,9 @@ registerLocaleData(localeRu, 'ru')
     ModalModule,
     PersonalAccountHintModule,
     EmploymentAndIncomeModule,
-    AdditionalContactModule
+    AdditionalContactModule,
+    ProductsModule,
+    ContractModule
   ],
   providers: [
     {

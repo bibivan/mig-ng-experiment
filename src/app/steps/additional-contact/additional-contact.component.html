@@ -1,1 +1,54 @@
-<p>additional-contact works!</p>
+<app-form-progress stepId="additional_contact" [stepPercent]="formProgressValue"></app-form-progress>
+
+<app-container>
+    <app-form-wrapper>
+        <h1 class="font-weight-bold">Доп. контакт</h1>
+
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <app-input [formControl]="contactsLastnameControl"
+                       placeholder="Фамилия"
+                       [mandatory]="true"
+                       [errorMessage]="contactsLastnameControl.errors | errorMessage"
+            ></app-input>
+
+            <app-input [formControl]="contactsNameControl"
+                       placeholder="Имя"
+                       [mandatory]="true"
+                       [errorMessage]="contactsNameControl.errors | errorMessage"
+            ></app-input>
+
+            <app-input [formControl]="contactsPatronymicControl"
+                       placeholder="Отчество"
+                       [errorMessage]="contactsPatronymicControl.errors | errorMessage"
+            ></app-input>
+
+            <app-select [formControl]="contactsStatusControl"
+                        [options]="contactsStatusOptions"
+                        placeholder="Семейное положение"
+                        [mandatory]="true"
+                        [errorMessage]="contactsStatusControl.errors | errorMessage"
+            ></app-select>
+
+            <app-input [formControl]="contactsPhoneControl"
+                       placeholder="Телефон контактного лица"
+                       mask="phone"
+                       [mandatory]="true"
+                       [errorMessage]="contactsPhoneControl.errors | errorMessage"
+            ></app-input>
+
+            <app-security-message class="margin-top-x2 hide-mobile"></app-security-message>
+
+            <div class="grid margin-top-x2">
+                <div class="col w-50 float-right">
+                    <app-button type="submit">Продолжить</app-button>
+                </div>
+                <div class="col w-50 float-right">
+                    <app-security-message class="hide-desktop margin-top-x2 margin-bottom-x2"></app-security-message>
+                    <p class="back-button-text">
+                        <span class="link" (click)="onClickBackButton()">Вернуться назад</span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </app-form-wrapper>
+</app-container>
