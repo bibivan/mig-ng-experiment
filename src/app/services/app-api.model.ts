@@ -1,6 +1,6 @@
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
-import { ABTestInterface, OrderInterface } from './app.model'
+import { ABTestInterface, OrderInterface, productListType } from './app.model'
 
 export interface InitOrderFormResponseInterface {
   order: OrderInterface
@@ -83,4 +83,10 @@ export interface SaveAdditionalContactRequestInterface {
   contactsPatronymic: string,
   contactsPhone: string,
   contactsStatus: string,
+}
+
+export interface GetProductOfferListResponseInterface {
+  order: {
+    productOfferList: productListType
+  }
 }

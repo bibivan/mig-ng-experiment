@@ -5,7 +5,7 @@ import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
-  CheckSMSRequestInterface,
+  CheckSMSRequestInterface, GetProductOfferListResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface,
@@ -121,5 +121,13 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  getProductOfferList(): Observable<GetProductOfferListResponseInterface> {
+    const mockupData = getMockup('/getProductOfferList', AppApiMockup.getProductOfferList.success)
+    const requestData = {
+      path: '/getProductOfferList',
+      mockupData
+    }
 
+    return this.api.post(requestData)
+  }
 }

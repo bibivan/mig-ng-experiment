@@ -29,6 +29,22 @@ export class AppComponent implements OnInit, OnDestroy {
     this.app.closePersonalAccountHint()
   }
 
+  closeInsuranceTermHint(): void {
+    this.app.closeInsuranceTermHint()
+  }
+
+  closeInsuranceInfoHint(): void {
+    this.app.closeInsuranceInfoHint()
+  }
+
+  closeRefusalLoanModal(): void {
+    this.app.closeRefusalLoanModal()
+  }
+
+  closeSumLoanHint(): void {
+    this.app.closeSumLoanHint()
+  }
+
   private refreshState(data: AppStateInterface): void {
     this.state = Object.assign({}, data)
   }

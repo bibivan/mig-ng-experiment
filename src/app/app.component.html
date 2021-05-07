@@ -34,6 +34,7 @@
 
             <app-products *ngSwitchCase="'products'"
                           [order]="state.order"
+                          [products]="state.products"
             ></app-products>
 
             <app-contract *ngSwitchCase="'contract'"></app-contract>
@@ -43,13 +44,28 @@
             ></app-final>
         </div>
 
-        <app-toast *ngIf="state.isOpenToastAnketaSMS" caption="Введите код из SMS">
-            Мы отправили код вам на номер
-            <span class="nobr">{{ state.order.mobilePhone | mobilePhone }}</span>
+        <app-toast *ngIf="state.toast?.isOpen" [caption]="state.toast.caption">
+            <div [innerHTML]="state.toast.text"></div>
         </app-toast>
 
         <app-modal *ngIf="state.isOpenPersonalAccountHint" [small]="true" [bottomMobile]="true">
             <app-personal-account-hint (clickedButton)="closePersonalAccountHint()"></app-personal-account-hint>
+        </app-modal>
+
+        <app-modal *ngIf="state.isOpenInsuranceTermHint" [small]="true" [bottomMobile]="true">
+            <app-insurance-term-hint (clickedButton)="closeInsuranceTermHint()"></app-insurance-term-hint>
+        </app-modal>
+
+        <app-modal *ngIf="state.isOpenInsuranceInfoHint" [small]="true" [bottomMobile]="true">
+            <app-insurance-info-hint (clickedButton)="closeInsuranceInfoHint()"></app-insurance-info-hint>
+        </app-modal>
+
+        <app-modal *ngIf="state.isOpenSumLoanHint" [small]="true" [bottomMobile]="true">
+            <app-sum-loan-hint (clickedButton)="closeSumLoanHint()"></app-sum-loan-hint>
+        </app-modal>
+
+        <app-modal *ngIf="state.isOpenRefusalLoanModal" [small]="true" [bottomMobile]="true">
+            <app-refusal-loan></app-refusal-loan>
         </app-modal>
     </ng-template>
 </div>

@@ -2,7 +2,7 @@
 
 <app-container>
     <app-form-wrapper>
-        <h1 class="font-weight-bold">Паспортные данные</h1>
+        <h1>Паспортные данные</h1>
 
         <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
             <div class="grid">
@@ -71,7 +71,7 @@
 
             <div class="form-divider margin-top-x2 margin-bottom-x2"></div>
 
-            <h2 class="h1 font-weight-bold">Адрес регистрации</h2>
+            <h2 class="h1">Адрес регистрации</h2>
             <app-kladr-address type="live"
                                [address]="order.address.Fact"
                                [touched]="formTouched"
@@ -90,7 +90,7 @@
             </app-input-checkbox>
 
             <div [class.hide]="liveRegFlagControl.value">
-                <h3 class="font-weight-bold">Адрес регистрации</h3>
+                <h3>Адрес регистрации</h3>
                 <app-kladr-address type="reg"
                                    [address]="order.address.Registration"
                                    [touched]="formTouched"

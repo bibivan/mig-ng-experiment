@@ -16,7 +16,10 @@ import { AnketaModule } from './steps/anketa/anketa.module'
 import { ContractModule } from './steps/contract/contract.module'
 import { EmploymentAndIncomeModule } from './steps/employment-and-income/employment-and-income.module'
 import { FinalModule } from './steps/final/final.module'
+import { InsuranceInfoHintModule } from './steps/hints/insurance-info-hint/insurance-info-hint.module'
+import { InsuranceTermHintModule } from './steps/hints/insurance-term-hint/insurance-term-hint.module'
 import { PersonalAccountHintModule } from './steps/hints/personal-account-hint/personal-account-hint.module'
+import { SumLoanHintModule } from './steps/hints/sum-loan-hint/sum-loan-hint.module'
 import { PassportModule } from './steps/passport/passport.module'
 import { HeaderModule } from './shared/header/header.module'
 import { ContainerModule } from './shared/container/container.module'
@@ -28,6 +31,7 @@ import { PreloaderModule } from './shared/preloader/preloader.module'
 import { SharedModule } from './shared/shared.module'
 import { ToastModule } from './shared/toast/toast.module'
 import { ProductsModule } from './steps/products/products.module'
+import { RefusalLoanModule } from './steps/refusal-loan/refusal-loan.module'
 import { SmsModule } from './steps/sms/sms.module'
 import { StepPreloaderModule } from './steps/step-preloader/step-preloader.module'
 import { AuthenticationService } from './services/authentication.service';
@@ -62,7 +66,11 @@ registerLocaleData(localeRu, 'ru')
     EmploymentAndIncomeModule,
     AdditionalContactModule,
     ProductsModule,
-    ContractModule
+    ContractModule,
+    InsuranceTermHintModule,
+    InsuranceInfoHintModule,
+    RefusalLoanModule,
+    SumLoanHintModule
   ],
   providers: [
     {

@@ -1,5 +1,42 @@
 import { of, throwError } from 'rxjs'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
+import { ProductItemInterface } from './app.model'
+
+const productItem: ProductItemInterface = {
+  Amount: 10000,
+  InsuranceList: [
+    { id: '1', amount: 200 },
+    { id: '2', amount: 100 },
+  ],
+  NeedIdentifyBy: [16],
+  PaymentKey: 16,
+  RegularPayment: 12300,
+  Status: 'Offer',
+  Term: 10,
+  TermUnit: 'Day',
+  id: '1'
+}
+
+const productsMockup = {
+  success: [
+    productItem,
+    Object.assign({}, productItem, {
+      Amount: 12000,
+      id: 2,
+      InsuranceList: null,
+      Term: 22,
+    }),
+    Object.assign({}, productItem, {
+      Amount: 5000,
+      id: 3,
+      InsuranceList: [
+        { id: '3', amount: 150 }
+      ],
+      Term: 5,
+    })
+  ],
+  empty: null
+}
 
 export class AppApiMockup {
   static initOrderForm = {
@@ -159,6 +196,20 @@ export class AppApiMockup {
 
   static saveAdditionalContact = {
     success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getProductOfferList = {
+    success: {
+      order: {
+        productOfferList: productsMockup.success
+      }
+    },
+    successEmpty: {
+      order: {
+        productOfferList: productsMockup.empty
+      }
+    },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 }

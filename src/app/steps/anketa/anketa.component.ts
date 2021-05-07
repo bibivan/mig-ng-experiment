@@ -163,7 +163,7 @@ export class AnketaComponent implements OnInit {
     this.isOpenModalCheckPhone = false
   }
 
-  openAcceptModal(event: any): void {
+  openAcceptModal(event: MouseEvent): void {
     event.preventDefault()
     this.isOpenAcceptModal = true
   }

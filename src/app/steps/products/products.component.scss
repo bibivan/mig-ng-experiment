@@ -1,0 +1,133 @@
+@import "../../../assets/scss/shared";
+
+.switchers {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: $indent20 0;
+
+  @include mobile {
+    margin: 0 -16px;
+    padding: $indent8 $indent16;
+    overflow-x: auto;
+  }
+
+  .mobile-fix-margin {
+    flex-shrink: 1;
+    display: block;
+    margin: 0;
+    width: 16px;
+    min-width: 16px;
+    height: 1px;
+
+    @include desktop {
+      display: none;
+    }
+  }
+
+  .item {
+    display: flex;
+    flex-shrink: 1;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0  0 0 $indent16;
+    padding: $indent12;
+    width: calc(50% - 16px);
+    height: 74px;
+    background: $colorGrayExtraLight;
+    border: 1px solid $colorBg;
+    border-radius: $borderRadius8;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &.selected {
+      border-color: $colorPrimary;
+      box-shadow: 0 0 0 3.5px rgba(0, 173, 238, 0.5);
+      cursor: default;
+    }
+
+    @include desktop {
+      &:hover {
+        border-color: $colorPrimary;
+      }
+    }
+
+    .icon {
+      display: block;
+      flex-shrink: 1;
+      width: 44px; height: 44px;
+      background: $colorLightBlue url("./img/icon.svg") center no-repeat;
+      background-size: 24px 24px;
+      border-radius: $borderRadius11;
+    }
+
+    .info {
+      margin-left: $indent12;
+    }
+
+    .sum {
+      @extend .headline-3;
+      margin: 0;
+      line-height: 1.2em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .text {
+      @extend .text-4;
+      margin: 0;
+      line-height: 1.2em;
+      color: $colorGray;
+    }
+  }
+}
+
+.product {
+  margin: $indent16 0;
+
+  .row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: $indent16 0;
+
+    .col {
+      flex-shrink: 0;
+      width: 50%;
+    }
+  }
+
+  .text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin: 0;
+    @extend .text-2;
+    font-weight: 400;
+    color: $colorGrayDark;
+
+    &.label {
+      color: $colorGray;
+    }
+  }
+
+  .info {
+    display: block;
+    margin: 0 0 0 $indent12;
+    width: 21px;
+    height: 21px;
+    font-size: 21px;
+    color: $colorGrayLight;
+    cursor: pointer;
+
+    @include desktop {
+      &:hover {
+        color: $colorGray;
+      }
+    }
+  }
+}

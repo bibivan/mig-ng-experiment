@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 @Component({
   selector: 'app-round-icon',
   templateUrl: './round-icon.component.html',
-  styleUrls: ['./round-icon.component.scss']
+  styleUrls: ['./round-icon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoundIconComponent {
   @Input() name: string

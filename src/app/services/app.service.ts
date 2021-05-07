@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core'
 import { interval, Subject, Subscription, timer } from 'rxjs'
+import { formattedMobilePhone, numberFormat } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
-  CheckSMSResponseInterface,
+  CheckSMSResponseInterface, GetProductOfferListResponseInterface,
   InitOrderFormResponseInterface, SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface, SavePassportRequestInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
-import { appPagesType, AppStateInterface, OrderInterface, SMSSettingsInterface } from './app.model'
+import { appPagesType, AppStateInterface, OrderInterface, productListType, SMSSettingsInterface } from './app.model'
 import { GetTokenResponseInterface } from './authentication.model'
 import { AuthenticationService } from './authentication.service'
 
@@ -22,11 +23,20 @@ export class AppService {
       seconds: 0,
     },
     isInit: false,
+    isOpenInsuranceInfoHint: false,
+    isOpenInsuranceTermHint: false,
     isOpenPersonalAccountHint: false,
-    isOpenToastAnketaSMS: false,
+    isOpenRefusalLoanModal: false,
+    isOpenSumLoanHint: false,
     order: null,
     page: null,
+    products: null,
     status: 'string',
+    toast: {
+      caption: '',
+      isOpen: false,
+      text: '0',
+    },
   }
 
   state$: Subject<AppStateInterface> = new Subject<AppStateInterface>()
@@ -34,7 +44,7 @@ export class AppService {
   countError = 0
 
   timerAnketaSMSSub: Subscription
-  timerToastSMSSub: Subscription
+  timerToastSub: Subscription
 
   constructor(
     private api: AppApiService,
@@ -65,7 +75,7 @@ export class AppService {
         this.initCompleted()
 
         // процесс дозаписи
-        this.setPage('anketa')
+        this.getProductOfferList()
       },
       () => this.errorHandler(this.getToken.bind(this))
     )
@@ -102,7 +112,7 @@ export class AppService {
         this.state.anketaSMS.code = ''
         this.updateTimerAnketaSMS()
         this.setPage('sms')
-        this.openToastAnketaSMS()
+        this.openToastSendSMS()
       },
       () => this.errorHandler(this.sendSMS.bind(this))
     )
@@ -151,10 +161,39 @@ export class AppService {
 
     this.api.saveAdditionalContact(data).subscribe(
       () => {
-        this.setPage('products')
+        this.getProductOfferList()
       },
       () => this.errorHandler(this.saveAdditionalContact.bind(this))
     )
+  }
+
+  getProductOfferList(): void {
+    this.showPreloader()
+
+    this.api.getProductOfferList().subscribe(
+      (data: GetProductOfferListResponseInterface) => {
+        const products = data?.order?.productOfferList || []
+        if (!products || !products.length) {
+          this.errorHandler(this.getProductOfferList.bind(this))
+          return
+        }
+
+        this.saveProducts(products)
+        this.setPage('products')
+        this.openToastProducts()
+      },
+      () => this.errorHandler(this.getProductOfferList.bind(this))
+    )
+  }
+
+  getMaxApprovedSum(): number {
+    if (!this.state?.products) { return 0 }
+
+    return this.state.products
+      .reduce((result, product) => {
+        if (product.Amount > result) { result = product.Amount }
+        return result
+      }, 0)
   }
 
   updateOrder(data: any): void {
@@ -162,16 +201,45 @@ export class AppService {
     this.refreshState()
   }
 
-  openToastAnketaSMS(): void {
-    this.state.isOpenToastAnketaSMS = true
-    this.timerToastSMSSub = timer(5000).subscribe(this.closeToastAnketaSMS.bind(this))
+  openToast(caption = '', text = ''): void {
+    this.state.toast.isOpen = true
+    this.state.toast.caption = caption
+    this.state.toast.text = text
+
+    // this.state.toast = Object.assign({
+    //   isOpen: true,
+    //   caption,
+    //   text,
+    // })
+
+    this.timerToastSub = timer(5000).subscribe(this.closeToast.bind(this))
     this.refreshState()
   }
 
-  closeToastAnketaSMS(): void {
-    this.state.isOpenToastAnketaSMS = false
-    this.timerToastSMSSub?.unsubscribe()
+  closeToast(): void {
+    this.state.toast.isOpen = false
+    // this.state.toast = Object.assign({
+    //   isOpen: false,
+    //   caption: '',
+    //   text: '',
+    // })
+    this.timerToastSub?.unsubscribe()
     this.refreshState()
+  }
+
+  openToastProducts(): void {
+    const maxApprovedSum = this.getMaxApprovedSum()
+    this.openToast(
+      'Поздравляем!',
+      `Максимально одобренная для вас сумма — <span class="nobr">${ numberFormat(maxApprovedSum) }</span> рублей`
+    )
+  }
+
+  openToastSendSMS(): void {
+    this.openToast(
+      'Введите код из SMS',
+      `Мы отправили вам код на номер <span class="nobr">${ formattedMobilePhone(this.state.order.mobilePhone) }</span>`
+    )
   }
 
   openPersonalAccountHint(): void {
@@ -181,6 +249,51 @@ export class AppService {
 
   closePersonalAccountHint(): void {
     this.state.isOpenPersonalAccountHint = false
+    this.refreshState()
+  }
+
+  openInsuranceTermHint(): void {
+    this.state.isOpenInsuranceTermHint = true
+    this.refreshState()
+  }
+
+  closeInsuranceTermHint(): void {
+    this.state.isOpenInsuranceTermHint = false
+    this.refreshState()
+  }
+
+  openInsuranceInfoHint(): void {
+    this.state.isOpenInsuranceInfoHint = true
+    this.refreshState()
+  }
+
+  closeInsuranceInfoHint(): void {
+    this.state.isOpenInsuranceInfoHint = false
+    this.refreshState()
+  }
+
+  openSumLoanHint(): void {
+    this.state.isOpenSumLoanHint = true
+    this.refreshState()
+  }
+
+  closeSumLoanHint(): void {
+    this.state.isOpenSumLoanHint = false
+    this.refreshState()
+  }
+
+  openRefusalLoanModal(): void {
+    this.state.isOpenRefusalLoanModal = true
+    this.refreshState()
+  }
+
+  closeRefusalLoanModal(): void {
+    this.state.isOpenRefusalLoanModal = false
+    this.refreshState()
+  }
+
+  private saveProducts(products: productListType): void {
+    this.state.products = products
     this.refreshState()
   }
 

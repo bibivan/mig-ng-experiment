@@ -1,0 +1,13 @@
+<p class="text-3">
+    Договор страхования от компании ОАО "Страхование жизни".
+    Стоимость страхования 900 рублей, срок страхования 3 месяца.
+    Ознакомится с условиями страхования можно по ссылке
+    <span class="link" (click)="openLink('https://migcredit.ru/#term-insurance.pdf')">
+        Условия страхования для физических лиц
+    </span>
+    и в
+    <span class="link" (click)="openLink('https://migcredit.ru/#pamytka-insurance.pdf')">
+        Памятке застрахованному лицу
+    </span>
+</p>
+<app-button (clicked)="clickedButton.emit()">Понятно</app-button>

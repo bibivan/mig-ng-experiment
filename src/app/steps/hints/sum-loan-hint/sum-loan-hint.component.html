@@ -1,0 +1,10 @@
+<div class="text-align-center">
+    <app-round-icon theme="primary" name="info"></app-round-icon>
+    <h1>Сумма займа</h1>
+    <p class="text-2 color-gray">
+        Включает в себя страхование – 6% от выбранной суммы.
+        Вы получите на карту {{ sum | currency }} рублей.
+    </p>
+
+    <app-button (clicked)="clickedButton.emit()">Понятно</app-button>
+</div>

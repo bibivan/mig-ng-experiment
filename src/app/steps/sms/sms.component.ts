@@ -21,7 +21,7 @@ export class SmsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.app.closeToastAnketaSMS()
+    this.app.closeToast()
   }
 
   onCodeCompleted(code: string): void {

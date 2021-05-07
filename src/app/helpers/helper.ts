@@ -271,3 +271,22 @@ export function validateSnils(snils: string): boolean {
 
   return true
 }
+
+export function openExternalLink(url: string, target: '_blank' | '_self' = '_blank'): void {
+  if (window.location.port === '9876') { return }
+
+  window.open(url, target)
+}
+
+export function formattedMobilePhone(mobilePhone: string): string {
+  if (!mobilePhone) { return '' }
+  if (mobilePhone.length !== 10) { return mobilePhone }
+
+  let result = '+7'
+  result += ` (${ mobilePhone.slice(0, 3) })`
+  result += ` ${ mobilePhone.slice(3, 6) }`
+  result += `-${ mobilePhone.slice(6, 8) }`
+  result += `-${ mobilePhone.slice(8) }`
+
+  return result
+}

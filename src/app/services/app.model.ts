@@ -1,4 +1,4 @@
-import { TermLoanInterface } from '../shared/calculator/calculator.model'
+import { TermLoanInterface, termUnitType } from '../shared/calculator/calculator.model'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
 
 export type appPagesType =
@@ -16,11 +16,20 @@ export type appPagesType =
 export interface AppStateInterface {
   anketaSMS: SMSSettingsInterface
   isInit: boolean,
+  isOpenInsuranceInfoHint: boolean,
+  isOpenInsuranceTermHint: boolean,
   isOpenPersonalAccountHint: boolean,
-  isOpenToastAnketaSMS: boolean,
+  isOpenRefusalLoanModal: boolean,
+  isOpenSumLoanHint: boolean,
   order: OrderInterface,
   page: appPagesType,
+  products: productListType,
   status: string,
+  toast: {
+    caption: string,
+    isOpen: boolean,
+    text: string,
+  },
 }
 
 export interface ABTestInterface {
@@ -85,3 +94,24 @@ export interface SMSSettingsInterface {
   seconds: number,
 }
 
+export type productListType = Array<ProductItemInterface>
+
+export interface ProductItemInterface {
+  id: string,
+  Status: string,
+  Amount: number,
+  Term: number,
+  TermUnit: termUnitType,
+  RegularPayment: number,
+  PaymentKey: number,
+  InsuranceList: productInsuranceListType,
+  NeedIdentifyBy: needIdentifyByListType,
+}
+
+export type needIdentifyByListType = Array<number>
+export type productInsuranceListType = Array<ProductInsuranceItemInterface>
+
+export interface ProductInsuranceItemInterface {
+  id: string,
+  amount: number
+}
