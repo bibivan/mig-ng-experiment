@@ -90,3 +90,10 @@ export interface GetProductOfferListResponseInterface {
     productOfferList: productListType
   }
 }
+
+export interface couca_6_9_RequestIntreface {
+  checkSMS: boolean,
+  order: {
+    status: string // 2.3 - COUCA_2_3 -> limit
+  },
+}

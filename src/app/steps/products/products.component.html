@@ -1,8 +1,10 @@
 <app-container>
     <app-form-wrapper>
         <h1 class="no-margin-bottom">Выберите сумму</h1>
-        <p class="color-gray margin-top-x1">Максимально одобренная для вас сумма
-            — {{ maxApprovedAmount | currencyRub }}</p>
+        <p class="color-gray margin-top-x1">
+            Максимально одобренная для вас сумма —
+            <span class="nobr">{{ maxApprovedAmount | currencyRub }}</span>
+        </p>
 
         <div class="switchers">
             <div *ngFor="let item of products"
@@ -118,35 +120,3 @@
         </p>
     </app-form-wrapper>
 </app-container>
-
-<!--<app-modal *ngIf="isOpenInsuranceTermModal"-->
-<!--           [small]="true"-->
-<!--           [bottomMobile]="true"-->
-<!--           (closed)="closeInsuranceTermHint()"-->
-<!--&gt;-->
-<!--    <p class="text-3">-->
-<!--        Договор страхования от компании ОАО "Страхование жизни".-->
-<!--        Стоимость страхования 900 рублей, срок страхования 3 месяца.-->
-<!--        Ознакомится с условиями страхования можно по ссылке-->
-<!--        <span class="link" (click)="openLink('https://migcredit.ru/#term-insurance.pdf')">Условия страхования для физических лиц</span> и в-->
-<!--        <span class="link" (click)="openLink('https://migcredit.ru/#pamytka-insurance.pdf')">Памятке застрахованному лицу</span>-->
-<!--    </p>-->
-<!--    <app-button (clicked)="closeInsuranceTermHint()">Понятно</app-button>-->
-<!--</app-modal>-->
-
-
-<!--<app-modal *ngIf="isOpenInsuranceInfoModal"-->
-<!--           [small]="true"-->
-<!--           [bottomMobile]="true"-->
-<!--           (closed)="closeInsuranceTermHint()"-->
-<!--&gt;-->
-<!--    <div class="text-align-center margin-bottom-x2">-->
-<!--        <app-round-icon theme="primary" name="shield"></app-round-icon>-->
-<!--        <p class="h1 no-margin-bottom">Страхование</p>-->
-<!--        <p class="text-2 color-gray margin-top-x1">-->
-<!--            В случае наступления "Страхового случая", страхование поможет вам с выплатой долга.-->
-<!--        </p>-->
-<!--    </div>-->
-
-<!--    <app-button (clicked)="closeInsuranceInfoHint()">Понятно</app-button>-->
-<!--</app-modal>-->

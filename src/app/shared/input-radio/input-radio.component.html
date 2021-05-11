@@ -1,16 +1,13 @@
-<label [class.disabled]="disabled"
-       class="checkbox-button"
->
-    <input (change)="switch()"
-           [checked]="value"
-           [disabled]="disabled"
-           type="radio">
+<label *ngFor="let item of items" class="radio-button">
+    <input [formControl]="formControl"
+           [value]="item.value"
+           type="radio"/>
 
-    <span class="icon">
-    <app-icon name="checked"></app-icon>
-  </span>
-
-    <span class="label">
-    <ng-content></ng-content>
-  </span>
+    <div class="icon">
+        <app-icon name="checked"></app-icon>
+    </div>
+    <div class="label">{{ item.label }}</div>
 </label>
+
+
+<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

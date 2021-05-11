@@ -27,7 +27,6 @@
 
   .item {
     display: flex;
-    flex-shrink: 1;
     justify-content: flex-start;
     align-items: center;
     margin: 0  0 0 $indent16;
@@ -55,9 +54,17 @@
       }
     }
 
+    @include only-mobile {
+      flex-shrink: 0;
+    }
+
+    @include xs-mobile {
+      width: auto;
+    }
+
     .icon {
       display: block;
-      flex-shrink: 1;
+      flex-shrink: 0;
       width: 44px; height: 44px;
       background: $colorLightBlue url("./img/icon.svg") center no-repeat;
       background-size: 24px 24px;

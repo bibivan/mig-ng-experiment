@@ -212,4 +212,10 @@ export class AppApiMockup {
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
+
+  // tslint:disable-next-line:variable-name
+  static couca_6_9 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
 }

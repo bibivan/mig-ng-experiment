@@ -1,70 +1,92 @@
 @import "../../../assets/scss/shared";
 
 :host {
-  display: flex;
-  margin-bottom: 16px !important;
-}
+  display: block;
+  margin: $indent16 0;
 
-.checkbox-button {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  margin: 0;
-  padding: 0 0 0 42px;
-  min-height: 25px;
-  cursor: pointer;
-
-  input {
-    display: none;
-  }
-
-  .icon {
+  .radio-button {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    top: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
     margin: 0;
-    width: 22px;
-    height: 22px;
-    font-size: 14px;
-    color: transparent;
-    background: $colorBg;
-    border: 1px solid $colorGrayLight;
-    border-radius: 50%;
-  }
+    padding: 0 0 0 42px;
+    width: 100%;
+    min-height: 25px;
+    text-align: left;
+    cursor: pointer;
 
-  .label {
-    display: block;
-    @extend .text-1;
-    color: $colorGrayDark;
-    line-height: 1.25em;
-  }
-
-  input:checked + .icon {
-    background: $colorPrimary;
-    color: $colorWhite;
-    border-color: $colorPrimary;
-  }
-
-  &:hover {
-    .icon {
-      background: $colorWhite;
+    &:not(:first-child) {
+      margin-top: $indent16;
     }
-  }
 
-  &.disabled {
-    cursor: default;
+    input {
+      display: none;
+    }
 
     .icon {
-      background: $colorGrayLight;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin: 0;
+      width: 22px;
+      height: 22px;
+      font-size: 14px;
+      color: transparent;
+      background: $colorBg;
+      border: 1px solid $colorGrayLight;
+      border-radius: 50%;
+    }
+
+    .label {
+      display: block;
+      @extend .text-2;
+      color: $colorGrayDark;
+      line-height: 1.25em;
     }
 
     input:checked + .icon {
-      background: $colorGrayLight;
-      color: $colorGrayMedium;
+      background: $colorPrimary;
+      color: $colorWhite;
+      border-color: $colorPrimary;
+    }
+
+    &:hover {
+      .icon {
+        background: $colorWhite;
+      }
+    }
+
+    &.disabled {
+      cursor: default;
+
+      .icon {
+        background: $colorGrayLight;
+      }
+
+      input:checked + .icon {
+        background: $colorGrayLight;
+        color: $colorGrayMedium;
+      }
+    }
+  }
+
+  .error-message {
+    display: none;
+    margin: $indent16 0 0 0;
+    font-size: 16px;
+    line-height: 1.2em;
+    font-weight: 400;
+    color: $colorDangerous;
+  }
+
+  &.ng-touched.ng-invalid {
+    .error-message {
+      display: block;
     }
   }
 }
+

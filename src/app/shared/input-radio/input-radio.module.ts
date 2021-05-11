@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule } from '@angular/forms'
 import { InputRadioComponent } from './input-radio.component'
 import { IconModule } from '../icon/icon.module'
 
@@ -10,7 +11,8 @@ import { IconModule } from '../icon/icon.module'
   ],
   imports: [
     CommonModule,
-    IconModule
+    IconModule,
+    ReactiveFormsModule
   ]
 })
 export class InputRadioModule {

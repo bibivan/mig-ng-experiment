@@ -8,6 +8,7 @@ import { OrderInterface } from '../../services/app.model'
 })
 export class FinalComponent implements OnInit {
   @Input() order: OrderInterface
+  @Input() status: string
 
   constructor() { }
 

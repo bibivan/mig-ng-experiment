@@ -1,5 +1,7 @@
-import { Component, forwardRef, Input } from '@angular/core'
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core'
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { Subscription } from 'rxjs'
+import { inputRadioButtonListType } from './input-radio.model'
 
 @Component({
   selector: 'app-input-radio',
@@ -14,42 +16,38 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
   ]
 })
 
-export class InputRadioComponent implements ControlValueAccessor {
-  @Input() disabled: boolean
+export class InputRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  @Input() items: inputRadioButtonListType
+  @Input() errorMessage = ''
 
-  @Input('value') _value = false
+  value: any = ''
 
-  get value(): boolean {
-    return this._value
-  }
+  private sub = new Subscription()
+  formControl = new FormControl('')
 
-  set value(val) {
-    this._value = val
-    this.onChange(val)
-    this.onTouched()
-  }
+  private onChange = (value: any) => { }
+  private onTouched = () => { }
+  registerOnChange = (fn: (value: any) => {}) => this.onChange = fn
+  registerOnTouched = (fn: () => {}) => this.onTouched = fn
 
-  onChange: any = () => {
-  }
-
-  onTouched: any = () => {
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn
-  }
-
-  writeValue(value): void {
-    if (value) {
+  ngOnInit(): void {
+    this.sub = this.formControl.valueChanges.subscribe(value => {
+      this.onTouched()
+      this.onChange(value)
       this.value = value
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe()
+  }
+
+  writeValue(obj: any): void {
+    if (obj) {
+      this.onTouched()
     }
+
+    this.formControl.setValue(obj, { emitEvent: false })
   }
 
-  registerOnTouched(fn): void {
-    this.onTouched = fn
-  }
-
-  switch(): void {
-    this.value = !this.value
-  }
 }

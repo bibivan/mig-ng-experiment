@@ -130,4 +130,15 @@ export class AppApiService {
 
     return this.api.post(requestData)
   }
+
+  couca_6_9(body: SaveAdditionalContactRequestInterface): Observable<any> {
+    const mockupData = getMockup('/couca_6_9', AppApiMockup.couca_6_9.success, body)
+    const requestData = {
+      path: '/couca_6_9',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
 }

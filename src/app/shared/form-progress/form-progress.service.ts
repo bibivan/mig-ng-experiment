@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { FormControl } from '@angular/forms'
 import { formProgressControlListInterface, formProgressStepsType, StepInfoInterface } from './form-progress.model'
 
 @Injectable({

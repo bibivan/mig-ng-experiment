@@ -75,7 +75,8 @@ export class AppService {
         this.initCompleted()
 
         // процесс дозаписи
-        this.getProductOfferList()
+        // this.getProductOfferList()
+        this.setPage('anketa')
       },
       () => this.errorHandler(this.getToken.bind(this))
     )
@@ -181,6 +182,7 @@ export class AppService {
         this.saveProducts(products)
         this.setPage('products')
         this.openToastProducts()
+        this.openRefusalLoanModal()
       },
       () => this.errorHandler(this.getProductOfferList.bind(this))
     )

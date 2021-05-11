@@ -1,1 +1,22 @@
-<p>refusal-loan works!</p>
+<div class="text-align-center">
+    <app-round-icon theme="error" name="error"></app-round-icon>
+    <h1 class="no-margin-bottom">Отказаться от займа</h1>
+    <p class="text-2  margin-top-x1">Пожалуйста, укажите причину</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <app-input-radio [formControl]="reasonControl"
+                         [items]="reasonItems"
+                         [errorMessage]="reasonControl.errors | errorMessage"
+        ></app-input-radio>
+
+        <div class="margin-top-x2">
+            <app-button (clicked)="close()">Закрыть и не отказываться</app-button>
+        </div>
+
+        <div class="margin-top-x2">
+            <app-button type="submit" theme="cancel">Отказаться от займа</app-button>
+        </div>
+    </form>
+</div>
+
+
