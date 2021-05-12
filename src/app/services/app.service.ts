@@ -95,7 +95,7 @@ export class AppService {
 
   // процесс дозаписи
   routeInitForm(): void {
-    this.setPage('passport')
+    this.setPage('anketa')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
