@@ -4,7 +4,7 @@ import { formattedMobilePhone, numberFormat } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
   CheckSMSResponseInterface,
-  couca_6_9_RequestInterface,
+  Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetProductOfferListResponseInterface,
   InitOrderFormResponseInterface,
@@ -198,7 +198,7 @@ export class AppService {
     )
   }
 
-  couca_6_9(data: couca_6_9_RequestInterface): void {
+  couca_6_9(data: Couca_6_9_RequestInterface): void {
     this.showPreloader()
 
     this.api.couca_6_9(data).subscribe(

@@ -6,7 +6,7 @@ import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
   CheckSMSRequestInterface,
-  couca_6_9_RequestInterface,
+  Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetProductOfferListResponseInterface,
   InitOrderFormResponseInterface,
@@ -138,7 +138,7 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
-  couca_6_9(body: couca_6_9_RequestInterface): Observable<any> {
+  couca_6_9(body: Couca_6_9_RequestInterface): Observable<any> {
     const mockupData = getMockup('/couca_6_9', AppApiMockup.couca_6_9.success, body)
     const requestData = {
       path: '/couca_6_9',

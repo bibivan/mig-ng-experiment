@@ -146,8 +146,50 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
+  static checkName = {
+    success: {
+      check: true
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
   static saveAnketa = {
     success: {},
+    successWithUcdbId: {
+      order: {
+        ucdbId: '12345'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_100 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getUcdbId = {
+    success: {
+      order: {
+        ucdbId: '12345'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusAnketa = {
+    success: {
+      order: {
+        status: '3.4'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '4.74', // '99' '3.1' '3.2' '3.3' '4.1' '4.5' '4.74'
+        // statusReason: 'APP_NeedCustomerResponse',
+      }
+    },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 

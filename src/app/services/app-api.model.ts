@@ -2,6 +2,15 @@ import { TermLoanInterface } from '../shared/calculator/calculator.model'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
 import { ABTestInterface, ContractInterface, OrderInterface, productListType } from './app.model'
 
+export interface GetStatusResponseInterface {
+  isFinalStatus: boolean,
+  isGetClientLoyaltyStatus?: boolean,
+  order: {
+    status: string,
+    statusReason?: string
+  }
+}
+
 export interface InitOrderFormResponseInterface {
   order: OrderInterface
 }
@@ -17,6 +26,14 @@ export interface CheckPhoneResponseInterface {
   promotions?: boolean,
 }
 
+export interface CheckNameRequestInterface {
+  name: string
+}
+
+export interface CheckNameResponseInterface {
+  check: boolean
+}
+
 export interface SaveAnketaRequestInterface {
   ABTest: ABTestInterface,
   accept: boolean,
@@ -30,6 +47,18 @@ export interface SaveAnketaRequestInterface {
   patronymic: string,
   sum: number,
   term: TermLoanInterface
+}
+
+export interface SaveAnketaResponseInterface {
+  order?: {
+    ucdbId: string
+  }
+}
+
+export interface GetUcdbIdResponseInterface {
+  order: {
+    ucdbId: string
+  }
 }
 
 export interface SendSMSResponseInterface {
@@ -92,7 +121,7 @@ export interface GetProductOfferListResponseInterface {
 }
 
 // tslint:disable-next-line:class-name
-export interface couca_6_9_RequestInterface {
+export interface Couca_6_9_RequestInterface {
   checkSMS: boolean,
   order: {
     status: string // 2.3 - COUCA_2_3 -> limit
