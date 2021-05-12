@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonTextModule } from '../../shared/button-text/button-text.module'
 import { ButtonModule } from '../../shared/button/button.module'
@@ -10,8 +10,7 @@ import { InputModule } from '../../shared/input/input.module'
 import { SecurityMessageModule } from '../../shared/security-message/security-message.module'
 import { SelectModule } from '../../shared/select/select.module'
 import { SharedModule } from '../../shared/shared.module'
-import { EmploymentAndIncomeComponent } from './employment-and-income.component';
-
+import { EmploymentAndIncomeComponent } from './employment-and-income.component'
 
 
 @NgModule({
@@ -35,4 +34,4 @@ import { EmploymentAndIncomeComponent } from './employment-and-income.component'
     ButtonTextModule
   ]
 })
-export class EmploymentAndIncomeModule { }
+export class EmploymentAndIncomeModule {}

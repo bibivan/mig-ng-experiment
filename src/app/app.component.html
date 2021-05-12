@@ -37,7 +37,15 @@
                           [products]="state.products"
             ></app-products>
 
-            <app-contract *ngSwitchCase="'contract'"></app-contract>
+            <app-snils *ngSwitchCase="'snils'"
+                       [order]="state.order"
+            ></app-snils>
+
+            <app-hold-amount *ngSwitchCase="'hold_amount'"></app-hold-amount>
+
+            <app-contract *ngSwitchCase="'contract'"
+                          [contract]="state.contract"
+            ></app-contract>
 
             <app-final *ngSwitchCase="'final'"
                        [order]="state.order"

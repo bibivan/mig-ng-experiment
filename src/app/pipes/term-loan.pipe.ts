@@ -7,11 +7,17 @@ import { TermLoanInterface } from '../shared/calculator/calculator.model'
 })
 export class TermLoanPipe implements PipeTransform {
 
+  private readonly termLabelsData = {
+    Day: ['день', 'дня', 'дней'],
+    Month: ['месяц', 'месяца', 'месяцев'],
+    Week: ['неделя', 'недели', 'недель'],
+  }
+
   transform(term: TermLoanInterface): string {
     if (!term) { return '' }
 
     const { value, termUnit } = term
-    const termLabels = termUnit === 'week' ? ['неделя', 'недели', 'недель'] : ['день', 'дня', 'дней']
+    const termLabels = this.termLabelsData[termUnit]
 
     return `${ value } ${ declOfNum(value, termLabels) }`
   }

@@ -72,8 +72,8 @@
             <div class="form-divider margin-top-x2 margin-bottom-x2"></div>
 
             <h2 class="h1">Адрес регистрации</h2>
-            <app-kladr-address type="live"
-                               [address]="order.address.Fact"
+            <app-kladr-address type="Fact"
+                               [address]="order.address?.Fact"
                                [touched]="formTouched"
                                (changed)="saveKladrAddress($event)"
             ></app-kladr-address>
@@ -91,8 +91,8 @@
 
             <div [class.hide]="liveRegFlagControl.value">
                 <h3>Адрес регистрации</h3>
-                <app-kladr-address type="reg"
-                                   [address]="order.address.Registration"
+                <app-kladr-address type="Registration"
+                                   [address]="order.address?.Registration"
                                    [touched]="formTouched"
                                    (changed)="saveKladrAddress($event)"
                 ></app-kladr-address>

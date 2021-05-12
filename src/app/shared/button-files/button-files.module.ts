@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonFilesComponent } from './button-files.component'
+import { NgModule } from '@angular/core'
 import { IconModule } from '../icon/icon.module'
+import { ButtonFilesComponent } from './button-files.component'
 
 
 @NgModule({

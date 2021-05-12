@@ -1,67 +1,67 @@
 <app-form-progress stepId="employment_and_income" [stepPercent]="formProgressValue"></app-form-progress>
 
- <app-container>
-     <app-form-wrapper>
-         <h1>Занятость и доходы</h1>
+<app-container>
+    <app-form-wrapper>
+        <h1>Занятость и доходы</h1>
 
-         <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
-             <app-select [formControl]="typeWorkControl"
-                         [options]="typeWorkOptions"
-                         placeholder="Тип занятости"
-                         [mandatory]="true"
-                         [errorMessage]="typeWorkControl.errors | errorMessage"
-             ></app-select>
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <app-select [formControl]="typeWorkControl"
+                        [options]="typeWorkOptions"
+                        placeholder="Тип занятости"
+                        [mandatory]="true"
+                        [errorMessage]="typeWorkControl.errors | errorMessage"
+            ></app-select>
 
-             <div [class.hide]="!isAvailableWorkBlock">
-                 <app-input [formControl]="companyNameControl"
-                            placeholder="Название организации"
-                            [mandatory]="true"
-                            [errorMessage]="companyNameControl.errors | errorMessage"
-                 ></app-input>
+            <div [class.hide]="!isAvailableWorkBlock">
+                <app-input [formControl]="companyNameControl"
+                           placeholder="Название организации"
+                           [mandatory]="true"
+                           [errorMessage]="companyNameControl.errors | errorMessage"
+                ></app-input>
 
-                 <app-input [formControl]="workPhoneControl"
-                            placeholder="Рабочий телефон"
-                            mask="phone"
-                            [errorMessage]="workPhoneControl.errors | errorMessage"
-                 ></app-input>
+                <app-input [formControl]="workPhoneControl"
+                           placeholder="Рабочий телефон"
+                           mask="phone"
+                           [errorMessage]="workPhoneControl.errors | errorMessage"
+                ></app-input>
 
-                 <app-input [formControl]="companyStartControl"
-                            placeholder="Дата начала работы"
-                            mask="dateMonthYear"
-                            [mandatory]="true"
-                            [errorMessage]="companyStartControl.errors | errorMessage"
-                 ></app-input>
+                <app-input [formControl]="companyStartControl"
+                           placeholder="Дата начала работы"
+                           mask="dateMonthYear"
+                           [mandatory]="true"
+                           [errorMessage]="companyStartControl.errors | errorMessage"
+                ></app-input>
 
-                 <app-input [formControl]="incomeWorkControl"
-                            placeholder="Заработная плата"
-                            mask="currency"
-                            [currencyPrecision]="0"
-                            [mandatory]="true"
-                            [errorMessage]="incomeWorkControl.errors | errorMessage"
-                 ></app-input>
+                <app-input [formControl]="incomeWorkControl"
+                           placeholder="Заработная плата"
+                           mask="currency"
+                           [currencyPrecision]="0"
+                           [mandatory]="true"
+                           [errorMessage]="incomeWorkControl.errors | errorMessage"
+                ></app-input>
 
-                 <app-input [formControl]="paymentCreditControl"
-                            placeholder="Расходы по кредитам"
-                            mask="currency"
-                            [currencyPrecision]="0"
-                            [mandatory]="true"
-                            [errorMessage]="paymentCreditControl.errors | errorMessage"
-                 ></app-input>
-             </div>
+                <app-input [formControl]="paymentCreditControl"
+                           placeholder="Расходы по кредитам"
+                           mask="currency"
+                           [currencyPrecision]="0"
+                           [mandatory]="true"
+                           [errorMessage]="paymentCreditControl.errors | errorMessage"
+                ></app-input>
+            </div>
 
-             <app-security-message class="margin-top-x2 hide-mobile"></app-security-message>
+            <app-security-message class="margin-top-x2 hide-mobile"></app-security-message>
 
-             <div class="grid margin-top-x2">
-                 <div class="col w-50 float-right">
-                     <app-button type="submit">Продолжить</app-button>
-                 </div>
-                 <div class="col w-50 float-right">
-                     <app-security-message class="hide-desktop margin-top-x2 margin-bottom-x2"></app-security-message>
-                     <p class="back-button-text">
-                         <span class="link" (click)="onClickBackButton()">Вернуться назад</span>
-                     </p>
-                 </div>
-             </div>
-         </form>
-     </app-form-wrapper>
- </app-container>
+            <div class="grid margin-top-x2">
+                <div class="col w-50 float-right">
+                    <app-button type="submit">Продолжить</app-button>
+                </div>
+                <div class="col w-50 float-right">
+                    <app-security-message class="hide-desktop margin-top-x2 margin-bottom-x2"></app-security-message>
+                    <p class="back-button-text">
+                        <span class="link" (click)="onClickBackButton()">Вернуться назад</span>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </app-form-wrapper>
+</app-container>

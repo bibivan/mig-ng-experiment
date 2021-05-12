@@ -1,1 +1,10 @@
-<p>contract works!</p>
+<app-container *ngIf="contract">
+    <app-form-wrapper>
+        <h1 class="no-margin-bottom">Проверьте и подпишите договор займа</h1>
+        <p class="text-2 color-gray margin-top-x1">
+            {{ contract.name }} {{ contract.patronymic }}, пожалуйста ознакомьтесь с договором займа
+            и подпишите его с помощью SMS-кода
+        </p>
+        <p>{{ contract | json }}</p>
+    </app-form-wrapper>
+</app-container>

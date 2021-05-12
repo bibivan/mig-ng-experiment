@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { AccordionModule } from '../../shared/accordion/accordion.module'
 import { ButtonBackModule } from '../../shared/button-back/button-back.module'
 import { ButtonFilesModule } from '../../shared/button-files/button-files.module'

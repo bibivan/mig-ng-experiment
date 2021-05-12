@@ -1,6 +1,7 @@
-import { Component, OnInit, Output } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
+import { couca_6_9_RequestInterface } from '../../services/app-api.model'
 import { AppService } from '../../services/app.service'
 import { inputRadioButtonListType } from '../../shared/input-radio/input-radio.model'
 
@@ -40,11 +41,16 @@ export class RefusalLoanComponent implements OnInit {
     this.form.markAllAsTouched()
     if (this.form.invalid) { return }
 
-    console.log('submit')
+    this.close()
+    this.app.couca_6_9(this.serializeForm())
   }
 
   close(): void {
     this.app.closeRefusalLoanModal()
+  }
+
+  private serializeForm(): couca_6_9_RequestInterface {
+    return this.form.value
   }
 
   get reasonControl(): FormControl {

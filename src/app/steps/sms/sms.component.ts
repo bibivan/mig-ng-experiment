@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { Subscription, timer } from 'rxjs'
-import { AppStateInterface, OrderInterface, SMSSettingsInterface } from '../../services/app.model'
+import { OrderInterface, SMSSettingsInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 
 @Component({

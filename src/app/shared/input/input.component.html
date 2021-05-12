@@ -1,4 +1,4 @@
-<label [class.empty]="!formControl.value && !focused && mask !== 'currency'"
+<label [class.empty]="(formControl.value === null || formControl.value === '')  && !focused"
        [class.focused]="focused"
        [class.masked-phone]="mask === 'phone' || mask === 'stacPhone'"
        [class.readonly]="readonly"

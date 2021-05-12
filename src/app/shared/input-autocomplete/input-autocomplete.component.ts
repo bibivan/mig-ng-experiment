@@ -1,16 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core'
-import {
-  FormControl,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms'
+import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core'
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 
 import { Subscription } from 'rxjs'

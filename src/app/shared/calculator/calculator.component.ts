@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Subscription } from 'rxjs'
-import { log } from 'util'
 import { CalculatorStateInterface, CalculatorValueInterface } from './calculator.model'
 import { CalculatorService } from './calculator.service'
 
@@ -33,7 +32,6 @@ export class CalculatorComponent implements OnInit, OnDestroy {
 
   init(value: CalculatorValueInterface): void {
     this.stateSub = this.calculator.state$.subscribe(this.refreshState.bind(this))
-
     this.calculator.init(value)
   }
 

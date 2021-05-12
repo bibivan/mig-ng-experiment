@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from '../../shared/button/button.module'
 import { ContainerModule } from '../../shared/container/container.module'
@@ -9,8 +9,7 @@ import { InputModule } from '../../shared/input/input.module'
 import { SecurityMessageModule } from '../../shared/security-message/security-message.module'
 import { SelectModule } from '../../shared/select/select.module'
 import { SharedModule } from '../../shared/shared.module'
-import { AdditionalContactComponent } from './additional-contact.component';
-
+import { AdditionalContactComponent } from './additional-contact.component'
 
 
 @NgModule({
@@ -33,4 +32,4 @@ import { AdditionalContactComponent } from './additional-contact.component';
     ButtonModule
   ]
 })
-export class AdditionalContactModule { }
+export class AdditionalContactModule {}

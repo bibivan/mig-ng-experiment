@@ -1,5 +1,5 @@
-export type termUnitType = 'Week' | 'Day'
-export type termUnitIdType = 'day' | 'weekShort' | 'weekFull'
+export type termUnitType = 'Week' | 'Day' | 'Month'
+export type termUnitIdType = 'Day' | 'weekShort' | 'weekFull'
 
 export interface CalculatorDataInterface {
   [key: string]: number
@@ -7,7 +7,7 @@ export interface CalculatorDataInterface {
 
 export interface TermLoanInterface {
   value: number,
-  termUnit: string
+  termUnit: termUnitType
 }
 
 export interface CalculatorStateInterface {

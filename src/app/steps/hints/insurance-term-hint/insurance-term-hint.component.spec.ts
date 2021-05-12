@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { InsuranceTermHintComponent } from './insurance-term-hint.component';
+import { InsuranceTermHintComponent } from './insurance-term-hint.component'
 
 describe('InsuranceTermHintComponent', () => {
-  let component: InsuranceTermHintComponent;
-  let fixture: ComponentFixture<InsuranceTermHintComponent>;
+  let component: InsuranceTermHintComponent
+  let fixture: ComponentFixture<InsuranceTermHintComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InsuranceTermHintComponent ]
+      declarations: [InsuranceTermHintComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InsuranceTermHintComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(InsuranceTermHintComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

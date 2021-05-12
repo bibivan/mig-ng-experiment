@@ -5,7 +5,7 @@ import { ClassificatorValidateRules } from '../../helpers/classificator-validate
 import { FormValidators } from '../../helpers/form-validators'
 import { isAvailableWorkBlock } from '../../helpers/helper'
 import { SaveEmploymentAndIncomeRequestInterface } from '../../services/app-api.model'
-import { AppStateInterface, OrderInterface } from '../../services/app.model'
+import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { FormProgressService } from '../../shared/form-progress/form-progress.service'
 import { selectOptionsType } from '../../shared/select/select.model'

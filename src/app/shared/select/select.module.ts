@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { SelectComponent } from './select.component'
-import { NgSelectModule } from '@ng-select/ng-select'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
+import { NgSelectModule } from '@ng-select/ng-select'
 import { IconModule } from '../icon/icon.module'
+import { SelectComponent } from './select.component'
 
 @NgModule({
   declarations: [SelectComponent],

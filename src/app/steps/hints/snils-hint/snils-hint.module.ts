@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ButtonModule } from '../../../shared/button/button.module'
-import { SnilsHintComponent } from './snils-hint.component';
-
+import { SnilsHintComponent } from './snils-hint.component'
 
 
 @NgModule({
@@ -17,4 +16,4 @@ import { SnilsHintComponent } from './snils-hint.component';
     ButtonModule
   ]
 })
-export class SnilsHintModule { }
+export class SnilsHintModule {}

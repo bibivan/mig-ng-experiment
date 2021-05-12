@@ -1,6 +1,6 @@
-import { of, throwError } from 'rxjs'
+import { throwError } from 'rxjs'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
-import { ProductItemInterface } from './app.model'
+import { OrderInterface, ProductItemInterface } from './app.model'
 
 const productItem: ProductItemInterface = {
   Amount: 10000,
@@ -112,6 +112,9 @@ export class AppApiMockup {
         workPhone: '9876543211',
       }
     },
+    successEmpty: {
+      order: {} as OrderInterface
+    },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
@@ -215,6 +218,47 @@ export class AppApiMockup {
 
   // tslint:disable-next-line:variable-name
   static couca_6_9 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveProduct = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveSNILS = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getApplicationContract = {
+    success: {
+      order: {
+        lastname: 'Кейдж',
+        name: 'Им',
+        patronymic: 'Отч',
+        email: 'email@email.ru',
+        mobilePhone: '9876543210',
+        insurance: true,
+        contract: {
+          sum: 35000,
+          term: {
+            value: 10,
+            termUnit: 'Day',
+          },
+          payment: 2000,
+          datePayment: '2021-07-08T00:00:00',
+          number: '12345567',
+          date: '2021-05-04T00:00:00',
+          dateEnd: '2021-12-03T00:00:00',
+        }
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveHoldAmount = {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
   }

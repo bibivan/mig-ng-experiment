@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
-import { ClassificatorSelectOptions } from '../../helpers/classificator-select-options'
 import { ClassificatorValidateRules } from '../../helpers/classificator-validate-rules'
 import { FormValidators } from '../../helpers/form-validators'
 import { getGenderByFIO, getSerialAndNumberPassport } from '../../helpers/helper'
 import { SavePassportRequestInterface } from '../../services/app-api.model'
-import { AppStateInterface, OrderInterface } from '../../services/app.model'
+import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { FormProgressService } from '../../shared/form-progress/form-progress.service'
 import { KladrAddressInterface } from '../../shared/kladr-address/kladr-address.model'
@@ -44,13 +43,18 @@ export class PassportComponent implements OnInit {
   }
 
   buildForm(): void {
-    let serialNumberPassport = ''
+    let serialNumberPassport = null
     if (this.order) {
       serialNumberPassport = this.order.serialPassport + this.order.numberPassport
     }
 
+    let liveRegFlag = true
+    if (this.order?.liveRegFlag !== undefined) {
+      liveRegFlag = this.order.liveRegFlag
+    }
+
     this.form = this.fb.group({
-      serialNumberPassport: [serialNumberPassport, [FormValidators.required, FormValidators.passportSerialNumber]],
+      serialNumberPassport: [serialNumberPassport || null, [FormValidators.required, FormValidators.passportSerialNumber]],
       datePassport: [this.order?.datePassport],
       codePassport: [this.order?.codePassport, [FormValidators.required, FormValidators.passportCode]],
       wherePassport: [this.order?.wherePassport, [FormValidators.required, FormValidators.noneEnglish]],
@@ -59,7 +63,7 @@ export class PassportComponent implements OnInit {
       changeLastnameFlag: [false],
       prevLastname: [this.order?.prevLastname, [FormValidators.textRus]],
       stacPhone: [this.order?.stacPhone],
-      liveRegFlag: [this.order?.liveRegFlag],
+      liveRegFlag: [liveRegFlag],
       address: this.fb.group({
         Registration: this.kladrAddress.getKladrFormGroup('Registration'),
         Fact: this.kladrAddress.getKladrFormGroup('Fact'),

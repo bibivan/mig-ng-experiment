@@ -29,7 +29,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 0  0 0 $indent16;
+    margin: 0 0 0 $indent16;
     padding: $indent12;
     width: calc(50% - 16px);
     height: 74px;
@@ -65,7 +65,8 @@
     .icon {
       display: block;
       flex-shrink: 0;
-      width: 44px; height: 44px;
+      width: 44px;
+      height: 44px;
       background: $colorLightBlue url("./img/icon.svg") center no-repeat;
       background-size: 24px 24px;
       border-radius: $borderRadius11;

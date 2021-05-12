@@ -12,7 +12,8 @@ import {
   validateEmail,
   validateMigCardNumber,
   validateMobilePhone,
-  validateServiceNumber, validateSnils
+  validateServiceNumber,
+  validateSnils
 } from './helper'
 
 export interface ErrorObject {

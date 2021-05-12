@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PersonalAccountHintComponent } from './personal-account-hint.component';
+import { PersonalAccountHintComponent } from './personal-account-hint.component'
 
 describe('PersonalAccountHintComponent', () => {
-  let component: PersonalAccountHintComponent;
-  let fixture: ComponentFixture<PersonalAccountHintComponent>;
+  let component: PersonalAccountHintComponent
+  let fixture: ComponentFixture<PersonalAccountHintComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PersonalAccountHintComponent ]
+      declarations: [PersonalAccountHintComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PersonalAccountHintComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PersonalAccountHintComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

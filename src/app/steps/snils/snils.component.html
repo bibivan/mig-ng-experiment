@@ -1,1 +1,32 @@
-<p>snils works!</p>
+<app-container>
+    <app-form-wrapper [small]="true">
+        <div class="text-align-center margin-bottom-x2">
+            <app-round-icon theme="error" name="error"></app-round-icon>
+            <h1 class="margin-top-x1 no-margin-bottom">
+                Идентификация не пройдена
+            </h1>
+            <p class="text-2 color-gray margin-top-x1">
+                Просим вас проверить корректность СНИЛС
+            </p>
+        </div>
+
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <app-input [formControl]="snilsControl"
+                       placeholder="СНИЛС"
+                       mask="snils"
+                       [mandatory]="true"
+                       [errorMessage]="snilsControl.errors | errorMessage"
+            ></app-input>
+
+            <app-security-message class="margin-bottom-x2"></app-security-message>
+            <div class="margin-bottom-x2">
+                <app-button type="submit">Продолжить</app-button>
+            </div>
+            <p class="text-2 text-align-center">
+                Если все данные правильные, обратитесь в
+                <span class="link" (click)="onClickSupport()">техподдержку</span>, описав ситуацию
+            </p>
+        </form>
+
+    </app-form-wrapper>
+</app-container>

@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { environment } from '../../../environments/environment'
-import { numberFormat, openExternalLink } from '../../helpers/helper'
+import { SaveProductRequestInterface } from '../../services/app-api.model'
 import {
   OrderInterface,
   ProductInsuranceItemInterface,
@@ -39,8 +38,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.app.closeToast()
   }
 
-  setProduct(): void {
-    console.log('save product', this.selectedProduct, this.selectedInsurance)
+  saveProduct(): void {
+    this.app.saveProduct(this.serializeForm())
   }
 
   changeProduct(product: ProductItemInterface): void {
@@ -99,4 +98,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.app.openSumLoanHint()
   }
 
+  private serializeForm(): SaveProductRequestInterface {
+    const insurance = this.selectedInsurance ? true : false
+    const productId = this.selectedProduct.id
+
+    return { insurance, productId }
+  }
 }

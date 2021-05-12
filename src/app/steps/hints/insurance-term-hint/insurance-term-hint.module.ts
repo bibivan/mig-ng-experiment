@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ButtonModule } from '../../../shared/button/button.module'
-import { InsuranceTermHintComponent } from './insurance-term-hint.component';
-
+import { InsuranceTermHintComponent } from './insurance-term-hint.component'
 
 
 @NgModule({
@@ -17,4 +16,4 @@ import { InsuranceTermHintComponent } from './insurance-term-hint.component';
     ButtonModule
   ]
 })
-export class InsuranceTermHintModule { }
+export class InsuranceTermHintModule {}

@@ -2,6 +2,9 @@
 
 :host {
   display: block;
+}
+
+.content {
   position: relative;
   z-index: 10;
   margin: $indent20 auto;
@@ -12,6 +15,14 @@
   overflow: hidden;
 
   max-width: 768px;
+
+  &.small {
+    max-width: 514px;
+    @include desktop {
+      padding-left: 73px;
+      padding-right: 73px;
+    }
+  }
 
   @include mobile {
     max-width: calc(100% + 32px);

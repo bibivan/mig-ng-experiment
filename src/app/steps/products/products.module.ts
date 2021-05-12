@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonTextModule } from '../../shared/button-text/button-text.module'
 import { ButtonModule } from '../../shared/button/button.module'
@@ -10,8 +10,7 @@ import { InputCheckboxModule } from '../../shared/input-checkbox/input-checkbox.
 import { ModalModule } from '../../shared/modal/modal.module'
 import { RoundIconModule } from '../../shared/round-icon/round-icon.module'
 import { SharedModule } from '../../shared/shared.module'
-import { ProductsComponent } from './products.component';
-
+import { ProductsComponent } from './products.component'
 
 
 @NgModule({
@@ -35,4 +34,4 @@ import { ProductsComponent } from './products.component';
     RoundIconModule
   ]
 })
-export class ProductsModule { }
+export class ProductsModule {}

@@ -1,16 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
-import { any } from 'codelyzer/util/function'
 import { FormValidators } from '../../helpers/form-validators'
 import { clearMaskedValue } from '../../helpers/helper'
-import { ApiService } from '../../services/api.service'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
   SaveAnketaRequestInterface
 } from '../../services/app-api.model'
 import { AppApiService } from '../../services/app-api.service'
-import { ABTestInterface, AppStateInterface, OrderInterface } from '../../services/app.model'
+import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { CalculatorService } from '../../shared/calculator/calculator.service'
 import { FormProgressService } from '../../shared/form-progress/form-progress.service'

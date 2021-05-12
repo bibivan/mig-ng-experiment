@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FinalComponent } from './final.component';
+import { FinalComponent } from './final.component'
 
 describe('FinalComponent', () => {
-  let component: FinalComponent;
-  let fixture: ComponentFixture<FinalComponent>;
+  let component: FinalComponent
+  let fixture: ComponentFixture<FinalComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FinalComponent ]
+      declarations: [FinalComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FinalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(FinalComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

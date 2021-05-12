@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
-import {
-  InvalidControlFocusDirective
-} from '../directives/invalid-control-focus.directive'
+import { InvalidControlFocusDirective } from '../directives/invalid-control-focus.directive'
 import { CurrencyRubPipe } from '../pipes/currency-rub.pipe'
 import { ErrorMessagePipe } from '../pipes/error-message.pipe'
 import { MobilePhonePipe } from '../pipes/mobile-phone.pipe'

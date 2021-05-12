@@ -3,13 +3,21 @@ import { interval, Subject, Subscription, timer } from 'rxjs'
 import { formattedMobilePhone, numberFormat } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
-  CheckSMSResponseInterface, GetProductOfferListResponseInterface,
-  InitOrderFormResponseInterface, SaveAdditionalContactRequestInterface,
-  SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface, SavePassportRequestInterface
+  CheckSMSResponseInterface,
+  couca_6_9_RequestInterface,
+  GetApplicationContractResponseInterface,
+  GetProductOfferListResponseInterface,
+  InitOrderFormResponseInterface,
+  SaveAdditionalContactRequestInterface,
+  SaveAnketaRequestInterface,
+  SaveEmploymentAndIncomeRequestInterface,
+  SaveHoldAmountRequestInterface,
+  SavePassportRequestInterface,
+  SaveProductRequestInterface,
+  SaveSNILSRequestInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
-import { appPagesType, AppStateInterface, OrderInterface, productListType, SMSSettingsInterface } from './app.model'
-import { GetTokenResponseInterface } from './authentication.model'
+import { appPagesType, AppStateInterface, ContractInterface, productListType } from './app.model'
 import { AuthenticationService } from './authentication.service'
 
 @Injectable({
@@ -22,6 +30,7 @@ export class AppService {
       limit: false,
       seconds: 0,
     },
+    contract: null,
     isInit: false,
     isOpenInsuranceInfoHint: false,
     isOpenInsuranceTermHint: false,
@@ -61,7 +70,7 @@ export class AppService {
 
   getToken(): void {
     this.authentication.getToken().subscribe(
-      (data: GetTokenResponseInterface) => {
+      () => {
         this.initForm()
       },
       () => this.errorHandler(this.getToken.bind(this)),
@@ -70,13 +79,10 @@ export class AppService {
 
   init(): void {
     this.api.initOrderForm().subscribe(
-      (data: InitOrderFormResponseInterface) => {
-        this.updateOrder(data.order)
+      (response: InitOrderFormResponseInterface) => {
+        this.updateOrder(response.order)
         this.initCompleted()
-
-        // процесс дозаписи
-        // this.getProductOfferList()
-        this.setPage('anketa')
+        this.routeInitForm()
       },
       () => this.errorHandler(this.getToken.bind(this))
     )
@@ -87,6 +93,11 @@ export class AppService {
     this.refreshState()
   }
 
+  // процесс дозаписи
+  routeInitForm(): void {
+    this.setPage('passport')
+  }
+
   saveAnketa(data: SaveAnketaRequestInterface): void {
     this.showPreloader()
     this.updateOrder(data)
@@ -95,21 +106,21 @@ export class AppService {
       () => {
         this.sendSMS()
       },
-      () => this.errorHandler(this.saveAnketa.bind(this))
+      () => this.errorHandler(this.saveAnketa.bind(this, data))
     )
   }
 
   sendSMS(): void {
     this.showPreloader()
     this.api.sendSMS().subscribe(
-      (data) => {
-        if (!data) {
+      (response) => {
+        if (!response) {
           this.errorHandler(this.sendSMS.bind(this))
           return
         }
 
-        this.state.anketaSMS.limit = !data.repeatSendSMS
-        this.state.anketaSMS.seconds = data.smsSeconds
+        this.state.anketaSMS.limit = !response.repeatSendSMS
+        this.state.anketaSMS.seconds = response.smsSeconds
         this.state.anketaSMS.code = ''
         this.updateTimerAnketaSMS()
         this.setPage('sms')
@@ -124,11 +135,11 @@ export class AppService {
 
     const body: CheckSMSRequestInterface = { code }
     this.api.checkSMS(body).subscribe(
-      (data: CheckSMSResponseInterface) => {
+      (response: CheckSMSResponseInterface) => {
         this.setPage('passport')
         this.openPersonalAccountHint()
       },
-      () => this.errorHandler(this.checkSMS.bind(this))
+      () => this.errorHandler(this.checkSMS.bind(this, body))
     )
   }
 
@@ -140,7 +151,7 @@ export class AppService {
       () => {
         this.setPage('employment_and_income')
       },
-      () => this.errorHandler(this.savePassport.bind(this))
+      () => this.errorHandler(this.savePassport.bind(this, data))
     )
   }
 
@@ -152,7 +163,7 @@ export class AppService {
       () => {
         this.setPage('additional_contact')
       },
-      () => this.errorHandler(this.saveEmploymentAndIncome.bind(this))
+      () => this.errorHandler(this.saveEmploymentAndIncome.bind(this, data))
     )
   }
 
@@ -164,7 +175,7 @@ export class AppService {
       () => {
         this.getProductOfferList()
       },
-      () => this.errorHandler(this.saveAdditionalContact.bind(this))
+      () => this.errorHandler(this.saveAdditionalContact.bind(this, data))
     )
   }
 
@@ -172,8 +183,8 @@ export class AppService {
     this.showPreloader()
 
     this.api.getProductOfferList().subscribe(
-      (data: GetProductOfferListResponseInterface) => {
-        const products = data?.order?.productOfferList || []
+      (response: GetProductOfferListResponseInterface) => {
+        const products = response?.order?.productOfferList || []
         if (!products || !products.length) {
           this.errorHandler(this.getProductOfferList.bind(this))
           return
@@ -182,9 +193,70 @@ export class AppService {
         this.saveProducts(products)
         this.setPage('products')
         this.openToastProducts()
-        this.openRefusalLoanModal()
       },
       () => this.errorHandler(this.getProductOfferList.bind(this))
+    )
+  }
+
+  couca_6_9(data: couca_6_9_RequestInterface): void {
+    this.showPreloader()
+
+    this.api.couca_6_9(data).subscribe(
+      () => {
+        // финальный экран
+        this.setPage('final')
+      },
+      () => this.errorHandler(this.couca_6_9.bind(this, data))
+    )
+  }
+
+  saveProduct(data: SaveProductRequestInterface): void {
+    this.showPreloader()
+
+    this.api.saveProduct(data).subscribe(
+      () => {
+        this.executeRequest(this.getApplicationContract.bind(this))
+      },
+      () => this.errorHandler(this.saveProduct.bind(this, data))
+    )
+  }
+
+  saveSNILS(data: SaveSNILSRequestInterface): void {
+    this.showPreloader()
+    this.updateOrder(data)
+
+    this.api.saveSNILS(data).subscribe(
+      () => {
+        this.getApplicationContract()
+      },
+      () => this.errorHandler(this.saveSNILS.bind(this, data))
+    )
+  }
+
+  saveHoldAmount(data: SaveHoldAmountRequestInterface): void {
+    this.showPreloader()
+
+    this.api.saveHoldAmount(data).subscribe(
+      () => {
+        this.getApplicationContract()
+      },
+      () => this.errorHandler(this.saveHoldAmount.bind(this, data))
+    )
+  }
+
+  getApplicationContract(): void {
+    this.showPreloader()
+
+    this.api.getApplicationContract().subscribe(
+      (response: GetApplicationContractResponseInterface) => {
+        const contract: ContractInterface = response.order
+        this.state.contract = Object.assign({},
+          response.order,
+          { contract: contract.contract }
+        )
+        this.setPage('contract')
+      },
+      () => this.errorHandler(this.getApplicationContract.bind(this))
     )
   }
 
@@ -208,23 +280,12 @@ export class AppService {
     this.state.toast.caption = caption
     this.state.toast.text = text
 
-    // this.state.toast = Object.assign({
-    //   isOpen: true,
-    //   caption,
-    //   text,
-    // })
-
     this.timerToastSub = timer(5000).subscribe(this.closeToast.bind(this))
     this.refreshState()
   }
 
   closeToast(): void {
     this.state.toast.isOpen = false
-    // this.state.toast = Object.assign({
-    //   isOpen: false,
-    //   caption: '',
-    //   text: '',
-    // })
     this.timerToastSub?.unsubscribe()
     this.refreshState()
   }

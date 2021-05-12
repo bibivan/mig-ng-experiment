@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { IconModule } from '../icon/icon.module'
-import { SecurityMessageComponent } from './security-message.component';
-
+import { SecurityMessageComponent } from './security-message.component'
 
 
 @NgModule({
@@ -17,4 +16,4 @@ import { SecurityMessageComponent } from './security-message.component';
     IconModule
   ]
 })
-export class SecurityMessageModule { }
+export class SecurityMessageModule {}

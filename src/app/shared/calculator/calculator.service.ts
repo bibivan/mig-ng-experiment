@@ -5,7 +5,8 @@ import { CalculatorApiService } from './calculator-api.service'
 import {
   CalculatorDataInterface,
   CalculatorStateInterface,
-  CalculatorTermSettingsInterface, CalculatorValueInterface,
+  CalculatorTermSettingsInterface,
+  CalculatorValueInterface,
   termUnitIdType
 } from './calculator.model'
 
@@ -17,13 +18,13 @@ export class CalculatorService {
 
   private state: CalculatorStateInterface = {
     isLoading: true,
-    sum: 10000,
+    sum: 5000,
     sumMin: 3000,
     sumMax: 14000,
     sumStep: 1000,
     term: {
       value: 10,
-      termUnit: 'day',
+      termUnit: 'Day',
     },
     termMin: 0,
     termMax: 0,
@@ -44,18 +45,18 @@ export class CalculatorService {
 
   private termSettings = {
     day: {
-      id: 'day',
+      id: 'Day',
       sumMin: 3000,
       sumMax: 14000,
-      termUnit: 'day',
+      termUnit: 'Day',
       values: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-      defaultValue: 10,
+      defaultValue: 7,
     },
     weekShort: {
       id: 'weekShort',
       sumMin: 15000,
       sumMax: 30000,
-      termUnit: 'week',
+      termUnit: 'Week',
       values: [10, 12, 16, 20, 24],
       defaultValue: 2,
     },
@@ -63,7 +64,7 @@ export class CalculatorService {
       id: 'weekFull',
       sumMin: 31000,
       sumMax: 100000,
-      termUnit: 'week',
+      termUnit: 'Week',
       values: [10, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48],
       defaultValue: 3,
     },
@@ -76,8 +77,9 @@ export class CalculatorService {
   init(value: CalculatorValueInterface): void {
     const currentTermSettings = this.getTermSettings()
     this.setTermSettings(currentTermSettings)
-
-    this.setCalculatorValue(value)
+    if (value.sum && value.term) {
+      this.setCalculatorValue(value)
+    }
 
     if (!this.calculatorData || !Object.keys(this.calculatorData).length) {
       this.getCalculatorData()
@@ -164,6 +166,7 @@ export class CalculatorService {
     this.state.termSliderValue = defaultValue
 
     const termValue = +values[defaultValue]
+
     this.updateTermSliderLabel(termValue)
 
     this.state.termInputValueMin = +values[0]

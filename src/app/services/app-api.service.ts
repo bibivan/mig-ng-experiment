@@ -5,11 +5,18 @@ import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
-  CheckSMSRequestInterface, GetProductOfferListResponseInterface,
+  CheckSMSRequestInterface,
+  couca_6_9_RequestInterface,
+  GetApplicationContractResponseInterface,
+  GetProductOfferListResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
-  SaveAnketaRequestInterface, SaveEmploymentAndIncomeRequestInterface,
+  SaveAnketaRequestInterface,
+  SaveEmploymentAndIncomeRequestInterface,
+  SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
+  SaveProductRequestInterface,
+  SaveSNILSRequestInterface,
   SendSMSResponseInterface
 } from './app-api.model'
 import { getMockup } from './get-mockup'
@@ -24,7 +31,7 @@ export class AppApiService {
   ) {}
 
   initOrderForm(): Observable<InitOrderFormResponseInterface> {
-    const mockupData = getMockup('/initOrderForm', AppApiMockup.initOrderForm.success)
+    const mockupData = getMockup('/initOrderForm', AppApiMockup.initOrderForm.successEmpty)
     const requestData = {
       path: '/initOrderForm',
       mockupData
@@ -131,12 +138,55 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
-  couca_6_9(body: SaveAdditionalContactRequestInterface): Observable<any> {
+  couca_6_9(body: couca_6_9_RequestInterface): Observable<any> {
     const mockupData = getMockup('/couca_6_9', AppApiMockup.couca_6_9.success, body)
     const requestData = {
       path: '/couca_6_9',
       mockupData,
       body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  saveProduct(body: SaveProductRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveProduct', AppApiMockup.saveProduct.success, body)
+    const requestData = {
+      path: '/saveProduct',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  saveSNILS(body: SaveSNILSRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveSNILS', AppApiMockup.saveSNILS.success, body)
+    const requestData = {
+      path: '/saveSNILS',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  saveHoldAmount(body: SaveHoldAmountRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveHoldAmount', AppApiMockup.saveHoldAmount.success, body)
+    const requestData = {
+      path: '/saveHoldAmount',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getApplicationContract(): Observable<GetApplicationContractResponseInterface> {
+    const mockupData = getMockup('/getApplicationContract', AppApiMockup.getApplicationContract.success)
+    const requestData = {
+      path: '/getApplicationContract',
+      mockupData,
     }
 
     return this.api.post(requestData)

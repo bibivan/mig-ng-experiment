@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
-import { InputRadioComponent } from './input-radio.component'
 import { IconModule } from '../icon/icon.module'
+import { InputRadioComponent } from './input-radio.component'
 
 @NgModule({
   declarations: [InputRadioComponent],

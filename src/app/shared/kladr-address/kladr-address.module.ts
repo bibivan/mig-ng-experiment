@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { InputAutocompleteModule } from '../input-autocomplete/input-autocomplete.module'
 import { InputModule } from '../input/input.module'
 import { SelectModule } from '../select/select.module'
 import { SharedModule } from '../shared.module'
-import { KladrAddressComponent } from './kladr-address.component';
-
+import { KladrAddressComponent } from './kladr-address.component'
 
 
 @NgModule({
@@ -25,4 +24,4 @@ import { KladrAddressComponent } from './kladr-address.component';
     ReactiveFormsModule
   ]
 })
-export class KladrAddressModule { }
+export class KladrAddressModule {}

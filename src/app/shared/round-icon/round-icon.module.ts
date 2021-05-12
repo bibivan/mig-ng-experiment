@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { RoundIconComponent } from './round-icon.component'
+import { NgModule } from '@angular/core'
 import { IconModule } from '../icon/icon.module'
+import { RoundIconComponent } from './round-icon.component'
 
 
 @NgModule({

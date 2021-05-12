@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FormProgressComponent } from './form-progress.component'
+import { NgModule } from '@angular/core'
 import { ContainerModule } from '../container/container.module'
+import { FormProgressComponent } from './form-progress.component'
 
 
 @NgModule({

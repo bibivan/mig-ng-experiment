@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { InputCodeComponent } from './input-code.component'
+import { NgModule } from '@angular/core'
 import { CodeInputModule } from 'angular-code-input'
+import { InputCodeComponent } from './input-code.component'
 
 
 @NgModule({

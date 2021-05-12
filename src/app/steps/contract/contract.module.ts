@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ContractComponent } from './contract.component';
-
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { ContainerModule } from '../../shared/container/container.module'
+import { FormWrapperModule } from '../../shared/form-wrapper/form-wrapper.module'
+import { ContractComponent } from './contract.component'
 
 
 @NgModule({
@@ -12,7 +13,9 @@ import { ContractComponent } from './contract.component';
     ContractComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ContainerModule,
+    FormWrapperModule
   ]
 })
-export class ContractModule { }
+export class ContractModule {}

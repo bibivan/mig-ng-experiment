@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FinalComponent } from './final.component';
-
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { FinalComponent } from './final.component'
 
 
 @NgModule({
@@ -15,4 +14,4 @@ import { FinalComponent } from './final.component';
     CommonModule
   ]
 })
-export class FinalModule { }
+export class FinalModule {}

@@ -109,7 +109,7 @@
 
             <div class="line margin-bottom-x2"></div>
 
-            <app-button theme="get-money" (clicked)="setProduct()">
+            <app-button theme="get-money" (clicked)="saveProduct()">
                 Получить {{ selectedProduct.Amount | currencyRub }}
                 на {{ { value: selectedProduct.Term, termUnit: selectedProduct.TermUnit } | termLoan }}
             </app-button>

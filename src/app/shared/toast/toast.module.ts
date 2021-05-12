@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ToastComponent } from './toast.component';
-
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { ToastComponent } from './toast.component'
 
 
 @NgModule({
@@ -15,4 +14,4 @@ import { ToastComponent } from './toast.component';
     CommonModule
   ]
 })
-export class ToastModule { }
+export class ToastModule {}

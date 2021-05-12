@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { ButtonModule } from '../../shared/button/button.module'
 import { ContainerModule } from '../../shared/container/container.module'
@@ -14,8 +14,7 @@ import { SecurityMessageModule } from '../../shared/security-message/security-me
 import { SharedModule } from '../../shared/shared.module'
 import { TextareaModule } from '../../shared/textarea/textarea.module'
 import { SnilsHintModule } from '../hints/snils-hint/snils-hint.module'
-import { PassportComponent } from './passport.component';
-
+import { PassportComponent } from './passport.component'
 
 
 @NgModule({
@@ -43,4 +42,4 @@ import { PassportComponent } from './passport.component';
     SnilsHintModule,
   ]
 })
-export class PassportModule { }
+export class PassportModule {}

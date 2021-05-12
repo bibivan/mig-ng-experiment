@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { ButtonModule } from '../../../shared/button/button.module'
 import { RoundIconModule } from '../../../shared/round-icon/round-icon.module'
-import { SumLoanHintComponent } from './sum-loan-hint.component';
-
+import { SumLoanHintComponent } from './sum-loan-hint.component'
 
 
 @NgModule({
@@ -19,4 +18,4 @@ import { SumLoanHintComponent } from './sum-loan-hint.component';
     ButtonModule
   ]
 })
-export class SumLoanHintModule { }
+export class SumLoanHintModule {}

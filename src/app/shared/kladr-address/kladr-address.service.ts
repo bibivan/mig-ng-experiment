@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { Observable } from 'rxjs'
 import { ClassificatorSelectOptions } from '../../helpers/classificator-select-options'

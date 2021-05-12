@@ -128,11 +128,11 @@ export function getDeadlineDate(term: TermLoanInterface): Date {
 
   const deadlineDate = new Date()
   let days = term.value
-  if (term.termUnit === 'week') {
+  if (term.termUnit === 'Week') {
     days = days * 7
   }
 
-  if (term.termUnit === 'week') {
+  if (term.termUnit === 'Week') {
     days = days + 1
   }
   deadlineDate.setDate(deadlineDate.getDate() + days)
@@ -280,13 +280,14 @@ export function openExternalLink(url: string, target: '_blank' | '_self' = '_bla
 
 export function formattedMobilePhone(mobilePhone: string): string {
   if (!mobilePhone) { return '' }
-  if (mobilePhone.length !== 10) { return mobilePhone }
+  const clearMobilePhone = clearMaskedValue(mobilePhone)
+  if (clearMobilePhone.length !== 10) { return clearMobilePhone }
 
   let result = '+7'
-  result += ` (${ mobilePhone.slice(0, 3) })`
-  result += ` ${ mobilePhone.slice(3, 6) }`
-  result += `-${ mobilePhone.slice(6, 8) }`
-  result += `-${ mobilePhone.slice(8) }`
+  result += ` (${ clearMobilePhone.slice(0, 3) })`
+  result += ` ${ clearMobilePhone.slice(3, 6) }`
+  result += `-${ clearMobilePhone.slice(6, 8) }`
+  result += `-${ clearMobilePhone.slice(8) }`
 
   return result
 }

@@ -10,11 +10,13 @@ export type appPagesType =
   | 'additional_contact'
   | 'products'
   | 'snils'
+  | 'hold_amount'
   | 'contract'
   | 'final'
 
 export interface AppStateInterface {
-  anketaSMS: SMSSettingsInterface
+  anketaSMS: SMSSettingsInterface,
+  contract: ContractInterface,
   isInit: boolean,
   isOpenInsuranceInfoHint: boolean,
   isOpenInsuranceTermHint: boolean,
@@ -114,4 +116,22 @@ export type productInsuranceListType = Array<ProductInsuranceItemInterface>
 export interface ProductInsuranceItemInterface {
   id: string,
   amount: number
+}
+
+export interface ContractInterface {
+  contract: {
+    date: string,
+    dateEnd: string,
+    datePayment: string,
+    number: string,
+    payment: number,
+    sum: number,
+    term: TermLoanInterface,
+  },
+  email: string,
+  insurance: boolean,
+  lastname: string,
+  mobilePhone: string,
+  name: string,
+  patronymic: string,
 }

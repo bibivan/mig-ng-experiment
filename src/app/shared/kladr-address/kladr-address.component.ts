@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
 import { FormControl, FormGroup } from '@angular/forms'
 import { EMPTY, Observable } from 'rxjs'
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators'
@@ -40,10 +40,10 @@ export class KladrAddressComponent implements OnInit, OnChanges {
 
   constructor(
     private kladrAddress: KladrAddressService,
-    private elementRef: ElementRef,
   ) {}
 
   ngOnInit(): void {
+    console.log('type', this.type)
     this.regionOptions = this.kladrAddress.regions
 
     this.form = this.kladrAddress.getKladrFormGroup(this.type)
@@ -60,43 +60,6 @@ export class KladrAddressComponent implements OnInit, OnChanges {
       this.form.markAllAsTouched()
     }
   }
-
-  get regionControl(): FormControl {
-    return this.form.get('region') as FormControl
-  }
-
-  get punktControl(): FormControl {
-    return this.form.get('punkt') as FormControl
-  }
-
-  get punktCodeControl(): FormControl {
-    return this.form.get('punktCode') as FormControl
-  }
-
-  get streetControl(): FormControl {
-    return this.form.get('street') as FormControl
-  }
-
-  get streetCodeControl(): FormControl {
-    return this.form.get('streetCode') as FormControl
-  }
-
-  get homeControl(): FormControl {
-    return this.form.get('home') as FormControl
-  }
-
-  get flatControl(): FormControl {
-    return this.form.get('flat') as FormControl
-  }
-
-  get korpControl(): FormControl {
-    return this.form.get('korp') as FormControl
-  }
-
-  get strControl(): FormControl {
-    return this.form.get('str') as FormControl
-  }
-
 
   onSelectRegion(): void {
     const region = this.regionControl.value
@@ -280,6 +243,42 @@ export class KladrAddressComponent implements OnInit, OnChanges {
     }
 
     return code
+  }
+
+  get regionControl(): FormControl {
+    return this.form.get('region') as FormControl
+  }
+
+  get punktControl(): FormControl {
+    return this.form.get('punkt') as FormControl
+  }
+
+  get punktCodeControl(): FormControl {
+    return this.form.get('punktCode') as FormControl
+  }
+
+  get streetControl(): FormControl {
+    return this.form.get('street') as FormControl
+  }
+
+  get streetCodeControl(): FormControl {
+    return this.form.get('streetCode') as FormControl
+  }
+
+  get homeControl(): FormControl {
+    return this.form.get('home') as FormControl
+  }
+
+  get flatControl(): FormControl {
+    return this.form.get('flat') as FormControl
+  }
+
+  get korpControl(): FormControl {
+    return this.form.get('korp') as FormControl
+  }
+
+  get strControl(): FormControl {
+    return this.form.get('str') as FormControl
   }
 
 }

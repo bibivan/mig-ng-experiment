@@ -12,6 +12,6 @@ export class InsuranceTermHintComponent {
 
 
   openLink(url: string): void {
-    openExternalLink(url  + '?d=' + Math.random())
+    openExternalLink(url + '?d=' + Math.random())
   }
 }

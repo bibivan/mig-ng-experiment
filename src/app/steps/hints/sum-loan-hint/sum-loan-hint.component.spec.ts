@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SumLoanHintComponent } from './sum-loan-hint.component';
+import { SumLoanHintComponent } from './sum-loan-hint.component'
 
 describe('SumLoanHintComponent', () => {
-  let component: SumLoanHintComponent;
-  let fixture: ComponentFixture<SumLoanHintComponent>;
+  let component: SumLoanHintComponent
+  let fixture: ComponentFixture<SumLoanHintComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SumLoanHintComponent ]
+      declarations: [SumLoanHintComponent]
     })
-    .compileComponents();
-  });
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SumLoanHintComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(SumLoanHintComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

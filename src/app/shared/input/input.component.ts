@@ -1,17 +1,19 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter,
+  Component,
+  EventEmitter,
   forwardRef,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit, Output,
+  OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { CurrencyMaskInputMode } from 'ngx-currency'
-import { inputType, MaskConfigInterface, maskType } from './input.model'
 import { Subscription } from 'rxjs'
+import { inputType, MaskConfigInterface, maskType } from './input.model'
 
 @Component({
   selector: 'app-input',
@@ -78,6 +80,10 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
     }
 
     this.sub = this.formControl.valueChanges.subscribe(value => {
+      if (value === null) {
+        value = ''
+      }
+
       this.onTouched()
       this.onChange(value)
 

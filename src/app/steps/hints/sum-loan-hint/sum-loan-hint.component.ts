@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { AppService } from '../../../services/app.service'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-sum-loan-hint',

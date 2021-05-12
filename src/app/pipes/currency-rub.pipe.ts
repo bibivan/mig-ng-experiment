@@ -1,7 +1,4 @@
-import {
-  Pipe,
-  PipeTransform
-} from '@angular/core'
+import { Pipe, PipeTransform } from '@angular/core'
 
 import { numberFormat } from '../helpers/helper'
 

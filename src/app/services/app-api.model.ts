@@ -1,6 +1,6 @@
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
 import { KladrAddressInterface } from '../shared/kladr-address/kladr-address.model'
-import { ABTestInterface, OrderInterface, productListType } from './app.model'
+import { ABTestInterface, ContractInterface, OrderInterface, productListType } from './app.model'
 
 export interface InitOrderFormResponseInterface {
   order: OrderInterface
@@ -91,9 +91,27 @@ export interface GetProductOfferListResponseInterface {
   }
 }
 
-export interface couca_6_9_RequestIntreface {
+// tslint:disable-next-line:class-name
+export interface couca_6_9_RequestInterface {
   checkSMS: boolean,
   order: {
     status: string // 2.3 - COUCA_2_3 -> limit
   },
+}
+
+export interface SaveProductRequestInterface {
+  productId: string,
+  insurance: boolean
+}
+
+export interface SaveSNILSRequestInterface {
+  snils: string,
+}
+
+export interface GetApplicationContractResponseInterface {
+  order: ContractInterface
+}
+
+export interface SaveHoldAmountRequestInterface {
+  amount: number,
 }
