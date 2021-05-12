@@ -1,0 +1,26 @@
+<app-container>
+    <app-form-wrapper [small]="true">
+        <div class="text-align-center margin-bottom-x2">
+            <h1 class="no-margin-bottom">Введите временно заблокированную сумму</h1>
+            <p class="text-2 color-gray margin-top-x1">
+                Для подтверждения карты введите временно заблокированную сумму,
+                указанную в SMS, отправленной вашим банком
+            </p>
+        </div>
+
+        <form appInvalidControlFocus [formGroup]="form" (ngSubmit)="submit()">
+            <app-input [formControl]="amountControl"
+                       placeholder="Сумма из SMS"
+                       mask="currency"
+                       [mandatory]="true"
+                       [currencyInputModeNatural]="true"
+                       [errorMessage]="amountControl.errors | errorMessage"
+            ></app-input>
+
+            <app-security-message class="margin-bottom-x2"></app-security-message>
+            <div>
+                <app-button type="submit">Продолжить</app-button>
+            </div>
+        </form>
+    </app-form-wrapper>
+</app-container>
