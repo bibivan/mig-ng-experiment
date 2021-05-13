@@ -229,6 +229,18 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
+  // tslint:disable-next-line:variable-name
+  static couca_2_3 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_3_5 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
   static savePassport = {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })

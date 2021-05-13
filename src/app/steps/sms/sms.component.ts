@@ -5,11 +5,13 @@ import { AppService } from '../../services/app.service'
 @Component({
   selector: 'app-sms',
   templateUrl: './sms.component.html',
-  styleUrls: ['./sms.component.scss']
+  styleUrls: ['./sms.component.scss'],
 })
 export class SmsComponent implements OnInit, OnDestroy {
   @Input() order: OrderInterface
   @Input() smsSettings: SMSSettingsInterface
+
+  error = ''
 
   constructor(
     private app: AppService
@@ -34,4 +36,5 @@ export class SmsComponent implements OnInit, OnDestroy {
   sendSMS(): void {
     this.app.sendSMS()
   }
+
 }

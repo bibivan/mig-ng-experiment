@@ -125,6 +125,26 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  couca_2_3(): Observable<any> {
+    const mockupData = getMockup('/couca_2_3', AppApiMockup.couca_2_3.success)
+    const requestData = {
+      path: '/couca_2_3',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_3_5(): Observable<any> {
+    const mockupData = getMockup('/couca_3_5', AppApiMockup.couca_3_5.success)
+    const requestData = {
+      path: '/couca_3_5',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
   savePassport(body: SavePassportRequestInterface): Observable<any> {
     const mockupData = getMockup('/savePassport', AppApiMockup.savePassport.success, body)
     const requestData = {

@@ -12,7 +12,7 @@
             <div class="margin-top-x3 margin-bottom-x3">
                 <app-input-code (codeCompleted)="onCodeCompleted($event)"
                                 [codeLength]="4"
-                                [code]=""
+                                [code]="smsSettings.code"
                 ></app-input-code>
             </div>
             <div *ngIf="!smsSettings.limit" class="text-align-center margin-top-x3 margin-bottom-x3">

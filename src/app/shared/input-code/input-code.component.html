@@ -1,13 +1,29 @@
 <div class="code-input"
      [class.error]="error"
 >
-    <code-input [codeLength]="codeLength"
-                [code]="code"
-                [isFocusingOnLastByClickIfFilled]="true"
-                [isPrevFocusableAfterClearing]="true"
-                (codeCompleted)="codeCompleted.emit($event)"
-                (click)="onClick()"
-    ></code-input>
+    <ng-container *ngIf="error">
+        <code-input [codeLength]="codeLength"
+                    [code]="code"
+                    [isFocusingOnLastByClickIfFilled]="true"
+                    [isPrevFocusableAfterClearing]="true"
+                    (codeCompleted)="codeCompleted.emit($event)"
+                    (click)="onClick()"
+        ></code-input>
+    </ng-container>
+
+    <ng-container *ngIf="!error">
+        <code-input [codeLength]="codeLength"
+                    [code]=""
+                    [initialFocusField]="0"
+                    [isFocusingOnLastByClickIfFilled]="true"
+                    [isPrevFocusableAfterClearing]="true"
+                    (codeCompleted)="codeCompleted.emit($event)"
+                    (click)="onClick()"
+        ></code-input>
+    </ng-container>
+
+
+
 
     <p *ngIf="error" class="error-message color-dangerous text-align-center">Укажите корректный код</p>
 </div>

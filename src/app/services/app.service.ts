@@ -14,7 +14,7 @@ import {
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
   SaveProductRequestInterface,
-  SaveSNILSRequestInterface
+  SaveSNILSRequestInterface, SendSMSResponseInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
 import { appPagesType, AppStateInterface, ContractInterface } from './app.model'
@@ -155,6 +155,8 @@ export class AppService {
       (response: GetStatusResponseInterface) => {
         if (this.isFinalStatusRouting(response)) { return }
 
+        this.resetCountError()
+
         const status = response.order?.status
         if (status === '3.4') {
           this.sendSMS()
@@ -170,9 +172,17 @@ export class AppService {
   sendSMS(): void {
     this.showPreloader()
     this.api.sendSMS().subscribe(
-      (response) => {
+      (response: SendSMSResponseInterface) => {
         if (!response) {
           this.errorHandler(this.sendSMS.bind(this))
+          return
+        }
+
+        this.resetCountError()
+
+        const orderStatus = response.order?.status
+        if (orderStatus === '2.3') {
+          this.executeRequest(this.couca_2_3.bind(this))
           return
         }
 
@@ -190,13 +200,58 @@ export class AppService {
   checkSMS(code: string): void {
     this.showPreloader()
 
+    this.state.anketaSMS.code = code
+
     const body: CheckSMSRequestInterface = { code }
     this.api.checkSMS(body).subscribe(
       (response: CheckSMSResponseInterface) => {
+        if (!response) {
+          this.errorHandler(this.checkSMS.bind(this, code))
+          return
+        }
+
+        this.resetCountError()
+
+        const orderStatus = response.order?.status
+        if (orderStatus === '2.3') {
+          this.executeRequest(this.couca_2_3.bind(this))
+          return
+        }
+
+        if (!response.checkSMS) {
+          this.setPage('sms')
+          return
+        }
+
+        this.executeRequest(this.couca_3_5.bind(this))
+      },
+      () => this.errorHandler(this.checkSMS.bind(this, code))
+    )
+  }
+
+  couca_2_3(): void {
+    this.showPreloader()
+
+    this.api.couca_2_3().subscribe(
+      () => {
+        this.resetCountError()
+        this.state.status = '2.3'
+        this.setPage('final')
+      },
+      () => this.errorHandler(this.couca_2_3.bind(this))
+    )
+  }
+
+  couca_3_5(): void {
+    this.showPreloader()
+
+    this.api.couca_3_5().subscribe(
+      () => {
+        this.resetCountError()
         this.setPage('passport')
         this.openPersonalAccountHint()
       },
-      () => this.errorHandler(this.checkSMS.bind(this, body))
+      () => this.errorHandler(this.couca_3_5.bind(this))
     )
   }
 
