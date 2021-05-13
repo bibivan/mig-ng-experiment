@@ -21,6 +21,7 @@ export class InputCodeComponent implements OnInit {
 
   onClick(): void {
     this.error = ''
+    this.code = ''
   }
 
 }
