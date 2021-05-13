@@ -6,10 +6,10 @@ import {
   CheckSMSResponseInterface,
   Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
-  GetProductOfferListResponseInterface,
+  GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
-  SaveAnketaRequestInterface,
+  SaveAnketaRequestInterface, SaveAnketaResponseInterface,
   SaveEmploymentAndIncomeRequestInterface,
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
@@ -17,7 +17,7 @@ import {
   SaveSNILSRequestInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
-import { appPagesType, AppStateInterface, ContractInterface, productListType } from './app.model'
+import { appPagesType, AppStateInterface, ContractInterface } from './app.model'
 import { AuthenticationService } from './authentication.service'
 
 @Injectable({
@@ -40,7 +40,8 @@ export class AppService {
     order: null,
     page: null,
     products: null,
-    status: 'string',
+    status: null,
+    statusReason: null,
     toast: {
       caption: '',
       isOpen: false,
@@ -55,6 +56,9 @@ export class AppService {
   timerAnketaSMSSub: Subscription
   timerToastSub: Subscription
 
+  private readonly timeoutGetStatus = 15000
+  private readonly timeoutNextRequest = 2000
+
   constructor(
     private api: AppApiService,
     private authentication: AuthenticationService,
@@ -68,18 +72,26 @@ export class AppService {
     }
   }
 
-  getToken(): void {
+  // процесс дозаписи
+  private routeInitForm(): void {
+    this.sendSMS()
+  }
+
+  private getToken(): void {
     this.authentication.getToken().subscribe(
       () => {
+        this.resetCountError()
         this.initForm()
       },
       () => this.errorHandler(this.getToken.bind(this)),
     )
   }
 
-  init(): void {
+  // инициализация формы - первичное получение информации по заявке
+  private init(): void {
     this.api.initOrderForm().subscribe(
       (response: InitOrderFormResponseInterface) => {
+        this.resetCountError()
         this.updateOrder(response.order)
         this.initCompleted()
         this.routeInitForm()
@@ -88,25 +100,70 @@ export class AppService {
     )
   }
 
-  setPage(page: appPagesType): void {
-    this.state.page = page
-    this.refreshState()
-  }
-
-  // процесс дозаписи
-  routeInitForm(): void {
-    this.setPage('anketa')
-  }
-
   saveAnketa(data: SaveAnketaRequestInterface): void {
     this.showPreloader()
     this.updateOrder(data)
 
     this.api.saveAnketa(data).subscribe(
-      () => {
-        this.sendSMS()
+      (response: SaveAnketaResponseInterface) => {
+        this.resetCountError()
+        if (response.order?.ucdbId) {
+          this.executeRequest(this.couca_100.bind(this))
+        } else {
+          this.executeRequest(this.getUcdbId.bind(this))
+        }
       },
       () => this.errorHandler(this.saveAnketa.bind(this, data))
+    )
+  }
+
+  private getUcdbId(): void {
+    this.showPreloader()
+
+    this.api.getUcdbId().subscribe(
+      (response: GetUcdbIdResponseInterface) => {
+        const ucdbId = response?.order?.ucdbId
+        if (!ucdbId) {
+          this.errorHandler(this.getUcdbId.bind(this))
+          return
+        }
+
+        this.resetCountError()
+        this.updateOrder({ ucdbId })
+        this.executeRequest(this.couca_100.bind(this))
+      },
+      () => this.errorHandler(this.getUcdbId.bind(this))
+    )
+  }
+
+  private couca_100(): void {
+    this.showPreloader()
+
+    this.api.couca_100().subscribe(
+      () => {
+        this.resetCountError()
+        this.executeRequest(this.getStatusAnketa.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.couca_100.bind(this))
+    )
+  }
+
+  private getStatusAnketa(): void {
+    this.showPreloader()
+
+    this.api.getStatusAnketa().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        const status = response.order?.status
+        if (status === '3.4') {
+          this.sendSMS()
+          return
+        }
+
+        this.executeRequest(this.getStatusAnketa.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusAnketa.bind(this))
     )
   }
 
@@ -190,7 +247,7 @@ export class AppService {
           return
         }
 
-        this.saveProducts(products)
+        this.state.products = products
         this.setPage('products')
         this.openToastProducts()
       },
@@ -260,6 +317,58 @@ export class AppService {
     )
   }
 
+  private getClientLoyalty(): void {
+
+  }
+
+  private executeRequest(method: any, time = this.timeoutNextRequest): void {
+    timer(time).subscribe(method)
+  }
+
+  private errorHandler(repeat: any): void {
+    this.countError++
+    if (this.countError > 3) {
+      this.setErrorPage('99')
+      this.resetCountError()
+      return
+    }
+
+    timer(7000).subscribe(() => {
+      repeat()
+    })
+  }
+
+  private resetCountError(): void {
+    this.countError = 0
+  }
+
+  /**
+   * Маршрутизация по финальным статусам при опросе статуса
+   * @return возвращает флаг отработки маршрутизации по финальному статусу
+   */
+  private isFinalStatusRouting(data: GetStatusResponseInterface): boolean {
+    if (!data) { return false }
+
+    const isFinalStatus = data.isFinalStatus
+    if (!isFinalStatus) { return false }
+
+    const isGetClientLoyaltyStatus = data.isGetClientLoyaltyStatus
+    const order = data.order
+    const orderStatus = order?.status
+    const orderStatusReason = order?.statusReason
+
+    this.state.status = orderStatus
+    this.state.statusReason = orderStatusReason
+
+    if (isGetClientLoyaltyStatus) {
+      this.getClientLoyalty()
+    } else {
+      this.setPage('final')
+    }
+
+    return true
+  }
+
   getMaxApprovedSum(): number {
     if (!this.state?.products) { return 0 }
 
@@ -268,11 +377,6 @@ export class AppService {
         if (product.Amount > result) { result = product.Amount }
         return result
       }, 0)
-  }
-
-  updateOrder(data: any): void {
-    this.state.order = Object.assign({}, this.state.order, data)
-    this.refreshState()
   }
 
   openToast(caption = '', text = ''): void {
@@ -355,8 +459,8 @@ export class AppService {
     this.refreshState()
   }
 
-  private saveProducts(products: productListType): void {
-    this.state.products = products
+  updateOrder(data: any): void {
+    this.state.order = Object.assign({}, this.state.order, data)
     this.refreshState()
   }
 
@@ -380,25 +484,9 @@ export class AppService {
     this.timerAnketaSMSSub?.unsubscribe()
   }
 
-  private executeRequest(method: any, time = 2000): void {
-    timer(time).subscribe(method)
-  }
-
-  private errorHandler(repeat: any): void {
-    this.countError++
-    if (this.countError > 3) {
-      this.setErrorPage('99')
-      this.resetCountError()
-      return
-    }
-
-    timer(7000).subscribe(() => {
-      repeat()
-    })
-  }
-
-  private resetCountError(): void {
-    this.countError = 0
+  setPage(page: appPagesType): void {
+    this.state.page = page
+    this.refreshState()
   }
 
   private setErrorPage(status: string): void {

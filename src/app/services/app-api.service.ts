@@ -8,7 +8,7 @@ import {
   CheckSMSRequestInterface,
   Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
-  GetProductOfferListResponseInterface,
+  GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface,
@@ -31,7 +31,7 @@ export class AppApiService {
   ) {}
 
   initOrderForm(): Observable<InitOrderFormResponseInterface> {
-    const mockupData = getMockup('/initOrderForm', AppApiMockup.initOrderForm.successEmpty)
+    const mockupData = getMockup('/initOrderForm', AppApiMockup.initOrderForm.success)
     const requestData = {
       path: '/initOrderForm',
       mockupData
@@ -64,6 +64,36 @@ export class AppApiService {
       path: '/saveAnketa',
       mockupData,
       body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getUcdbId(): Observable<GetUcdbIdResponseInterface> {
+    const mockupData = getMockup('/getUcdbId', AppApiMockup.getUcdbId.success)
+    const requestData = {
+      path: '/getUcdbId',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_100(): Observable<any> {
+    const mockupData = getMockup('/couca_100', AppApiMockup.couca_100.success)
+    const requestData = {
+      path: '/couca_100',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusAnketa(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusAnketa', AppApiMockup.getStatusAnketa.success)
+    const requestData = {
+      path: '/getStatusAnketa',
+      mockupData,
     }
 
     return this.api.post(requestData)
