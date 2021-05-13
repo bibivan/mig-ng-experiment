@@ -111,7 +111,7 @@ export class AppService {
       this.getStatusCardRegistration()
       return
     }
-    this.getProductOfferList()
+    this.setPage('anketa')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
@@ -631,7 +631,10 @@ export class AppService {
           response.order,
           { contract: contract.contract }
         )
+
+        this.openToastSendSMS()
         this.setPage('contract')
+
       },
       () => this.errorHandler(this.getApplicationContract.bind(this))
     )
