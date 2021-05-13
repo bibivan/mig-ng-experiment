@@ -246,6 +246,17 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
+  static clientSmevIdentity = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_3_6 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
   static saveEmploymentAndIncome = {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
@@ -253,6 +264,32 @@ export class AppApiMockup {
 
   static saveAdditionalContact = {
     success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_3_7 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusFullAnketa = {
+    success: {
+      order: {
+        status: '5.0'
+      }
+    },
+    successSNILS: {
+      order: {
+        status: '5.0.2'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '4.74', // '99' '3.1' '3.2' '3.3' '4.1' '4.3' '4.5' '4.6' '4.7' '4.74' '4.8' '5.2' '5.3'
+        // statusReason: 'APP_NeedCustomerResponse',
+      }
+    },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
@@ -283,6 +320,31 @@ export class AppApiMockup {
 
   static saveSNILS = {
     success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_5_0_1 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusSNILS = {
+    success: {
+      order: {
+        status: '5.0'
+      }
+    },
+    successSNILS: {
+      order: {
+        status: '5.0.2'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '4.74', // '99' '5.0.4' '5.0.6' '5.11'
+      }
+    },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 

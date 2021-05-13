@@ -63,7 +63,7 @@ export interface GetUcdbIdResponseInterface {
 
 export interface SendSMSResponseInterface {
   order: {
-    status: string // 2.3 - COUCA_2_3 -> limit
+    status: string
   },
   repeatSendSMS?: boolean,
   smsSeconds?: number,
@@ -76,7 +76,7 @@ export interface CheckSMSRequestInterface {
 export interface CheckSMSResponseInterface {
   checkSMS: boolean,
   order: {
-    status: string // 2.3 - COUCA_2_3 -> limit
+    status: string
   },
 }
 
@@ -95,6 +95,10 @@ export interface SavePassportRequestInterface {
   snils: string,
   stacPhone: string,
   wherePassport: string,
+}
+
+export interface ClientSmevIdentityRequestInterface {
+  snils: string
 }
 
 export interface SaveEmploymentAndIncomeRequestInterface {
@@ -121,10 +125,10 @@ export interface GetProductOfferListResponseInterface {
 }
 
 // tslint:disable-next-line:class-name
-export interface Couca_6_9_RequestInterface {
+export interface Couca_6_9_ResponseInterface {
   checkSMS: boolean,
   order: {
-    status: string // 2.3 - COUCA_2_3 -> limit
+    status: string
   },
 }
 
@@ -135,6 +139,13 @@ export interface SaveProductRequestInterface {
 
 export interface SaveSNILSRequestInterface {
   snils: string,
+}
+
+// tslint:disable-next-line:class-name
+export interface Couca_5_0_1_ResponseInterface {
+  order?: {
+    status: string
+  },
 }
 
 export interface GetApplicationContractResponseInterface {

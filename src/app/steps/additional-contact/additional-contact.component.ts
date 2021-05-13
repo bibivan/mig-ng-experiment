@@ -46,7 +46,6 @@ export class AdditionalContactComponent implements OnInit {
 
   submit(): void {
     this.form.markAllAsTouched()
-    console.log(this.form.invalid)
     if (this.form.invalid) { return }
 
     this.app.saveAdditionalContact(this.serializeForm())

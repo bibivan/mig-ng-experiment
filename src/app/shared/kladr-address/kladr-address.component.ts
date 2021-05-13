@@ -43,7 +43,6 @@ export class KladrAddressComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    console.log('type', this.type)
     this.regionOptions = this.kladrAddress.regions
 
     this.form = this.kladrAddress.getKladrFormGroup(this.type)

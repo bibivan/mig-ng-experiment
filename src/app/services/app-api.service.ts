@@ -5,8 +5,8 @@ import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
-  CheckSMSRequestInterface,
-  Couca_6_9_RequestInterface,
+  CheckSMSRequestInterface, ClientSmevIdentityRequestInterface,
+  Couca_6_9_ResponseInterface,
   GetApplicationContractResponseInterface,
   GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
@@ -145,12 +145,33 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  clientSmevIdentity(body: ClientSmevIdentityRequestInterface): Observable<any> {
+    const mockupData = getMockup('/clientSmevIdentity', AppApiMockup.clientSmevIdentity.success, body)
+    const requestData = {
+      path: '/clientSmevIdentity',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
   savePassport(body: SavePassportRequestInterface): Observable<any> {
     const mockupData = getMockup('/savePassport', AppApiMockup.savePassport.success, body)
     const requestData = {
       path: '/savePassport',
       mockupData,
       body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_3_6(): Observable<any> {
+    const mockupData = getMockup('/couca_3_6', AppApiMockup.couca_3_6.success)
+    const requestData = {
+      path: '/couca_3_6',
+      mockupData,
     }
 
     return this.api.post(requestData)
@@ -178,6 +199,26 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  couca_3_7(): Observable<any> {
+    const mockupData = getMockup('/couca_3_7', AppApiMockup.couca_3_7.success)
+    const requestData = {
+      path: '/couca_3_7',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusFullAnketa(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusAnketa', AppApiMockup.getStatusFullAnketa.successSNILS)
+    const requestData = {
+      path: '/getStatusFullAnketa',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
   getProductOfferList(): Observable<GetProductOfferListResponseInterface> {
     const mockupData = getMockup('/getProductOfferList', AppApiMockup.getProductOfferList.success)
     const requestData = {
@@ -188,7 +229,7 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
-  couca_6_9(body: Couca_6_9_RequestInterface): Observable<any> {
+  couca_6_9(body: Couca_6_9_ResponseInterface): Observable<any> {
     const mockupData = getMockup('/couca_6_9', AppApiMockup.couca_6_9.success, body)
     const requestData = {
       path: '/couca_6_9',
@@ -216,6 +257,26 @@ export class AppApiService {
       path: '/saveSNILS',
       mockupData,
       body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_5_0_1(): Observable<any> {
+    const mockupData = getMockup('/couca_5_0_1', AppApiMockup.couca_5_0_1.success)
+    const requestData = {
+      path: '/couca_5_0_1',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusSNILS(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusSNILS', AppApiMockup.getStatusSNILS.success)
+    const requestData = {
+      path: '/getStatusSNILS',
+      mockupData,
     }
 
     return this.api.post(requestData)

@@ -38,8 +38,6 @@ export class SelectComponent implements OnInit, OnDestroy, ControlValueAccessor 
 
   ngOnInit(): void {
     this.sub = this.formControl.valueChanges.subscribe(this.onValueChanges.bind(this))
-
-    console.log(this.formControl)
   }
 
   ngOnDestroy(): void {

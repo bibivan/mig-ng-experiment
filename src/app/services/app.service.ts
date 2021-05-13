@@ -3,8 +3,8 @@ import { interval, Subject, Subscription, timer } from 'rxjs'
 import { formattedMobilePhone, numberFormat } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
-  CheckSMSResponseInterface,
-  Couca_6_9_RequestInterface,
+  CheckSMSResponseInterface, ClientSmevIdentityRequestInterface, Couca_5_0_1_ResponseInterface,
+  Couca_6_9_ResponseInterface,
   GetApplicationContractResponseInterface,
   GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
@@ -72,11 +72,6 @@ export class AppService {
     }
   }
 
-  // процесс дозаписи
-  private routeInitForm(): void {
-    this.sendSMS()
-  }
-
   private getToken(): void {
     this.authentication.getToken().subscribe(
       () => {
@@ -98,6 +93,11 @@ export class AppService {
       },
       () => this.errorHandler(this.getToken.bind(this))
     )
+  }
+
+  // процесс дозаписи
+  private routeInitForm(): void {
+    this.setPage('additional_contact')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
@@ -229,7 +229,7 @@ export class AppService {
     )
   }
 
-  couca_2_3(): void {
+  private couca_2_3(): void {
     this.showPreloader()
 
     this.api.couca_2_3().subscribe(
@@ -242,7 +242,7 @@ export class AppService {
     )
   }
 
-  couca_3_5(): void {
+  private couca_3_5(): void {
     this.showPreloader()
 
     this.api.couca_3_5().subscribe(
@@ -255,15 +255,33 @@ export class AppService {
     )
   }
 
+  clientSmevIdentity(data: ClientSmevIdentityRequestInterface): void {
+    // Вызов сервиса SOAP /client/SmevIdentity (CliS)
+    // без ожидания ответа и обработки результата
+    this.api.clientSmevIdentity(data).subscribe()
+  }
+
   savePassport(data: SavePassportRequestInterface): void {
     this.showPreloader()
     this.updateOrder(data)
 
     this.api.savePassport(data).subscribe(
       () => {
-        this.setPage('employment_and_income')
+        this.executeRequest(this.couca_3_6.bind(this))
       },
       () => this.errorHandler(this.savePassport.bind(this, data))
+    )
+  }
+
+  private couca_3_6(): void {
+    this.showPreloader()
+
+    this.api.couca_3_6().subscribe(
+      () => {
+        this.resetCountError()
+        this.setPage('employment_and_income')
+      },
+      () => this.errorHandler(this.couca_3_6.bind(this))
     )
   }
 
@@ -285,13 +303,51 @@ export class AppService {
 
     this.api.saveAdditionalContact(data).subscribe(
       () => {
-        this.getProductOfferList()
+        this.executeRequest(this.couca_3_7.bind(this))
       },
       () => this.errorHandler(this.saveAdditionalContact.bind(this, data))
     )
   }
 
-  getProductOfferList(): void {
+  private couca_3_7(): void {
+    this.showPreloader()
+
+    this.api.couca_3_7().subscribe(
+      () => {
+        this.resetCountError()
+        this.executeRequest(this.getStatusFullAnketa.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.couca_3_7.bind(this))
+    )
+  }
+
+  private getStatusFullAnketa(): void {
+    this.showPreloader()
+
+    this.api.getStatusFullAnketa().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const status = response.order?.status
+        if (status === '5.0') {
+          this.executeRequest(this.getProductOfferList.bind(this))
+          return
+        }
+
+        if (status === '5.0.2') {
+          this.setPage('snils')
+          return
+        }
+
+        this.executeRequest(this.getStatusFullAnketa.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusFullAnketa.bind(this))
+    )
+  }
+
+  private getProductOfferList(): void {
     this.showPreloader()
 
     this.api.getProductOfferList().subscribe(
@@ -310,7 +366,7 @@ export class AppService {
     )
   }
 
-  couca_6_9(data: Couca_6_9_RequestInterface): void {
+  couca_6_9(data: Couca_6_9_ResponseInterface): void {
     this.showPreloader()
 
     this.api.couca_6_9(data).subscribe(
@@ -339,9 +395,63 @@ export class AppService {
 
     this.api.saveSNILS(data).subscribe(
       () => {
-        this.getApplicationContract()
+        this.executeRequest(this.couca_5_0_1.bind(this))
       },
       () => this.errorHandler(this.saveSNILS.bind(this, data))
+    )
+  }
+
+  private couca_5_0_1(): void {
+    this.showPreloader()
+
+    this.api.couca_5_0_1().subscribe(
+      (response: Couca_5_0_1_ResponseInterface) => {
+        this.resetCountError()
+
+        const orderStatus = response.order?.status || ''
+        const finalStatuses = ['99', '5.0.4', '5.0.6', '5.11']
+        const getProductOfferListStatuses = ['5.0']
+
+        if (finalStatuses.includes(orderStatus)) {
+          this.state.status = orderStatus
+          this.setPage('final')
+          return
+        }
+
+        if (getProductOfferListStatuses.includes(orderStatus)) {
+          this.executeRequest(this.getProductOfferList.bind(this))
+          return
+        }
+
+        this.executeRequest(this.getStatusSNILS.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.couca_5_0_1.bind(this))
+    )
+  }
+
+  private getStatusSNILS(): void {
+    this.showPreloader()
+
+    this.api.getStatusSNILS().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const status = response.order?.status
+        if (status === '5.0') {
+          this.executeRequest(this.getProductOfferList.bind(this))
+          return
+        }
+
+        if (status === '5.0.2') {
+          this.setPage('snils')
+          return
+        }
+
+        this.executeRequest(this.getStatusSNILS.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusSNILS.bind(this))
     )
   }
 
