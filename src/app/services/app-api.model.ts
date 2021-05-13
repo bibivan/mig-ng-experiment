@@ -148,10 +148,21 @@ export interface Couca_5_0_1_ResponseInterface {
   },
 }
 
+export interface GetPNEUrlResponseInterface {
+  url: string
+}
+
 export interface GetApplicationContractResponseInterface {
   order: ContractInterface
 }
 
 export interface SaveHoldAmountRequestInterface {
   amount: number,
+}
+
+// tslint:disable-next-line:class-name
+export interface Couca_1_31_ResponseInterface {
+  order?: {
+    status: string
+  },
 }

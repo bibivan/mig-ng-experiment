@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core'
 import { interval, Subject, Subscription, timer } from 'rxjs'
-import { formattedMobilePhone, numberFormat } from '../helpers/helper'
+import * as url from 'url'
+import { formattedMobilePhone, numberFormat, openExternalLink } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
-  CheckSMSResponseInterface, ClientSmevIdentityRequestInterface, Couca_5_0_1_ResponseInterface,
+  CheckSMSResponseInterface,
+  ClientSmevIdentityRequestInterface,
+  Couca_1_31_ResponseInterface,
+  Couca_5_0_1_ResponseInterface,
   Couca_6_9_ResponseInterface,
   GetApplicationContractResponseInterface,
-  GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
+  GetPNEUrlResponseInterface,
+  GetProductOfferListResponseInterface,
+  GetStatusResponseInterface,
+  GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
-  SaveAnketaRequestInterface, SaveAnketaResponseInterface,
+  SaveAnketaRequestInterface,
+  SaveAnketaResponseInterface,
   SaveEmploymentAndIncomeRequestInterface,
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
   SaveProductRequestInterface,
-  SaveSNILSRequestInterface, SendSMSResponseInterface
+  SaveSNILSRequestInterface,
+  SendSMSResponseInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
 import { appPagesType, AppStateInterface, ContractInterface } from './app.model'
@@ -97,7 +106,12 @@ export class AppService {
 
   // процесс дозаписи
   private routeInitForm(): void {
-    this.setPage('additional_contact')
+    const hash = window.location.hash
+    if (hash === '#ariuspay') {
+      this.getStatusCardRegistration()
+      return
+    }
+    this.getProductOfferList()
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
@@ -157,9 +171,9 @@ export class AppService {
 
         this.resetCountError()
 
-        const status = response.order?.status
-        if (status === '3.4') {
-          this.sendSMS()
+        const orderStatus = response.order?.status
+        if (orderStatus === '3.4') {
+          this.executeRequest(this.sendSMS.bind(this))
           return
         }
 
@@ -330,13 +344,13 @@ export class AppService {
 
         this.resetCountError()
 
-        const status = response.order?.status
-        if (status === '5.0') {
+        const orderStatus = response.order?.status
+        if (orderStatus === '5.0') {
           this.executeRequest(this.getProductOfferList.bind(this))
           return
         }
 
-        if (status === '5.0.2') {
+        if (orderStatus === '5.0.2') {
           this.setPage('snils')
           return
         }
@@ -344,48 +358,6 @@ export class AppService {
         this.executeRequest(this.getStatusFullAnketa.bind(this), this.timeoutGetStatus)
       },
       () => this.errorHandler(this.getStatusFullAnketa.bind(this))
-    )
-  }
-
-  private getProductOfferList(): void {
-    this.showPreloader()
-
-    this.api.getProductOfferList().subscribe(
-      (response: GetProductOfferListResponseInterface) => {
-        const products = response?.order?.productOfferList || []
-        if (!products || !products.length) {
-          this.errorHandler(this.getProductOfferList.bind(this))
-          return
-        }
-
-        this.state.products = products
-        this.setPage('products')
-        this.openToastProducts()
-      },
-      () => this.errorHandler(this.getProductOfferList.bind(this))
-    )
-  }
-
-  couca_6_9(data: Couca_6_9_ResponseInterface): void {
-    this.showPreloader()
-
-    this.api.couca_6_9(data).subscribe(
-      () => {
-        // финальный экран
-        this.setPage('final')
-      },
-      () => this.errorHandler(this.couca_6_9.bind(this, data))
-    )
-  }
-
-  saveProduct(data: SaveProductRequestInterface): void {
-    this.showPreloader()
-
-    this.api.saveProduct(data).subscribe(
-      () => {
-        this.executeRequest(this.getApplicationContract.bind(this))
-      },
-      () => this.errorHandler(this.saveProduct.bind(this, data))
     )
   }
 
@@ -438,13 +410,13 @@ export class AppService {
 
         this.resetCountError()
 
-        const status = response.order?.status
-        if (status === '5.0') {
+        const orderStatus = response.order?.status
+        if (orderStatus === '5.0') {
           this.executeRequest(this.getProductOfferList.bind(this))
           return
         }
 
-        if (status === '5.0.2') {
+        if (orderStatus === '5.0.2') {
           this.setPage('snils')
           return
         }
@@ -455,14 +427,197 @@ export class AppService {
     )
   }
 
+  private getProductOfferList(): void {
+    this.showPreloader()
+
+    this.api.getProductOfferList().subscribe(
+      (response: GetProductOfferListResponseInterface) => {
+        const products = response?.order?.productOfferList || []
+        if (!products || !products.length) {
+          this.errorHandler(this.getProductOfferList.bind(this))
+          return
+        }
+
+        this.state.products = products
+        this.setPage('products')
+        this.openToastProducts()
+      },
+      () => this.errorHandler(this.getProductOfferList.bind(this))
+    )
+  }
+
+  couca_6_9(data: Couca_6_9_ResponseInterface): void {
+    this.showPreloader()
+
+    this.api.couca_6_9(data).subscribe(
+      () => {
+        this.resetCountError()
+        this.state.status = '6.9'
+        this.setPage('final')
+      },
+      () => this.errorHandler(this.couca_6_9.bind(this, data))
+    )
+  }
+
+  saveProduct(data: SaveProductRequestInterface): void {
+    this.showPreloader()
+
+    this.api.saveProduct(data).subscribe(
+      () => {
+        this.resetCountError()
+        this.executeRequest(this.coucaProduct.bind(this))
+      },
+      () => this.errorHandler(this.saveProduct.bind(this, data))
+    )
+  }
+
+  private coucaProduct(): void {
+    this.showPreloader()
+
+    this.api.coucaProduct().subscribe(
+      () => {
+        this.resetCountError()
+        this.executeRequest(this.getStatusProducts.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.coucaProduct.bind(this))
+    )
+  }
+
+  private getStatusProducts(): void {
+    this.showPreloader()
+
+    this.api.getStatusProducts().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const orderStatus = response.order?.status
+        if (orderStatus === '1.20.1') {
+          this.executeRequest(this.getPNEUrl.bind(this))
+          return
+        }
+
+        this.executeRequest(this.getStatusProducts.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusProducts.bind(this))
+    )
+  }
+
+  private getPNEUrl(): void {
+    this.showPreloader()
+
+    this.api.getPNEUrl().subscribe(
+      (response: GetPNEUrlResponseInterface) => {
+        const pneUrl = response?.url
+        if (!pneUrl) {
+          this.errorHandler(this.getPNEUrl.bind(this))
+          return
+        }
+
+        openExternalLink(pneUrl, '_self')
+      },
+      () => this.errorHandler(this.getPNEUrl.bind(this))
+    )
+  }
+
+  private getStatusCardRegistration(): void {
+    this.showPreloader()
+
+    this.api.getStatusCardRegistration().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const orderStatus = response?.order?.status || ''
+        const getProductsStatuses = ['5.0']
+
+        if (getProductsStatuses.includes(orderStatus)) {
+          this.executeRequest(this.getProductOfferList.bind(this))
+          return
+        }
+
+        if (orderStatus === '1.21') {
+          this.setPage('hold_amount')
+          return
+        }
+
+        if (orderStatus === '5.4') {
+          this.executeRequest(this.getApplicationContract.bind(this))
+          return
+        }
+
+        this.executeRequest(this.getStatusCardRegistration.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusCardRegistration.bind(this))
+    )
+  }
+
   saveHoldAmount(data: SaveHoldAmountRequestInterface): void {
     this.showPreloader()
 
     this.api.saveHoldAmount(data).subscribe(
       () => {
-        this.getApplicationContract()
+        this.resetCountError()
+        this.executeRequest(this.couca_1_31.bind(this))
       },
       () => this.errorHandler(this.saveHoldAmount.bind(this, data))
+    )
+  }
+
+  private couca_1_31(): void {
+    this.showPreloader()
+
+    this.api.couca_1_31().subscribe(
+      (response: Couca_1_31_ResponseInterface) => {
+        this.resetCountError()
+
+        const orderStatus = response?.order?.status || ''
+        const finalStatuses = ['99', '5.3', '5.11']
+        const getProductOfferListStatuses = ['5.0']
+
+        if (finalStatuses.includes(orderStatus)) {
+          this.state.status = orderStatus
+          this.setPage('final')
+          return
+        }
+
+        if (getProductOfferListStatuses.includes(orderStatus)) {
+          this.executeRequest(this.getProductOfferList.bind(this))
+          return
+        }
+
+        this.executeRequest(this.getStatusHoldAmount.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.couca_1_31.bind(this))
+    )
+  }
+
+  private getStatusHoldAmount(): void {
+    this.showPreloader()
+
+    this.api.getStatusHoldAmount().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const orderStatus = response?.order?.status || ''
+
+        if (orderStatus === '1.21') {
+          this.setPage('hold_amount')
+          return
+        }
+
+        if (orderStatus === '5.4') {
+          this.executeRequest(this.getApplicationContract.bind(this))
+          return
+        }
+
+        this.executeRequest(this.getStatusHoldAmount.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusHoldAmount.bind(this))
     )
   }
 

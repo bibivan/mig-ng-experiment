@@ -293,31 +293,6 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
-  static getProductOfferList = {
-    success: {
-      order: {
-        productOfferList: productsMockup.success
-      }
-    },
-    successEmpty: {
-      order: {
-        productOfferList: productsMockup.empty
-      }
-    },
-    error: throwError({ RESULT_CODE: 'ERROR' })
-  }
-
-  // tslint:disable-next-line:variable-name
-  static couca_6_9 = {
-    success: {},
-    error: throwError({ RESULT_CODE: 'ERROR' })
-  }
-
-  static saveProduct = {
-    success: {},
-    error: throwError({ RESULT_CODE: 'ERROR' })
-  }
-
   static saveSNILS = {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
@@ -343,6 +318,116 @@ export class AppApiMockup {
     successFinal: {
       order: {
         status: '4.74', // '99' '5.0.4' '5.0.6' '5.11'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getProductOfferList = {
+    success: {
+      order: {
+        productOfferList: productsMockup.success
+      }
+    },
+    successEmpty: {
+      order: {
+        productOfferList: productsMockup.empty
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_6_9 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveProduct = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static coucaProduct = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusProducts = {
+    success: {
+      order: {
+        status: '1.20.1'
+      }
+    },
+    successSNILS: {
+      order: {
+        status: '5.0.2'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '5.1', // '99' '5.1' '5.3' '5.11' '6.4' '5.11'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getPNEUrl = {
+    success: {
+      url: 'https://migcredit.ru/#ariuspay'
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusCardRegistration = {
+    success: {
+      order: {
+        status: '5.4'
+      }
+    },
+    successProducts: {
+      order: {
+        status: '5.0'
+      }
+    },
+    successHoldAmount: {
+      order: {
+        status: '1.21'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '5.11', // '99' '5.1.0' '5.3' '5.11'
+      }
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static saveHoldAmount = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static couca_1_31 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusHoldAmount = {
+    success: {
+      order: {
+        status: '5.4'
+      }
+    },
+    successHoldAmount: {
+      order: {
+        status: '1.21'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '5.11', // '99' '5.3' '5.11'
       }
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
@@ -374,8 +459,5 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
-  static saveHoldAmount = {
-    success: {},
-    error: throwError({ RESULT_CODE: 'ERROR' })
-  }
+
 }

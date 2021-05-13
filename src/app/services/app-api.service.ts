@@ -7,7 +7,7 @@ import {
   CheckPhoneResponseInterface,
   CheckSMSRequestInterface, ClientSmevIdentityRequestInterface,
   Couca_6_9_ResponseInterface,
-  GetApplicationContractResponseInterface,
+  GetApplicationContractResponseInterface, GetPNEUrlResponseInterface,
   GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
@@ -219,6 +219,37 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
+  saveSNILS(body: SaveSNILSRequestInterface): Observable<any> {
+    const mockupData = getMockup('/saveSNILS', AppApiMockup.saveSNILS.success, body)
+    const requestData = {
+      path: '/saveSNILS',
+      mockupData,
+      body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_5_0_1(): Observable<any> {
+    const mockupData = getMockup('/couca_5_0_1', AppApiMockup.couca_5_0_1.success)
+    const requestData = {
+      path: '/couca_5_0_1',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusSNILS(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusSNILS', AppApiMockup.getStatusSNILS.success)
+    const requestData = {
+      path: '/getStatusSNILS',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
   getProductOfferList(): Observable<GetProductOfferListResponseInterface> {
     const mockupData = getMockup('/getProductOfferList', AppApiMockup.getProductOfferList.success)
     const requestData = {
@@ -251,31 +282,40 @@ export class AppApiService {
     return this.api.post(requestData)
   }
 
-  saveSNILS(body: SaveSNILSRequestInterface): Observable<any> {
-    const mockupData = getMockup('/saveSNILS', AppApiMockup.saveSNILS.success, body)
+  coucaProduct(): Observable<any> {
+    const mockupData = getMockup('/coucaProduct', AppApiMockup.coucaProduct.success)
     const requestData = {
-      path: '/saveSNILS',
-      mockupData,
-      body
-    }
-
-    return this.api.post(requestData)
-  }
-
-  couca_5_0_1(): Observable<any> {
-    const mockupData = getMockup('/couca_5_0_1', AppApiMockup.couca_5_0_1.success)
-    const requestData = {
-      path: '/couca_5_0_1',
+      path: '/coucaProduct',
       mockupData,
     }
 
     return this.api.post(requestData)
   }
 
-  getStatusSNILS(): Observable<GetStatusResponseInterface> {
-    const mockupData = getMockup('/getStatusSNILS', AppApiMockup.getStatusSNILS.success)
+  getStatusProducts(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusProducts', AppApiMockup.getStatusProducts.success)
     const requestData = {
-      path: '/getStatusSNILS',
+      path: '/getStatusProducts',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getPNEUrl(): Observable<GetPNEUrlResponseInterface> {
+    const mockupData = getMockup('/getPNEUrl', AppApiMockup.getPNEUrl.success)
+    const requestData = {
+      path: '/getPNEUrl',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusCardRegistration(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusCardRegistration', AppApiMockup.getStatusCardRegistration.successHoldAmount)
+    const requestData = {
+      path: '/getStatusCardRegistration',
       mockupData,
     }
 
@@ -288,6 +328,26 @@ export class AppApiService {
       path: '/saveHoldAmount',
       mockupData,
       body
+    }
+
+    return this.api.post(requestData)
+  }
+
+  couca_1_31(): Observable<any> {
+    const mockupData = getMockup('/couca_1_31', AppApiMockup.couca_1_31.success)
+    const requestData = {
+      path: '/couca_1_31',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusHoldAmount(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusHoldAmount', AppApiMockup.getStatusHoldAmount.success)
+    const requestData = {
+      path: '/getStatusHoldAmount',
+      mockupData,
     }
 
     return this.api.post(requestData)
