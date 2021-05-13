@@ -23,5 +23,4 @@ export class InputCodeComponent implements OnInit {
     this.error = ''
     this.code = ''
   }
-
 }
