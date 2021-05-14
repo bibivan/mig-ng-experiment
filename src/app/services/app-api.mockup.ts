@@ -91,11 +91,13 @@ export class AppApiMockup {
         liveRegFlag: false,
         mobilePhone: '9999999999',
         name: 'Константин',
+        needIdentifyBy: null,
         numberChild: 0,
         numberPassport: '682468',
         orderStatus: '',
         patronymic: 'Константинович',
         paymentCredit: 5300,
+        paymentKey: null,
         placeBirthday: 'гор долгопрудный',
         prevLastname: '',
         serialPassport: '4512',
@@ -318,7 +320,8 @@ export class AppApiMockup {
     successFinal: {
       order: {
         status: '4.74', // '99' '5.0.4' '5.0.6' '5.11'
-      }
+      },
+      isFinalStatus: true
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
@@ -367,7 +370,8 @@ export class AppApiMockup {
     successFinal: {
       order: {
         status: '5.1', // '99' '5.1' '5.3' '5.11' '6.4' '5.11'
-      }
+      },
+      isFinalStatus: true
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
@@ -398,7 +402,8 @@ export class AppApiMockup {
     successFinal: {
       order: {
         status: '5.11', // '99' '5.1.0' '5.3' '5.11'
-      }
+      },
+      isFinalStatus: true
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
@@ -428,7 +433,8 @@ export class AppApiMockup {
     successFinal: {
       order: {
         status: '5.11', // '99' '5.3' '5.11'
-      }
+      },
+      isFinalStatus: true
     },
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
@@ -459,5 +465,62 @@ export class AppApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
+  // tslint:disable-next-line:variable-name
+  static scas_5_6 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static scas_5_61 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  // tslint:disable-next-line:variable-name
+  static scas_5_7 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusSendSMSContract = {
+    success: {
+      order: {
+        status: '5.73'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '5.11', // '99' '5.11' '5.72'
+      },
+      isFinalStatus: true
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
+
+  static getStatusCheckSMSContract = {
+    success: {
+      order: {
+        status: '6.2',
+        needIdentifyBy: 8,
+        paymentKey: 16
+      },
+      isFinalStatus: true,
+    },
+    incorrectSMSCode: {
+      order: {
+        status: '5.71', // '5.71' '5.73'
+      }
+    },
+    successFinal: {
+      order: {
+        status: '5.55', // '99' '5.11' '5.5' '5.55' '5.72' '6.2' '6.3' '6.4',
+        needIdentifyBy: 8,
+        paymentKey: 16
+      },
+      isFinalStatus: true,
+    },
+    error: throwError({ RESULT_CODE: 'ERROR' })
+  }
 
 }

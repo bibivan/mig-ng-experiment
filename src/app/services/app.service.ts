@@ -23,6 +23,10 @@ import {
   SavePassportRequestInterface,
   SaveProductRequestInterface,
   SaveSNILSRequestInterface,
+  Scas_5_61_ResponseInterface,
+  Scas_5_6_ResponseInterface,
+  Scas_5_7_RequestInterface,
+  Scas_5_7_ResponseInterface,
   SendSMSResponseInterface
 } from './app-api.model'
 import { AppApiService } from './app-api.service'
@@ -40,6 +44,11 @@ export class AppService {
       seconds: 0,
     },
     contract: null,
+    contractSMS: {
+      code: '',
+      countSendSMS: 0,
+      seconds: null,
+    },
     isInit: false,
     isOpenInsuranceInfoHint: false,
     isOpenInsuranceTermHint: false,
@@ -64,6 +73,7 @@ export class AppService {
 
   timerAnketaSMSSub: Subscription
   timerToastSub: Subscription
+  timerContractSMSSub: Subscription
 
   private readonly timeoutGetStatus = 15000
   private readonly timeoutNextRequest = 2000
@@ -96,7 +106,7 @@ export class AppService {
     this.api.initOrderForm().subscribe(
       (response: InitOrderFormResponseInterface) => {
         this.resetCountError()
-        this.updateOrder(response.order)
+        this.updateOrder(response?.order)
         this.initCompleted()
         this.routeInitForm()
       },
@@ -111,7 +121,7 @@ export class AppService {
       this.getStatusCardRegistration()
       return
     }
-    this.setPage('anketa')
+    this.getApplicationContract()
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
@@ -171,7 +181,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '3.4') {
           this.executeRequest(this.sendSMS.bind(this))
           return
@@ -194,7 +204,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '2.3') {
           this.executeRequest(this.couca_2_3.bind(this))
           return
@@ -226,7 +236,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '2.3') {
           this.executeRequest(this.couca_2_3.bind(this))
           return
@@ -344,7 +354,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '5.0') {
           this.executeRequest(this.getProductOfferList.bind(this))
           return
@@ -380,7 +390,7 @@ export class AppService {
       (response: Couca_5_0_1_ResponseInterface) => {
         this.resetCountError()
 
-        const orderStatus = response.order?.status || ''
+        const orderStatus = response?.order?.status || ''
         const finalStatuses = ['99', '5.0.4', '5.0.6', '5.11']
         const getProductOfferListStatuses = ['5.0']
 
@@ -410,7 +420,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '5.0') {
           this.executeRequest(this.getProductOfferList.bind(this))
           return
@@ -492,7 +502,7 @@ export class AppService {
 
         this.resetCountError()
 
-        const orderStatus = response.order?.status
+        const orderStatus = response?.order?.status
         if (orderStatus === '1.20.1') {
           this.executeRequest(this.getPNEUrl.bind(this))
           return
@@ -626,9 +636,9 @@ export class AppService {
 
     this.api.getApplicationContract().subscribe(
       (response: GetApplicationContractResponseInterface) => {
-        const contract: ContractInterface = response.order
+        const contract: ContractInterface = response?.order
         this.state.contract = Object.assign({},
-          response.order,
+          contract,
           { contract: contract.contract }
         )
 
@@ -639,6 +649,126 @@ export class AppService {
       () => this.errorHandler(this.getApplicationContract.bind(this))
     )
   }
+
+  scas_5_6(): void {
+    this.showPreloader()
+
+    this.api.scas_5_6().subscribe(
+      (response: Scas_5_6_ResponseInterface) => {
+        this.resetCountError()
+
+        this.state.contractSMS.countSendSMS++
+
+        const orderStatus = response?.order?.status
+        const finalStatuses = ['99', '5.11']
+        if (finalStatuses.includes(orderStatus)) {
+          this.state.status = orderStatus
+          this.setPage('final')
+          return
+        }
+
+        this.executeRequest(this.getStatusSendSMSContract.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.scas_5_6.bind(this))
+    )
+  }
+
+  scas_5_61(): void {
+    this.showPreloader()
+
+    this.api.scas_5_61().subscribe(
+      (response: Scas_5_61_ResponseInterface) => {
+        this.resetCountError()
+
+        this.state.contractSMS.countSendSMS++
+
+        const orderStatus = response?.order?.status
+        const finalStatuses = ['99', '5.11']
+        if (finalStatuses.includes(orderStatus)) {
+          this.state.status = orderStatus
+          this.setPage('final')
+          return
+        }
+
+        this.executeRequest(this.getStatusSendSMSContract.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.scas_5_61.bind(this))
+    )
+  }
+
+  scas_5_7(body: Scas_5_7_RequestInterface): void {
+    this.showPreloader()
+
+    this.state.contractSMS.code = body.code
+
+    this.api.scas_5_7(body).subscribe(
+      (response: Scas_5_7_ResponseInterface) => {
+        this.resetCountError()
+
+        const orderStatus = response?.order?.status
+        const finalStatuses = ['99', '5.11']
+        if (finalStatuses.includes(orderStatus)) {
+          this.state.status = orderStatus
+          this.setPage('final')
+          return
+        }
+
+        this.executeRequest(this.getStatusCheckSMSContract.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.scas_5_7.bind(this, body))
+    )
+  }
+
+  private getStatusSendSMSContract(): void {
+    this.showPreloader()
+
+    this.api.getStatusSendSMSContract().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const orderStatus = response?.order?.status
+        if (orderStatus === '5.73') {
+          this.state.contractSMS.seconds = 300
+          this.updateTimerContractSMS()
+
+          this.setPage('contract')
+          return
+        }
+
+        this.executeRequest(this.getStatusSendSMSContract.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusSendSMSContract.bind(this))
+    )
+  }
+
+  private getStatusCheckSMSContract(): void {
+    this.showPreloader()
+
+    this.api.getStatusCheckSMSContract().subscribe(
+      (response: GetStatusResponseInterface) => {
+        if (this.isFinalStatusRouting(response)) { return }
+
+        this.resetCountError()
+
+        const order = response.order
+        const orderStatus = order?.status
+
+        if (orderStatus === '5.71' || orderStatus === '5.73') {
+          this.state.contractSMS.seconds = 300
+          this.updateTimerContractSMS()
+          this.setPage('contract')
+          return
+        }
+
+        this.executeRequest(this.getStatusCheckSMSContract.bind(this), this.timeoutGetStatus)
+      },
+      () => this.errorHandler(this.getStatusCheckSMSContract.bind(this))
+    )
+  }
+
+
 
   private getClientLoyalty(): void {
 
@@ -679,6 +809,10 @@ export class AppService {
     const order = data.order
     const orderStatus = order?.status
     const orderStatusReason = order?.statusReason
+    const paymentKey = order?.paymentKey
+    const needIdentifyBy = order?.needIdentifyBy
+
+    this.updateOrder({ needIdentifyBy, paymentKey })
 
     this.state.status = orderStatus
     this.state.statusReason = orderStatusReason
@@ -805,6 +939,21 @@ export class AppService {
 
   private stopTimerAnketaSMS(): void {
     this.timerAnketaSMSSub?.unsubscribe()
+  }
+
+  private updateTimerContractSMS(): void {
+    this.stopTimerAnketaSMS()
+
+    this.timerContractSMSSub = interval(1000).subscribe(() => {
+      this.state.contractSMS.seconds--
+      if (this.state.contractSMS.seconds === 0) { this.stopTimerContractSMS() }
+
+      this.refreshState()
+    })
+  }
+
+  private stopTimerContractSMS(): void {
+    this.timerContractSMSSub?.unsubscribe()
   }
 
   setPage(page: appPagesType): void {

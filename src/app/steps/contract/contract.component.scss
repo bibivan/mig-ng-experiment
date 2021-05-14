@@ -1,0 +1,44 @@
+@import "../../../assets/scss/shared";
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: $indent16 0;
+
+  .col {
+    flex-shrink: 0;
+    width: 50%;
+  }
+}
+
+.text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  margin: 0;
+  @extend .text-2;
+  font-weight: 400;
+  color: $colorGrayDark;
+
+  &.label {
+    color: $colorGray;
+  }
+}
+
+.info {
+  display: block;
+  margin: 0 0 0 $indent12;
+  width: 21px;
+  height: 21px;
+  font-size: 21px;
+  color: $colorGrayLight;
+  cursor: pointer;
+
+  @include desktop {
+    &:hover {
+      color: $colorGray;
+    }
+  }
+}

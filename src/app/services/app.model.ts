@@ -17,6 +17,7 @@ export type appPagesType =
 export interface AppStateInterface {
   anketaSMS: SMSSettingsInterface,
   contract: ContractInterface,
+  contractSMS: ContractSigningInterface,
   isInit: boolean,
   isOpenInsuranceInfoHint: boolean,
   isOpenInsuranceTermHint: boolean,
@@ -72,11 +73,13 @@ export interface OrderInterface {
   liveRegFlag?: boolean
   mobilePhone?: string,
   name?: string,
+  needIdentifyBy?: number,
   numberChild?: number,
   numberPassport?: string,
   orderStatus?: string,
   patronymic?: string,
   paymentCredit?: number,
+  paymentKey?: number,
   placeBirthday?: string,
   prevLastname?: string,
   serialPassport?: string,
@@ -137,4 +140,10 @@ export interface ContractInterface {
   mobilePhone: string,
   name: string,
   patronymic: string,
+}
+
+export interface ContractSigningInterface {
+  code: string,
+  seconds: number,
+  countSendSMS: number
 }

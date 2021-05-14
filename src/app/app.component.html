@@ -44,7 +44,9 @@
             <app-hold-amount *ngSwitchCase="'hold_amount'"></app-hold-amount>
 
             <app-contract *ngSwitchCase="'contract'"
+                          [order]="state.order"
                           [contract]="state.contract"
+                          [sms]="state.contractSMS"
             ></app-contract>
 
             <app-final *ngSwitchCase="'final'"

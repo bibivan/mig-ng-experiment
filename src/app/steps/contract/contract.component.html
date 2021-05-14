@@ -1,10 +1,163 @@
-<app-container *ngIf="contract">
+<app-container>
     <app-form-wrapper>
         <h1 class="no-margin-bottom">Проверьте и подпишите договор займа</h1>
         <p class="text-2 color-gray margin-top-x1">
             {{ contract.name }} {{ contract.patronymic }}, пожалуйста ознакомьтесь с договором займа
             и подпишите его с помощью SMS-кода
         </p>
-        <p>{{ contract | json }}</p>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Договор</div>
+            </div>
+            <div class="col">
+                <div class="text">{{ contract.contract?.number }}</div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">ФИО</div>
+            </div>
+            <div class="col">
+                <div class="text">{{ contract.lastname }} {{ contract.name }} {{ contract.patronymic }}</div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Сумма займа</div>
+            </div>
+            <div class="col">
+                <div class="text">
+                    <span class="nobr">{{ contract.contract?.sum | currencyRub }}</span>
+                    <div class="info" (click)="openSumLoanHint($event)">
+                        <app-icon name="info"></app-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Получение</div>
+            </div>
+            <div class="col">
+                <div class="text">Онлайн на карту</div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Срок займа</div>
+            </div>
+            <div class="col">
+                <div class="text">{{ contract.contract?.term | termLoan }}</div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Платёж</div>
+            </div>
+            <div class="col">
+                <div class="text">
+                    {{ contract.contract?.payment | currencyRub }}
+                    одним платежом
+                </div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Дата погашения</div>
+            </div>
+            <div class="col">
+                <div class="text">
+                    до {{ contract.contract?.date | date: 'dd MMM YYYY' }}
+                </div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row">
+            <div class="col">
+                <div class="text label">Страхование</div>
+            </div>
+            <div class="col">
+                <div class="text">
+                    {{ contract.insurance ? 'Подключено' : 'Отключено' }}
+                </div>
+            </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="margin-top-x2 margin-bottom-x2">
+            <app-button-files url="https://migone.ru/#договор_займа">
+                Договор займа
+            </app-button-files>
+        </div>
+
+        <div class="margin-bottom-x2">
+            <app-button-files url="https://migone.ru/#общие_условия">
+                Общие условия договора займа
+            </app-button-files>
+        </div>
+
+
+        <div #contractSigningBlock class="margin-top-x3">
+            <ng-container *ngIf="sms.countSendSMS === 0; else smsCode">
+                <div>
+                    <app-button (click)="scas_5_6()">Подписать договор по SMS</app-button>
+                </div>
+                <p class="text-4 color-gray text-align-center">
+                    Код, отправляемый по SMS необходим для подписания договора <br class="hide-mobile">
+                    займа в качестве электронной подписи
+                </p>
+            </ng-container>
+
+            <ng-template #smsCode>
+                <p class="text-2 color-gray margin-bottom-x1">
+                    Мы отправили вам код на номер
+                    <span class="nobr">{{ order?.mobilePhone | mobilePhone }}</span>
+                </p>
+
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <app-input [formControl]="codeControl"
+                               type="tel"
+                               placeholder="Введите код из SMS"
+                               [errorMessage]="codeControl.errors | errorMessage"
+                    ></app-input>
+                    <p class="text-2 margin-top-x2">
+                        <span *ngIf="sms.seconds" class="color-gray">
+                            Отправить код повторно через {{ sms.seconds | timerTime }}
+                        </span>
+                            <span *ngIf="!sms.seconds" class="link" (click)="scas_5_61()">
+                            Отправить код повторно
+                        </span>
+                    </p>
+                    <div class="margin-top-x2">
+                        <app-button type="submit">Подписать</app-button>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+
     </app-form-wrapper>
 </app-container>

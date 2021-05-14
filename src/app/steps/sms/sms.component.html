@@ -17,12 +17,12 @@
             </div>
             <div *ngIf="!smsSettings.limit" class="text-align-center margin-top-x3 margin-bottom-x3">
                 <p class="text-2">
-                <span *ngIf="smsSettings.seconds" class="color-gray">
-                    Отправить код повторно через {{ smsSettings.seconds | timerTime }}
-                </span>
+                    <span *ngIf="smsSettings.seconds" class="color-gray">
+                        Отправить код повторно через {{ smsSettings.seconds | timerTime }}
+                    </span>
                     <span *ngIf="!smsSettings.seconds" class="link" (click)="sendSMS()">
-                    Отправить код повторно
-                </span>
+                        Отправить код повторно
+                    </span>
                 </p>
             </div>
 

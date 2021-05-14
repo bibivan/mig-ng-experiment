@@ -5,10 +5,14 @@ import { AppApiMockup } from './app-api.mockup'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
-  CheckSMSRequestInterface, ClientSmevIdentityRequestInterface,
+  CheckSMSRequestInterface,
+  ClientSmevIdentityRequestInterface,
   Couca_6_9_ResponseInterface,
-  GetApplicationContractResponseInterface, GetPNEUrlResponseInterface,
-  GetProductOfferListResponseInterface, GetStatusResponseInterface, GetUcdbIdResponseInterface,
+  GetApplicationContractResponseInterface,
+  GetPNEUrlResponseInterface,
+  GetProductOfferListResponseInterface,
+  GetStatusResponseInterface,
+  GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface,
@@ -17,6 +21,10 @@ import {
   SavePassportRequestInterface,
   SaveProductRequestInterface,
   SaveSNILSRequestInterface,
+  Scas_5_61_ResponseInterface,
+  Scas_5_6_ResponseInterface,
+  Scas_5_7_RequestInterface,
+  Scas_5_7_ResponseInterface,
   SendSMSResponseInterface
 } from './app-api.model'
 import { getMockup } from './get-mockup'
@@ -357,6 +365,57 @@ export class AppApiService {
     const mockupData = getMockup('/getApplicationContract', AppApiMockup.getApplicationContract.success)
     const requestData = {
       path: '/getApplicationContract',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  scas_5_6(): Observable<Scas_5_6_ResponseInterface> {
+    const mockupData = getMockup('/scas_5_6', AppApiMockup.scas_5_6.success)
+    const requestData = {
+      path: '/scas_5_6',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  scas_5_61(): Observable<Scas_5_61_ResponseInterface> {
+    const mockupData = getMockup('/scas_5_61', AppApiMockup.scas_5_61.success)
+    const requestData = {
+      path: '/scas_5_61',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  scas_5_7(body: Scas_5_7_RequestInterface): Observable<Scas_5_7_ResponseInterface> {
+    const mockupData = getMockup('/scas_5_7', AppApiMockup.scas_5_7.success, body)
+    const requestData = {
+      path: '/scas_5_7',
+      mockupData,
+      body,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusSendSMSContract(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusSendSMSContract', AppApiMockup.getStatusSendSMSContract.success)
+    const requestData = {
+      path: '/getStatusSendSMSContract',
+      mockupData,
+    }
+
+    return this.api.post(requestData)
+  }
+
+  getStatusCheckSMSContract(): Observable<GetStatusResponseInterface> {
+    const mockupData = getMockup('/getStatusCheckSMSContract', AppApiMockup.getStatusCheckSMSContract.incorrectSMSCode)
+    const requestData = {
+      path: '/getStatusCheckSMSContract',
       mockupData,
     }
 

@@ -7,7 +7,9 @@ export interface GetStatusResponseInterface {
   isGetClientLoyaltyStatus?: boolean,
   order: {
     status: string,
-    statusReason?: string
+    statusReason?: string,
+    needIdentifyBy?: number,
+    paymentKey?: number
   }
 }
 
@@ -152,16 +154,42 @@ export interface GetPNEUrlResponseInterface {
   url: string
 }
 
-export interface GetApplicationContractResponseInterface {
-  order: ContractInterface
-}
-
 export interface SaveHoldAmountRequestInterface {
   amount: number,
 }
 
 // tslint:disable-next-line:class-name
 export interface Couca_1_31_ResponseInterface {
+  order?: {
+    status: string
+  },
+}
+
+export interface GetApplicationContractResponseInterface {
+  order: ContractInterface
+}
+
+// tslint:disable-next-line:class-name
+export interface Scas_5_6_ResponseInterface {
+  order?: {
+    status: string
+  },
+}
+
+// tslint:disable-next-line:class-name
+export interface Scas_5_61_ResponseInterface {
+  order?: {
+    status: string
+  },
+}
+
+// tslint:disable-next-line:class-name
+export interface Scas_5_7_RequestInterface {
+  code: string
+}
+
+// tslint:disable-next-line:class-name
+export interface Scas_5_7_ResponseInterface {
   order?: {
     status: string
   },
