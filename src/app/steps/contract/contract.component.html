@@ -143,7 +143,11 @@
                                type="tel"
                                placeholder="Введите код из SMS"
                                [errorMessage]="codeControl.errors | errorMessage"
+                               class="no-margin-bottom"
                     ></app-input>
+                    <p *ngIf="code" class="text-2 no-margin-top color-dangerous">
+                        Код введен неверно
+                    </p>
                     <p class="text-2 margin-top-x2">
                         <span *ngIf="sms.seconds" class="color-gray">
                             Отправить код повторно через {{ sms.seconds | timerTime }}

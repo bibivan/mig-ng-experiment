@@ -75,7 +75,7 @@ export class AppService {
   timerToastSub: Subscription
   timerContractSMSSub: Subscription
 
-  private readonly timeoutGetStatus = 15000
+  private readonly timeoutGetStatus = 1000//15000
   private readonly timeoutNextRequest = 2000
 
   constructor(
@@ -730,9 +730,7 @@ export class AppService {
 
         const orderStatus = response?.order?.status
         if (orderStatus === '5.73') {
-          this.state.contractSMS.seconds = 300
-          this.updateTimerContractSMS()
-
+          this.startTimerContractSMS()
           this.setPage('contract')
           return
         }
@@ -756,8 +754,7 @@ export class AppService {
         const orderStatus = order?.status
 
         if (orderStatus === '5.71' || orderStatus === '5.73') {
-          this.state.contractSMS.seconds = 300
-          this.updateTimerContractSMS()
+          this.startTimerContractSMS()
           this.setPage('contract')
           return
         }
@@ -952,7 +949,12 @@ export class AppService {
     })
   }
 
-  private stopTimerContractSMS(): void {
+  private startTimerContractSMS(): void {
+    this.state.contractSMS.seconds = 300
+    this.updateTimerContractSMS()
+  }
+
+  stopTimerContractSMS(): void {
     this.timerContractSMSSub?.unsubscribe()
   }
 

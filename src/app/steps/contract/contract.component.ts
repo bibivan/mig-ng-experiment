@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
 import { Scas_5_7_RequestInterface } from '../../services/app-api.model'
@@ -10,7 +19,7 @@ import { AppService } from '../../services/app.service'
   templateUrl: './contract.component.html',
   styleUrls: ['./contract.component.scss']
 })
-export class ContractComponent implements OnInit {
+export class ContractComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() contract: ContractInterface
   @Input() sms: ContractSigningInterface
   @Input() order: OrderInterface
@@ -29,16 +38,23 @@ export class ContractComponent implements OnInit {
     this.buildForm()
   }
 
+  ngOnDestroy(): void {
+    this.app.stopTimerContractSMS()
+    this.app.closeToast()
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.sms?.countSendSMS) {
+      const scrollTop = this.contractSigningBlock?.nativeElement.offsetTop || 0
+      document.body.scrollTop = scrollTop
+    }
+  }
+
   buildForm(): void {
     this.code = this.sms?.code || ''
     this.form = this.fb.group({
       code: [this.code, [FormValidators.required]]
     })
-
-    if (this.code) {
-      const scrollTop = this.contractSigningBlock?.nativeElement.offsetTop || 0
-      document.body.scrollTop = scrollTop
-    }
   }
 
   submit(): void {
