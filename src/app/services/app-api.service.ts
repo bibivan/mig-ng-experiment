@@ -413,7 +413,7 @@ export class AppApiService {
   }
 
   getStatusCheckSMSContract(): Observable<GetStatusResponseInterface> {
-    const mockupData = getMockup('/getStatusCheckSMSContract', AppApiMockup.getStatusCheckSMSContract.incorrectSMSCode)
+    const mockupData = getMockup('/getStatusCheckSMSContract', AppApiMockup.getStatusCheckSMSContract.success)
     const requestData = {
       path: '/getStatusCheckSMSContract',
       mockupData,

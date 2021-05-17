@@ -1,5 +1,21 @@
 <app-container>
     <app-form-wrapper [small]="true">
-        <app-round-icon theme="success" name="checked"></app-round-icon>
+        <div [ngSwitch]="messageId">
+
+            <ng-template ngSwitchCase="6.2">
+                <app-round-icon theme="success" name="checked"></app-round-icon>
+                <h1>Поздравляем!</h1>
+                <p>
+                    Денежные средства поступят вам на карту в ближайшее время!
+                    Спасибо, что выбрали сервис Migone!
+                </p>
+            </ng-template>
+
+            <div *ngSwitchDefault>
+                <app-round-icon theme="error" name="settings"></app-round-icon>
+                <h1>Ошибка</h1>
+            </div>
+        </div>
+
     </app-form-wrapper>
 </app-container>

@@ -75,7 +75,7 @@ export class AppService {
   timerToastSub: Subscription
   timerContractSMSSub: Subscription
 
-  private readonly timeoutGetStatus = 1000//15000
+  private readonly timeoutGetStatus = 15000
   private readonly timeoutNextRequest = 2000
 
   constructor(
@@ -121,7 +121,7 @@ export class AppService {
       this.getStatusCardRegistration()
       return
     }
-    this.getApplicationContract()
+    this.setPage('anketa')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
