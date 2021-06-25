@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import { interval, Subject, Subscription, timer } from 'rxjs'
-import * as url from 'url'
 import { formattedMobilePhone, numberFormat, openExternalLink } from '../helpers/helper'
 import {
   CheckSMSRequestInterface,
@@ -28,8 +27,8 @@ import {
   Scas_5_7_RequestInterface,
   Scas_5_7_ResponseInterface,
   SendSMSResponseInterface
-} from './app-api.model'
-import { AppApiService } from './app-api.service'
+} from './api.model'
+import { ApiService } from './api.service'
 import { appPagesType, AppStateInterface, ContractInterface } from './app.model'
 import { AuthenticationService } from './authentication.service'
 
@@ -79,7 +78,7 @@ export class AppService {
   private readonly timeoutNextRequest = 2000
 
   constructor(
-    private api: AppApiService,
+    private api: ApiService,
     private authentication: AuthenticationService,
   ) { }
 
@@ -764,7 +763,6 @@ export class AppService {
       () => this.errorHandler(this.getStatusCheckSMSContract.bind(this))
     )
   }
-
 
 
   private getClientLoyalty(): void {

@@ -1,16 +1,7 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core'
+import { AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
-import { Scas_5_7_RequestInterface } from '../../services/app-api.model'
+import { Scas_5_7_RequestInterface } from '../../services/api.model'
 import { ContractInterface, ContractSigningInterface, OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 

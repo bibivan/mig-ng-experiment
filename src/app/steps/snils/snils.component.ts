@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
 import { openExternalLink } from '../../helpers/helper'
-import { SaveSNILSRequestInterface } from '../../services/app-api.model'
+import { SaveSNILSRequestInterface } from '../../services/api.model'
 import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 

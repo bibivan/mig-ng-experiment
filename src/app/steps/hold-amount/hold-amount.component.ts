@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
-import { SaveHoldAmountRequestInterface } from '../../services/app-api.model'
+import { SaveHoldAmountRequestInterface } from '../../services/api.model'
 import { AppService } from '../../services/app.service'
 
 @Component({

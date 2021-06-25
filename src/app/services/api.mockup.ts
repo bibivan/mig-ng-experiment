@@ -38,7 +38,7 @@ const productsMockup = {
   empty: null
 }
 
-export class AppApiMockup {
+export class ApiMockup {
   static initOrderForm = {
     success: {
       order: {

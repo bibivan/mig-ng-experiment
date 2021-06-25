@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { FormValidators } from '../../helpers/form-validators'
-import { Couca_6_9_ResponseInterface } from '../../services/app-api.model'
+import { Couca_6_9_ResponseInterface } from '../../services/api.model'
 import { AppService } from '../../services/app.service'
 import { inputRadioButtonListType } from '../../shared/input-radio/input-radio.model'
 

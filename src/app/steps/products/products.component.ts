@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { SaveProductRequestInterface } from '../../services/app-api.model'
+import { SaveProductRequestInterface } from '../../services/api.model'
 import {
   OrderInterface,
   ProductInsuranceItemInterface,

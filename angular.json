@@ -31,7 +31,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "sex-by-russian-name",
+              "js-sha1"
+            ]
           },
           "configurations": {
             "production": {

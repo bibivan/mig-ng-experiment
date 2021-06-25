@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { timer } from 'rxjs'
 
 @Component({
   selector: 'app-input-code',

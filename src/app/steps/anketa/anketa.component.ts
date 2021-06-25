@@ -6,8 +6,8 @@ import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
   SaveAnketaRequestInterface
-} from '../../services/app-api.model'
-import { AppApiService } from '../../services/app-api.service'
+} from '../../services/api.model'
+import { ApiService } from '../../services/api.service'
 import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
 import { CalculatorService } from '../../shared/calculator/calculator.service'
@@ -39,7 +39,7 @@ export class AnketaComponent implements OnInit {
 
   constructor(
     private app: AppService,
-    private appApi: AppApiService,
+    private appApi: ApiService,
     private calculator: CalculatorService,
     private formProgress: FormProgressService,
     private fb: FormBuilder,
