@@ -27,6 +27,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.8.3",
     "js-sha1": "^0.6.0",
+    "material": "0.4.3",
     "moment": "^2.29.1",
     "ngx-currency": "^2.5.2",
     "ngx-mask": "^11.1.5",
