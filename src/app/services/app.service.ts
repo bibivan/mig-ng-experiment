@@ -134,9 +134,6 @@ export class AppService {
         case 'App_IdentifyInProgress':
           this.setErrorPage('5.5')
           break
-
-        case 'App_SELFYInputAfterEDS2':
-          break
       }
 
       return
@@ -258,7 +255,7 @@ export class AppService {
         break
 
       case 'getStatusCardRegistration':
-        this.executeRequest(this.getApplicationContract.bind(this))
+        this.executeRequest(this.getStatusCardRegistration.bind(this))
         break
 
       case 'saveHoldAmount':
@@ -300,13 +297,6 @@ export class AppService {
       default:
         this.step99()
     }
-
-    const hash = window.location.hash
-    if (hash === '#ariuspay') {
-      this.getStatusCardRegistration()
-      return
-    }
-    this.setPage('anketa')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
@@ -832,9 +822,7 @@ export class AppService {
           { contract: contract.contract }
         )
 
-        this.openToastSendSMS()
         this.setPage('contract')
-
       },
       () => this.errorHandler(this.getApplicationContract.bind(this))
     )
@@ -929,6 +917,7 @@ export class AppService {
         if (orderStatus === '5.73') {
           this.startTimerContractSMS()
           this.setPage('contract')
+          this.openToastSendSMS()
           return
         }
 

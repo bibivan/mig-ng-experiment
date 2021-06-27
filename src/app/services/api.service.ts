@@ -47,7 +47,23 @@ export class ApiService {
   ) {}
 
   initOrderForm(): Observable<InitOrderFormResponseInterface> {
-    const mockupData = getMockup('/initOrderForm', ApiMockup.initOrderForm.success)
+    const hash = window.location.hash
+    let mockupType = 'success'
+    if (hash === '#appHoldAmmount') { mockupType = 'successAppHoldAmmount' }
+    if (hash === '#appSNILSInput') { mockupType = 'successAppSNILSInput' }
+    if (hash === '#sendSMS') { mockupType = 'successSendSMS' }
+    if (hash === '#checkSMS') { mockupType = 'successCheckSMS' }
+    if (hash === '#couca_3_5') { mockupType = 'successCouca_3_5' }
+    if (hash === '#couca_3_6') { mockupType = 'successCouca_3_6' }
+    if (hash === '#saveEmploymentAndIncome') { mockupType = 'successSaveEmploymentAndIncome' }
+    if (hash === '#saveAdditionalContact') { mockupType = 'successSaveAdditionalContact' }
+    if (hash === '#getProductOfferList') { mockupType = 'successGetProductOfferList' }
+    if (hash === '#getStatusCardRegistration') { mockupType = 'successGetStatusCardRegistration' }
+    if (hash === '#getStatusHoldAmount') { mockupType = 'successGetStatusHoldAmount' }
+    if (hash === '#getApplicationContract') { mockupType = 'successGetApplicationContract' }
+
+    // @ts-ignore
+    const mockupData = getMockup('/initOrderForm', ApiMockup.initOrderForm[mockupType])
     const requestData = {
       path: '/initOrderForm',
       mockupData
