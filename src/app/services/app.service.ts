@@ -116,7 +116,8 @@ export class AppService {
       this.getStatusCardRegistration()
       return
     }
-    this.setPage('anketa')
+    // this.setPage('anketa')
+    this.setErrorPage('3.3')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {

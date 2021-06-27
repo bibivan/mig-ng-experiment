@@ -1,0 +1,42 @@
+.final-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  background-position: center center;
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+
+  &.theme-success {
+    background-color: rgba(76, 206, 121, 0.15);
+    background-image: url("./img/success.svg");
+  }
+
+  &.theme-warning {
+    background-color: rgba(228, 29, 65, 0.15);
+    background-image: url("./img/warning.svg");
+  }
+
+  &.theme-refuse {
+    background-color: rgba(228, 29, 65, 0.15);
+    background-image: url("./img/failed.svg");
+  }
+
+  &.theme-sad {
+    background-color: rgba(126, 137, 149, 0.15);
+    background-image: url("./img/sad.svg");
+  }
+
+  &.theme-technical_work {
+    background-color: rgba(126, 137, 149, 0.15);
+    background-image: url("./img/gear.svg");
+  }
+
+  &.theme-wait {
+    background-color: rgba(126, 137, 149, 0.15);
+    background-image: url("./img/wait.svg");
+  }
+}

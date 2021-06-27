@@ -63,6 +63,7 @@ export interface OrderInterface {
   education?: string,
   email?: string,
   familyStatus?: string,
+  formAction?: string,
   incomeAdd?: number,
   incomeWork?: number,
   lastname?: string,

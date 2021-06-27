@@ -1,21 +1,147 @@
 <app-container>
-    <app-form-wrapper [small]="true">
-        <div [ngSwitch]="messageId">
+    <app-form-wrapper>
+        <div [ngSwitch]="true" class="text-align-center">
+            <div *ngSwitchCase="['3.1', '3.2'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, спасибо, что обратились к нам!</p>
+                <p>Мы очень сожалеем, но согласно нашей кредитной политике мы не можем выдать вам заем.</p>
+                <p>Повторно подать заявку возможно после {{ date | date:'dd.MM.YYYY г.' }}</p>
+            </div>
 
-            <ng-template ngSwitchCase="6.2">
-                <app-round-icon theme="success" name="checked"></app-round-icon>
-                <h1>Поздравляем!</h1>
+            <div *ngSwitchCase="['3.3'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, заявка с указанного номера телефона была направлена в компанию ранее.</p>
+                <p>Пожалуйста, повторите заполнения заявки через 30 минут.</p>
+                <p>Либо вы можете обратиться по телефону 8 800 100 06 09 (звонок по России бесплатный) и наши консультанты окажут вам всю необходимую помощь.</p>
+                <app-button (clicked)="onButtonSiteClick('')" [inline]="true" class="button">На главную</app-button>
+            </div>
+
+            <div *ngSwitchCase="['4.1'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, спасибо, что обратились к нам!</p>
+                <p>Наша кредитная политика не позволяет нам выдавать займы тем, кто моложе 21 года.</p>
+                <p>ЛБудем рады увидеть вас в будущем!</p>
+            </div>
+
+            <div *ngSwitchCase="['4.2'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, а вы с характером!</p>
+                <p>Постарайтесь не использовать нецензурную лексику при заполнении заявки. Попробуете <a href="">еще раз</a>?</p>
+            </div>
+
+            <div *ngSwitchCase="['4.3', '4.8', '5.1.0', '5.1', '5.2', '5.3'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, спасибо, что обратились к нам!</p>
+                <p>Нам очень жаль, но мы не можем выдать вам заем согласно нашей кредитной политике.</p>
+                <p>Вы сможете подать заявку снова после {{ date | date:'dd.MM.YYYY г.' }}</p>
+            </div>
+
+            <div *ngSwitchCase="['4.5'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, спасибо, что обратились к нам!</p>
+                <p>Согласно нашей кредитной политике, на сегодняшний день мы кредитуем только граждан, имеющих постоянную регистрацию в Российской Федерации.</p>
+            </div>
+
+            <div *ngSwitchCase="['4.6'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, похоже, у вас уже есть активный заем.</p>
+                <p>Оформить новый вы сможете, когда погасите текущий.</p>
+                <p>Оплатить можно <span class="link" (click)="onButtonSiteClick('/loan_repayment/')">здесь</span>.</p>
+            </div>
+
+            <div *ngSwitchCase="['4.7'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, мы нашли вашу незавершенную заявку.</p>
+                <p>Наш сотрудник позвонит вам в течение часа, чтобы закончить оформление.</p>
+                <p>Вы также можете продолжить заполнение в <span (click)="onButtonSiteClick('/login/')">личном кабинете</span>.</p>
+            </div>
+
+            <div *ngSwitchCase="['4.74'].includes(status)">
+                <app-final-icon theme="warning"></app-final-icon>
+                <p class="caption">{{ order?.name }}, мы нашли вашу незавершенную заявку.</p>
                 <p>
-                    Денежные средства поступят вам на карту в ближайшее время!
-                    Спасибо, что выбрали сервис Migone!
+                    <ng-container *ngIf="order?.statusReason === 'APP_NeedCall'; else notAppNeedCall">
+                        Запросите код для подписания документов, позвонив по номеру
+                        <span class="nobr">8 800 700 09 08</span> (звонок по России бесплатный).
+                    </ng-container>
+                    <ng-template #notAppNeedCall>
+                        Подождите немного, скоро вам позвонит наш сотрудник для окончания оформления.
+                    </ng-template>
                 </p>
-            </ng-template>
+            </div>
+
+            <div *ngSwitchCase="['5.0.4'].includes(status)">
+                <app-final-icon theme="sad"></app-final-icon>
+                <p class="caption">Превышен лимит попыток ввода СНИЛС.</p>
+                <p>Попробуйте оформить заявку <a href="">заново</a>.</p>
+            </div>
+
+            <div *ngSwitchCase="['5.0.6'].includes(status)">
+                <app-final-icon theme="sad"></app-final-icon>
+                <p class="caption">Время для ввода СНИЛС истекло.</p>
+                <p>Попробуйте оформить заявку <a href="">заново</a>.</p>
+            </div>
+
+            <div *ngSwitchCase="['5.5'].includes(status)">
+                <app-final-icon theme="success"></app-final-icon>
+                <p class="caption">{{ order?.name }}, вам предварительно одобрен заем!</p>
+                <ng-container *ngIf="order?.needIdentifyBy === 16">
+                    <p>Скоро с вами свяжется курьер, чтобы приехать на подписание документов.</p>
+                </ng-container>
+                <ng-container *ngIf="order?.needIdentifyBy === 8 || order?.formAction === 'App_IdentifyInProgress'">
+                    <p>Финальное решение вы получите в SMS в течение часа.</p>
+                    <p>Вся информация о займе будет доступна в <span class="link" (click)="onButtonSiteClick('/login/')">личном кабинете</span>.</p>
+                </ng-container>
+            </div>
+
+            <div *ngSwitchCase="['5.55'].includes(status)">
+                <app-final-icon theme="success"></app-final-icon>
+                <p class="caption">{{ order?.name }}, вам предварительно одобрен заем!</p>
+                <p>Финальное решение вы получите в SMS в течение часа.</p>
+                <p>Вся информация о займе будет доступна в <span class="link" (click)="onButtonSiteClick('/login/')">личном кабинете</span>.</p>
+            </div>
+
+            <div *ngSwitchCase="['5.72'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, а вы настойчивы!</p>
+                <p>У вас кончились попытки на подписание договора.</p>
+                <p>Попробуйте заполнить анкету повторно через 2 часа.</p>
+            </div>
+
+            <div *ngSwitchCase="['6.2'].includes(status)">
+                <app-final-icon theme="success"></app-final-icon>
+                <p class="caption">{{ order?.name }}, поздравляем!</p>
+                <p *ngIf="order?.paymentKey === 2">Скоро вам придет СМС с номером перевода.</p>
+                <p *ngIf="order?.paymentKey === 16">Денежные средства поступят вам на карту в ближайшее время!</p>
+                <p *ngIf="order?.paymentKey === 32">Денежные средства зачислены на виртуальную карту, реквизиты карты придут в СМС.</p>
+                <p>Спасибо, что выбрали сервис Migone!</p>
+            </div>
+
+            <div *ngSwitchCase="['6.3'].includes(status)">
+                <app-final-icon theme="refuse"></app-final-icon>
+                <p class="caption">{{ order?.name }}, спасибо, что обратились к нам!</p>
+                <p>Подождите немного, скоро вам позвонит наш сотрудник для окончания оформления.</p>
+            </div>
+
+            <div *ngSwitchCase="['6.4'].includes(status)">
+                <app-final-icon theme="success"></app-final-icon>
+                <p class="caption">{{ order?.name }}, мы нашли вашу незавершенную заявку.</p>
+                <p>Подождите немного, скоро вам позвонит наш сотрудник для окончания оформления.</p>
+            </div>
+
+            <div *ngSwitchCase="['92', '93', '95', '96', '97', '98', '99', '5.11'].includes(status)">
+                <app-final-icon theme="technical_work"></app-final-icon>
+                <p class="caption">Ой, что-то пошло не так! Мы уже разбираемся.</p>
+                <p>Пожалуйста, попробуйте заполнить заявку снова через <span class="nobr">60 минут</span>.</p>
+                <app-button (clicked)="onButtonSiteClick()" [inline]="true" class="button">На главную</app-button>
+            </div>
 
             <div *ngSwitchDefault>
-                <app-round-icon theme="error" name="settings"></app-round-icon>
-                <h1>Ошибка</h1>
+                <app-final-icon theme="technical_work"></app-final-icon>
+                <p class="caption">Ой, что-то пошло не так! Мы уже разбираемся.</p>
+                <p>Пожалуйста, попробуйте заполнить заявку снова через <span class="nobr">60 минут</span>.</p>
+                <app-button (clicked)="onButtonSiteClick()" [inline]="true" class="button">На главную</app-button>
             </div>
         </div>
-
     </app-form-wrapper>
 </app-container>

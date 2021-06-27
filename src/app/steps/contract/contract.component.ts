@@ -20,6 +20,8 @@ export class ContractComponent implements OnInit, OnDestroy, AfterViewChecked {
   form!: FormGroup
   code: string = ''
 
+  disableScrollTop: boolean = false
+
   constructor(
     private app: AppService,
     private fb: FormBuilder,
@@ -35,9 +37,9 @@ export class ContractComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.sms?.countSendSMS) {
-      const scrollTop = this.contractSigningBlock?.nativeElement.offsetTop || 0
-      document.body.scrollTop = scrollTop
+    if (this.sms?.countSendSMS || this.sms?.code) {
+      document.body.scrollTop = this.contractSigningBlock?.nativeElement.offsetTop || 0
+      this.disableScrollTop = true
     }
   }
 

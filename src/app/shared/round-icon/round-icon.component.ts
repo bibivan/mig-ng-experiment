@@ -8,5 +8,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 })
 export class RoundIconComponent {
   @Input() name: string = ''
-  @Input() theme: 'primary' | 'error' | 'success' = 'primary'
+  @Input() theme: 'primary' | 'error' | 'success' | 'info' = 'primary'
 }
