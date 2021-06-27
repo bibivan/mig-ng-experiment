@@ -7,10 +7,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
-  @Input() small: boolean
-  @Input() caption: string
-  @Input() centered = true
-  @Input() bottomMobile: boolean
+  @Input() small: boolean = false
+  @Input() caption: string = ''
+  @Input() centered: boolean = true
+  @Input() bottomMobile: boolean = false
   @Output() closed: EventEmitter<void> = new EventEmitter<void>()
 
   close(): void {

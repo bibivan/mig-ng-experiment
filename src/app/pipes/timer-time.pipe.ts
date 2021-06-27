@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class TimerTimePipe implements PipeTransform {
 
-  transform(value: number): string {
+  transform(value: number = 0): string {
     if (!value) { return '' }
 
     let seconds = value

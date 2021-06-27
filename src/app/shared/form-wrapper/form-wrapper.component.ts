@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core'
   styleUrls: ['./form-wrapper.component.scss']
 })
 export class FormWrapperComponent {
-  @Input() small: boolean
+  @Input() small: boolean = false
 }

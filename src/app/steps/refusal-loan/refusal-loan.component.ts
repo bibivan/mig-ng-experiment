@@ -11,7 +11,7 @@ import { inputRadioButtonListType } from '../../shared/input-radio/input-radio.m
   styleUrls: ['./refusal-loan.component.scss']
 })
 export class RefusalLoanComponent implements OnInit {
-  form: FormGroup
+  form!: FormGroup
 
   reasonItems: inputRadioButtonListType = [
     { value: 'Не устраивает срок займа', label: 'Не устраивает срок займа' },
@@ -37,12 +37,12 @@ export class RefusalLoanComponent implements OnInit {
     this.form.markAllAsTouched()
     if (this.form.invalid) { return }
 
-    this.close()
+    this.closeModal()
     this.app.couca_6_9(this.serializeForm())
   }
 
-  close(): void {
-    this.app.closeRefusalLoanModal()
+  closeModal(): void {
+    this.app.closeModal()
   }
 
   private serializeForm(): Couca_6_9_ResponseInterface {

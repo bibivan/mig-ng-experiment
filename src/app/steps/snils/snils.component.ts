@@ -12,9 +12,9 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./snils.component.scss']
 })
 export class SnilsComponent implements OnInit {
-  @Input() order: OrderInterface
+  @Input() order!: OrderInterface | null
 
-  form: FormGroup
+  form!: FormGroup
 
   constructor(
     private app: AppService,
@@ -27,7 +27,7 @@ export class SnilsComponent implements OnInit {
 
   buildForm(): void {
     this.form = this.fb.group({
-      snils: [this.order.snils, [FormValidators.required, FormValidators.snils]]
+      snils: [this.order?.snils || '', [FormValidators.required, FormValidators.snils]]
     })
   }
 

@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { SaveProductRequestInterface } from '../../services/api.model'
 import {
+  modalsType,
   OrderInterface,
   ProductInsuranceItemInterface,
   ProductItemInterface,
@@ -15,12 +16,12 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  @Input() order: OrderInterface
-  @Input() products: productListType
+  @Input() order!: OrderInterface | null
+  @Input() products!: productListType | null
 
-  maxApprovedAmount: number
-  selectedProduct: ProductItemInterface
-  selectedInsurance: ProductInsuranceItemInterface
+  maxApprovedAmount!: number
+  selectedProduct!: ProductItemInterface | null
+  selectedInsurance!: ProductInsuranceItemInterface | null
 
   insuranceControl: FormControl = new FormControl(true)
 
@@ -30,7 +31,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.maxApprovedAmount = this.app.getMaxApprovedSum()
-    this.changeProduct(this.products[0])
+    if (this.products?.length) {
+      this.changeProduct(this.products[0])
+    }
+
     this.insuranceControl.valueChanges.subscribe(this.onChangeInsurance.bind(this))
   }
 
@@ -47,7 +51,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.setInsurance(product)
   }
 
-  setInsurance(product: ProductItemInterface): void {
+  setInsurance(product: ProductItemInterface | null): void {
     const insurance = this.getInsurance(product)
     if (insurance && this.insuranceControl.value) {
       this.selectedInsurance = Object.assign({}, insurance)
@@ -64,7 +68,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getInsurance(product: ProductItemInterface): ProductInsuranceItemInterface {
+  getInsurance(product: ProductItemInterface | null): ProductInsuranceItemInterface | null {
     return product?.InsuranceList ? product.InsuranceList[0] : null
   }
 
@@ -78,29 +82,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     return product.RegularPayment + insuranceAmount
   }
 
-  openInsuranceTermHint(event: MouseEvent): void {
+  openModal(event: MouseEvent, type: modalsType): void {
     event.preventDefault()
-    this.app.openInsuranceTermHint()
-  }
-
-  openInsuranceInfoHint(event: MouseEvent): void {
-    event.preventDefault()
-    this.app.openInsuranceInfoHint()
-  }
-
-  openRefusalLoanModal(event: MouseEvent): void {
-    event.preventDefault()
-    this.app.openRefusalLoanModal()
-  }
-
-  openSumLoanHint(event: MouseEvent): void {
-    event.preventDefault()
-    this.app.openSumLoanHint()
+    this.app.openModal(type)
   }
 
   private serializeForm(): SaveProductRequestInterface {
-    const insurance = this.selectedInsurance ? true : false
-    const productId = this.selectedProduct.id
+    const insurance = !!this.selectedInsurance
+    const productId = this.selectedProduct?.id || ''
 
     return { insurance, productId }
   }

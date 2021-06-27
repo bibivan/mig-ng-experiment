@@ -81,15 +81,15 @@ export class KladrAddressService {
       str = '',
     } = data
 
-    addressGroup.get('region').setValue(region)
-    addressGroup.get('punkt').setValue(punkt)
-    addressGroup.get('punktCode').setValue(punktCode)
-    addressGroup.get('street').setValue(street)
-    addressGroup.get('streetCode').setValue(streetCode)
-    addressGroup.get('home').setValue(home)
-    addressGroup.get('flat').setValue(flat)
-    addressGroup.get('korp').setValue(korp)
-    addressGroup.get('str').setValue(str)
+    addressGroup.get('region')?.setValue(region)
+    addressGroup.get('punkt')?.setValue(punkt)
+    addressGroup.get('punktCode')?.setValue(punktCode)
+    addressGroup.get('street')?.setValue(street)
+    addressGroup.get('streetCode')?.setValue(streetCode)
+    addressGroup.get('home')?.setValue(home)
+    addressGroup.get('flat')?.setValue(flat)
+    addressGroup.get('korp')?.setValue(korp)
+    addressGroup.get('str')?.setValue(str)
   }
 
   get regions(): selectOptionsType {

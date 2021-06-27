@@ -21,7 +21,7 @@
                             [max]="state.sumMax"
                             [step]="state.sumStep"
                             [value]="state.sum"
-                            (input)="onChangeSum($event.value)"
+                            (input)="onChangeSum($event.value || 0)"
                 ></mat-slider>
             </div>
             <div class="slider-info">
@@ -51,7 +51,7 @@
                             [max]="state.termMax"
                             [step]="state.termStep"
                             [value]="state.termSliderValue"
-                            (input)="onChangeTerm($event.value)"
+                            (input)="onChangeTerm($event.value || 0)"
                 ></mat-slider>
             </div>
 

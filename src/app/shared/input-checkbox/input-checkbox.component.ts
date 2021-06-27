@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
   ]
 })
 export class InputCheckboxComponent implements ControlValueAccessor {
-  @Input() disabled: boolean
+  @Input() disabled: boolean = false
 
   @Input('value') _value = false
 
@@ -38,13 +38,13 @@ export class InputCheckboxComponent implements ControlValueAccessor {
     this.onChange = fn
   }
 
-  writeValue(value): void {
+  writeValue(value: any): void {
     if (value) {
       this.value = value
     }
   }
 
-  registerOnTouched(fn): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn
   }
 

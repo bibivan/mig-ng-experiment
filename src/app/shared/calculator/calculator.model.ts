@@ -27,7 +27,7 @@ export interface CalculatorStateInterface {
   isDiscount: boolean,
   results: {
     sumReturn: number,
-    deadline: Date
+    deadline: Date | null
   }
 }
 

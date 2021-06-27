@@ -10,8 +10,7 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./hold-amount.component.scss']
 })
 export class HoldAmountComponent implements OnInit {
-
-  form: FormGroup
+  form!: FormGroup
 
   constructor(
     private app: AppService,

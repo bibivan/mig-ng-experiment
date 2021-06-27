@@ -6,10 +6,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   styleUrls: ['./accordion.component.scss'],
 })
 export class AccordionComponent implements OnInit, OnChanges {
-  @Input() opened: boolean
-  @Input() caption: string
+  @Input() opened: boolean = false
+  @Input() caption: string = ''
 
-  isOpen: boolean
+  isOpen: boolean = false
 
   ngOnInit() {
     this.isOpen = this.opened || false

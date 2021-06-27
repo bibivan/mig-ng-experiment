@@ -2,7 +2,7 @@
     <app-form-wrapper>
         <h1 class="no-margin-bottom">Проверьте и подпишите договор займа</h1>
         <p class="text-2 color-gray margin-top-x1">
-            {{ contract.name }} {{ contract.patronymic }}, пожалуйста ознакомьтесь с договором займа
+            {{ contract?.name }} {{ contract?.patronymic }}, пожалуйста ознакомьтесь с договором займа
             и подпишите его с помощью SMS-кода
         </p>
 
@@ -13,7 +13,7 @@
                 <div class="text label">Договор</div>
             </div>
             <div class="col">
-                <div class="text">{{ contract.contract?.number }}</div>
+                <div class="text">{{ contract?.contract?.number }}</div>
             </div>
         </div>
 
@@ -24,7 +24,7 @@
                 <div class="text label">ФИО</div>
             </div>
             <div class="col">
-                <div class="text">{{ contract.lastname }} {{ contract.name }} {{ contract.patronymic }}</div>
+                <div class="text">{{ contract?.lastname }} {{ contract?.name }} {{ contract?.patronymic }}</div>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
             </div>
             <div class="col">
                 <div class="text">
-                    <span class="nobr">{{ contract.contract?.sum | currencyRub }}</span>
+                    <span class="nobr">{{ contract?.contract?.sum | currencyRub }}</span>
                     <div class="info" (click)="openSumLoanHint($event)">
                         <app-icon name="info"></app-icon>
                     </div>
@@ -62,7 +62,7 @@
                 <div class="text label">Срок займа</div>
             </div>
             <div class="col">
-                <div class="text">{{ contract.contract?.term | termLoan }}</div>
+                <div class="text">{{ contract?.contract?.term | termLoan }}</div>
             </div>
         </div>
 
@@ -74,7 +74,7 @@
             </div>
             <div class="col">
                 <div class="text">
-                    {{ contract.contract?.payment | currencyRub }}
+                    {{ contract?.contract?.payment | currencyRub }}
                     одним платежом
                 </div>
             </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="col">
                 <div class="text">
-                    до {{ contract.contract?.date | date: 'dd MMM YYYY' }}
+                    до {{ contract?.contract?.date | date: 'dd MMM YYYY' }}
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
             </div>
             <div class="col">
                 <div class="text">
-                    {{ contract.insurance ? 'Подключено' : 'Отключено' }}
+                    {{ contract?.insurance ? 'Подключено' : 'Отключено' }}
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
 
 
         <div #contractSigningBlock class="margin-top-x3">
-            <ng-container *ngIf="sms.countSendSMS === 0; else smsCode">
+            <ng-container *ngIf="sms?.countSendSMS === 0; else smsCode">
                 <div>
                     <app-button (click)="scas_5_6()">Подписать договор по SMS</app-button>
                 </div>
@@ -149,10 +149,10 @@
                         Код введен неверно
                     </p>
                     <p class="text-2 margin-top-x2">
-                        <span *ngIf="sms.seconds" class="color-gray">
-                            Отправить код повторно через {{ sms.seconds | timerTime }}
+                        <span *ngIf="sms?.seconds" class="color-gray">
+                            Отправить код повторно через {{ sms?.seconds | timerTime }}
                         </span>
-                        <span *ngIf="!sms.seconds" class="link" (click)="scas_5_61()">
+                        <span *ngIf="!sms?.seconds" class="link" (click)="scas_5_61()">
                             Отправить код повторно
                         </span>
                     </p>

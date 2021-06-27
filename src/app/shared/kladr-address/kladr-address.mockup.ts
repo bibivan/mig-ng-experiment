@@ -6,12 +6,12 @@ export class KladrAddressMockup {
     return generateMockup(text)
   }
 
-  static getStreet(text: string): autocompleteListType {
+  static getStreet(text: string = ''): autocompleteListType {
     return generateMockup(text)
   }
 }
 
-function generateMockup(text): autocompleteListType {
+function generateMockup(text: string = ''): autocompleteListType {
   const result = []
   const max = 20 - text.length
 

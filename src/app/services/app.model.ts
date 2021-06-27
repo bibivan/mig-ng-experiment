@@ -15,18 +15,14 @@ export type appPagesType =
   | 'final'
 
 export interface AppStateInterface {
-  anketaSMS: SMSSettingsInterface,
-  contract: ContractInterface,
-  contractSMS: ContractSigningInterface,
+  anketaSMS: SMSSettingsInterface | null,
+  contract: ContractInterface | null,
+  contractSMS: ContractSigningInterface | null,
   isInit: boolean,
-  isOpenInsuranceInfoHint: boolean,
-  isOpenInsuranceTermHint: boolean,
-  isOpenPersonalAccountHint: boolean,
-  isOpenRefusalLoanModal: boolean,
-  isOpenSumLoanHint: boolean,
-  order: OrderInterface,
-  page: appPagesType,
-  products: productListType,
+  openModal: modalsType | null,
+  order: OrderInterface | null,
+  page: appPagesType | null,
+  products: productListType | null,
   status: string,
   statusReason: string,
   toast: {
@@ -147,3 +143,5 @@ export interface ContractSigningInterface {
   seconds: number,
   countSendSMS: number
 }
+
+export type modalsType = 'insurance_info' | 'insurance_term' | 'personal_account' | 'refusal_loan' | 'sum_loan'

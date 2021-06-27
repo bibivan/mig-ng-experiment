@@ -1,7 +1,7 @@
 export type kladrAddressType = 'Registration' | 'Fact' | 'Work'
 
 export interface KladrAddressInterface {
-  type: kladrAddressType
+  type: kladrAddressType | null
   region: string,
   punkt: string,
   punktCode: string,

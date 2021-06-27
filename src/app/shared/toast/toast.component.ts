@@ -30,6 +30,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
 
 export class ToastComponent {
-  @Input() caption: string
-  @Input() text: string
+  @Input() caption: string = ''
+  @Input() text: string = ''
 }

@@ -9,6 +9,7 @@ const dayMax = 30
 for (let i = sumDayMin; i <= sumDayMax; i += 1000) {
   for (let j = dayMin; j <= dayMax; j++) {
     const key = i + '_' + j
+    // @ts-ignore
     calculatorDataMockup[key] = i + i * j * 0.05
   }
 }

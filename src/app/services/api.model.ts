@@ -66,8 +66,9 @@ export interface SaveAnketaRequestInterface {
   mobilePhone: string,
   name: string,
   patronymic: string,
+  promoCode: string,
   sum: number,
-  term: TermLoanInterface
+  term: TermLoanInterface,
 }
 
 export interface SaveAnketaResponseInterface {
@@ -212,4 +213,13 @@ export interface Scas_5_7_ResponseInterface {
   order?: {
     status: string
   },
+}
+
+export interface CheckPromoCodeRequestInterface {
+  promoCode: string,
+  sum: number
+}
+
+export interface CheckPromoCodeResponseInterface {
+  errorText: string
 }

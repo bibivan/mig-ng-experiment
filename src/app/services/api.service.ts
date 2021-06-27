@@ -7,7 +7,10 @@ import {
   ApiInterface,
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
+  CheckPromoCodeRequestInterface,
+  CheckPromoCodeResponseInterface,
   CheckSMSRequestInterface,
+  CheckSMSResponseInterface,
   ClientSmevIdentityRequestInterface,
   Couca_6_9_ResponseInterface,
   GetApplicationContractResponseInterface,
@@ -18,6 +21,7 @@ import {
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface,
+  SaveAnketaResponseInterface,
   SaveEmploymentAndIncomeRequestInterface,
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
@@ -59,6 +63,7 @@ export class ApiService {
     if (phone === '9999999114') { mockupType = 'successUnfinishedApplication' }
     if (phone === '9999999111') { mockupType = 'successPromotions' }
 
+    // @ts-ignore
     const mockupData = getMockup('/checkPhone', ApiMockup.checkPhone[mockupType], body)
 
     const requestData = {
@@ -70,7 +75,7 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  saveAnketa(body: SaveAnketaRequestInterface): Observable<any> {
+  saveAnketa(body: SaveAnketaRequestInterface): Observable<SaveAnketaResponseInterface> {
     const mockupData = getMockup('/saveAnketa', ApiMockup.saveAnketa.success, body)
     const requestData = {
       path: '/saveAnketa',
@@ -121,12 +126,13 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  checkSMS(body: CheckSMSRequestInterface): Observable<SendSMSResponseInterface> {
+  checkSMS(body: CheckSMSRequestInterface): Observable<CheckSMSResponseInterface> {
     const code = body.code
     let mockupType = 'success'
     if (code === '0000') { mockupType = 'successInvalidCode' }
     if (code === '1111') { mockupType = 'successLimit' }
 
+    // @ts-ignore
     const mockupData = getMockup('/checkSMS', ApiMockup.checkSMS[mockupType], body)
     const requestData = {
       path: '/checkSMS',
@@ -421,6 +427,24 @@ export class ApiService {
     const requestData = {
       path: '/getStatusCheckSMSContract',
       mockupData,
+    }
+
+    return this.post(requestData)
+  }
+
+  checkPromoCode(body: CheckPromoCodeRequestInterface): Observable<CheckPromoCodeResponseInterface> {
+    let mockupType = 'successInvalidPromoCode'
+    if (body.promoCode === 'miglove') {
+      mockupType = 'success'
+    }
+
+    // @ts-ignore
+    const mockupData = getMockup('/creditApplication/anketa/checkPromoCode', ApiMockup.checkPromoCode[mockupType], body)
+
+    const requestData = {
+      path: '/creditApplication/anketa/checkPromoCode',
+      mockupData,
+      body
     }
 
     return this.post(requestData)

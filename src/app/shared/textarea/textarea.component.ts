@@ -16,12 +16,12 @@ import { Subscription } from 'rxjs'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextareaComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() disabled: boolean
-  @Input() readonly: boolean
-  @Input() mandatory: boolean
-  @Input() placeholder = ''
-  @Input() errorMessage = ''
-  @Input() errorMessageHidden = false
+  @Input() disabled: boolean = false
+  @Input() readonly: boolean = false
+  @Input() mandatory: boolean = false
+  @Input() placeholder: string = ''
+  @Input() errorMessage: string = ''
+  @Input() errorMessageHidden: boolean = false
 
   value: any = ''
   focused = false

@@ -9,10 +9,10 @@ import { FormProgressService } from './form-progress.service'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormProgressComponent implements OnInit {
-  @Input() stepPercent: number
-  @Input() stepId: formProgressStepsType
+  @Input() stepPercent: number = 0
+  @Input() stepId!: formProgressStepsType
 
-  stepInfo: StepInfoInterface
+  stepInfo!: StepInfoInterface
 
   constructor(
     private formProgress: FormProgressService

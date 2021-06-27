@@ -2,7 +2,7 @@
 
 <app-container>
     <app-form-wrapper>
-        <app-calculator [defaultValue]="{ sum: order.sum, term: order.term }"></app-calculator>
+        <app-calculator [defaultValue]="calculatorDefaultValue"></app-calculator>
 
         <div class="form-divider"></div>
 
@@ -71,6 +71,20 @@
                        [errorMessage]="dateBirthdayControl.errors | errorMessage"
             ></app-input>
 
+            <div class="form-divider margin-bottom-x2"></div>
+
+            <app-input [formControl]="promoCodeControl"
+                       placeholder="Промокод"
+                       [errorMessage]="promoCodeControl.errors | errorMessage"
+                       (blurEvent)="checkPromoCode()"
+                       (focusEvent)="onFocusPromoCode()"
+                       class="no-margin-bottom"
+            ></app-input>
+
+            <p *ngIf="promoCodeError" class="text-2 color-dangerous margin-top-x1">{{ promoCodeError }}</p>
+
+            <div class="form-divider margin-top-x2 margin-bottom-x2"></div>
+
             <app-input-checkbox [formControl]="acceptControl">
                 Я соглашаюсь на
                 <span class="link"
@@ -90,7 +104,7 @@
 
             <app-button type="submit"
                         theme="primary"
-                        [disabled]="!isAvailableSubmit"
+                        [disabled]="!isVerifiedMobilePhone || isLoadingPromoCode"
             >Продолжить
             </app-button>
 

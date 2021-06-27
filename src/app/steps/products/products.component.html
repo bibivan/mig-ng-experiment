@@ -9,7 +9,7 @@
         <div class="switchers">
             <div *ngFor="let item of products"
                  class="item"
-                 [class.selected]="item.id === selectedProduct.id"
+                 [class.selected]="item.id === selectedProduct?.id"
                  (click)="changeProduct(item)"
             >
                 <div class="icon"></div>
@@ -31,7 +31,7 @@
                     <div class="col">
                         <div class="text">
                             {{ selectedProduct.Amount | currencyRub }}
-                            <div class="info" (click)="openSumLoanHint($event)">
+                            <div class="info" (click)="openModal($event, 'sum_loan')">
                                 <app-icon name="info"></app-icon>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 </ng-template>
                                 <div class="info"
                                      [class.color-dangerous]="!selectedInsurance"
-                                     (click)="openInsuranceInfoHint($event)"
+                                     (click)="openModal($event, 'insurance_info')"
                                 >
                                     <app-icon name="info"></app-icon>
                                 </div>
@@ -101,7 +101,7 @@
                 <div class="line margin-bottom-x2"></div>
                 <app-input-checkbox [formControl]="insuranceControl">
                     Я согласен на заключение
-                    <span class="link" (click)="openInsuranceTermHint($event)">
+                    <span class="link" (click)="openModal($event, 'insurance_term')">
                         договора страхования
                     </span>
                 </app-input-checkbox>
@@ -116,7 +116,7 @@
         </div>
 
         <p class="text-1 text-align-center margin-top-x3">
-            <span class="link" (click)="openRefusalLoanModal($event)">Отказаться от получения займа</span>
+            <span class="link" (click)="openModal($event, 'refusal_loan')">Отказаться от получения займа</span>
         </p>
     </app-form-wrapper>
 </app-container>

@@ -83,6 +83,7 @@ export class FormProgressService {
   }
 
   getFieldPercent(field: string): number {
+    // @ts-ignore
     return this.fields[field] || 0
   }
 

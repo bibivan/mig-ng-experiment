@@ -7,6 +7,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoundIconComponent {
-  @Input() name: string
+  @Input() name: string = ''
   @Input() theme: 'primary' | 'error' | 'success' = 'primary'
 }

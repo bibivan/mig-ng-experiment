@@ -8,8 +8,8 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./sms.component.scss'],
 })
 export class SmsComponent implements OnInit, OnDestroy {
-  @Input() order: OrderInterface
-  @Input() smsSettings: SMSSettingsInterface
+  @Input() order!: OrderInterface | null
+  @Input() smsSettings!: SMSSettingsInterface | null
 
   error = ''
 

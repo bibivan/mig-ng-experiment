@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class ErrorMessagePipe implements PipeTransform {
 
-  transform(value: object): string {
+  transform(value: object | null | undefined): string {
     if (!value) { return '' }
 
     return Object.values(value).join('. ')

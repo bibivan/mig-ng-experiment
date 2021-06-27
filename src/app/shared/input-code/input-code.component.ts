@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 })
 export class InputCodeComponent implements OnInit {
   @Input() codeLength = 4
-  @Input() code: string
+  @Input() code: string = ''
   @Output() codeCompleted: EventEmitter<string> = new EventEmitter<string>()
 
   error = ''

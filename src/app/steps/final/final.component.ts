@@ -7,10 +7,10 @@ import { OrderInterface } from '../../services/app.model'
   styleUrls: ['./final.component.scss']
 })
 export class FinalComponent implements OnInit {
-  @Input() order: OrderInterface
-  @Input() status: string
+  @Input() order!: OrderInterface | null
+  @Input() status!: string
 
-  messageId: string
+  messageId!: string
   technicalWorkStatuses = ['92', '93', '95', '96', '97', '98', '99', '5.11']
   rejectionStatuses = ['3.1', '3.2', '4.3', '4.5', '4.8', '5.2', '5.3', '6.3']
 

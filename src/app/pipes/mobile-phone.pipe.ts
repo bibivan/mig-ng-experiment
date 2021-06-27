@@ -6,7 +6,7 @@ import { formattedMobilePhone } from '../helpers/helper'
 })
 export class MobilePhonePipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: string = ''): string {
     return formattedMobilePhone(value)
   }
 

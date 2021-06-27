@@ -9,8 +9,8 @@ import { AppService } from './services/app.service'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  state: AppStateInterface
-  stateSub: Subscription
+  state!: AppStateInterface
+  stateSub!: Subscription
 
   constructor(
     private app: AppService
@@ -25,24 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.stateSub?.unsubscribe()
   }
 
-  closePersonalAccountHint(): void {
-    this.app.closePersonalAccountHint()
-  }
-
-  closeInsuranceTermHint(): void {
-    this.app.closeInsuranceTermHint()
-  }
-
-  closeInsuranceInfoHint(): void {
-    this.app.closeInsuranceInfoHint()
-  }
-
-  closeRefusalLoanModal(): void {
-    this.app.closeRefusalLoanModal()
-  }
-
-  closeSumLoanHint(): void {
-    this.app.closeSumLoanHint()
+  closeModal(): void {
+    this.app.closeModal()
   }
 
   private refreshState(data: AppStateInterface): void {

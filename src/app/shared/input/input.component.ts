@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   forwardRef,
@@ -26,35 +25,34 @@ import { inputType, MaskConfigInterface, maskType } from './input.model'
       multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValueAccessor {
-  @Input() readonly: boolean
-  @Input() mandatory: boolean
-  @Input() placeholder = ''
+  @Input() readonly: boolean = false
+  @Input() mandatory: boolean = false
+  @Input() placeholder: string = ''
   @Input() type: inputType = 'text'
-  @Input() maxlength = 256
-  @Input() errorMessage = ''
-  @Input() errorMessageHidden = false
-  @Input() mask: maskType
-  @Input() matAutocomplete: string
+  @Input() maxlength: number = 256
+  @Input() errorMessage: string = ''
+  @Input() errorMessageHidden: boolean = false
+  @Input() mask!: maskType
+  @Input() matAutocomplete: string = ''
   @Input() currencyPrecision = 2
   @Input() currencySuffix = ' ₽'
   @Input() currencyMax = 1000000
   @Input() currencyMin = 0
   @Input() currencyThousands = ' '
-  @Input() currencyInputModeNatural = false
-  @Input() inputSlider = false
+  @Input() currencyInputModeNatural: boolean = false
+  @Input() inputSlider: boolean = false
   @Output() blurEvent: EventEmitter<any> = new EventEmitter<any>()
   @Output() focusEvent: EventEmitter<any> = new EventEmitter<any>()
 
   value: any = ''
-  focused = false
-  isPassword: boolean
-  maskConfig: MaskConfigInterface
-  disabled: boolean
+  focused: boolean = false
+  isPassword: boolean = false
+  maskConfig!: MaskConfigInterface
+  disabled: boolean = false
 
-  currencyConfig = null
+  currencyConfig!: object
 
   private sub = new Subscription()
   formControl = new FormControl('')
@@ -100,6 +98,7 @@ export class InputComponent implements OnInit, OnDestroy, OnChanges, ControlValu
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.currencySuffix && this.currencyConfig) {
+      // @ts-ignore
       this.currencyConfig.suffix = changes.currencySuffix.currentValue
     }
   }

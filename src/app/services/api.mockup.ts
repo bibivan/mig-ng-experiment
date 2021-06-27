@@ -523,4 +523,12 @@ export class ApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
+  static checkPromoCode = {
+    success: {
+      errorText: ''
+    },
+    successInvalidPromoCode: {
+      errorText: 'Промокод не существует'
+    }
+  }
 }

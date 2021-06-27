@@ -1,9 +1,8 @@
+// @ts-ignore
 import * as sha1 from 'js-sha1'
 import * as moment from 'moment'
 import { SexByRussianName } from 'sex-by-russian-name'
 import { TermLoanInterface } from '../shared/calculator/calculator.model'
-
-// import { TermLoanInterface } from '../../core/steps/calculator/calculator.model'
 import { selectOptionsType } from '../shared/select/select.model'
 
 
@@ -104,12 +103,13 @@ export function numberFormat(num: number, decimals = 0, decPoint = '', thousands
   let kd
   let km
 
-  i = parseInt((+num || 0).toFixed(decimals), null) + ''
+  i = parseInt((+num || 0).toFixed(decimals), undefined) + ''
   j = i.length
   if (j > 3) { j = j % 3 } else { j = 0 }
 
   km = (j ? i.substr(0, j) + thousandsSep : '')
   kw = i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousandsSep)
+  // @ts-ignore
   kd = (decimals ? decPoint + Math.abs(num - i).toFixed(decimals).replace(/-/, '0').slice(2) : '')
   return km + kw + kd
 }
@@ -123,7 +123,7 @@ export function sha1Encode(str = ''): string {
   return sha1(str)
 }
 
-export function getDeadlineDate(term: TermLoanInterface): Date {
+export function getDeadlineDate(term: TermLoanInterface): Date | null {
   if (!term) { return null }
 
   const deadlineDate = new Date()
@@ -177,7 +177,7 @@ export function isRequiredStacPhone(value = ''): boolean {
 }
 
 // формирование даты Moment из строки дд.мм.гггг
-export function getMomentDate(value = ''): moment.Moment {
+export function getMomentDate(value = ''): moment.Moment | null {
   if (!value) { return null }
 
   const dateArray = value.split('.')

@@ -16,13 +16,13 @@ import { selectOptionsType } from '../../shared/select/select.model'
   styleUrls: ['./employment-and-income.component.scss']
 })
 export class EmploymentAndIncomeComponent implements OnInit {
-  @Input() order: OrderInterface
+  @Input() order!: OrderInterface | null
 
-  form: FormGroup
+  form!: FormGroup
   formProgressValue = 0
 
   typeWorkOptions: selectOptionsType = ClassificatorSelectOptions.typeWork
-  isAvailableWorkBlock: boolean
+  isAvailableWorkBlock!: boolean
 
   constructor(
     private app: AppService,
@@ -90,7 +90,7 @@ export class EmploymentAndIncomeComponent implements OnInit {
   }
 
   private updateValidateCompanyStart(): void {
-    const dateBirthdayControl = new FormControl(this.order.dateBirthday)
+    const dateBirthdayControl = new FormControl(this.order?.dateBirthday || '')
     let validators = null
     if (this.isAvailableWorkBlock) {
       validators = [FormValidators.required, FormValidators.dateWorkStart(dateBirthdayControl)]
@@ -104,8 +104,9 @@ export class EmploymentAndIncomeComponent implements OnInit {
     const workFields = ['companyName', 'workPhone', 'companyStart', 'incomeWork', 'paymentCredit']
 
     workFields.forEach((item: string) => {
-      this.form.get(item).setValidators(validators[item])
-      this.form.get(item).updateValueAndValidity()
+      // @ts-ignore
+      this.form.get(item)?.setValidators(validators[item])
+      this.form.get(item)?.updateValueAndValidity()
     })
 
   }

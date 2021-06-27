@@ -11,14 +11,14 @@ import { AppService } from '../../services/app.service'
   styleUrls: ['./contract.component.scss']
 })
 export class ContractComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @Input() contract: ContractInterface
-  @Input() sms: ContractSigningInterface
-  @Input() order: OrderInterface
+  @Input() contract!: ContractInterface | null
+  @Input() sms!: ContractSigningInterface | null
+  @Input() order!: OrderInterface | null
 
-  @ViewChild('contractSigningBlock', { static: true }) contractSigningBlock: ElementRef
+  @ViewChild('contractSigningBlock', { static: true }) contractSigningBlock!: ElementRef
 
-  form: FormGroup
-  code: string
+  form!: FormGroup
+  code: string = ''
 
   constructor(
     private app: AppService,
@@ -57,7 +57,7 @@ export class ContractComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   openSumLoanHint(event: MouseEvent): void {
     event.preventDefault()
-    this.app.openSumLoanHint()
+    this.app.openModal('sum_loan')
   }
 
   serializeForm(): Scas_5_7_RequestInterface {

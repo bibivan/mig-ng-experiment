@@ -13,8 +13,8 @@ import { KladrAddressService } from './kladr-address.service'
   styleUrls: ['./kladr-address.component.scss']
 })
 export class KladrAddressComponent implements OnInit, OnChanges {
-  @Input() type: kladrAddressType
-  @Input() address: KladrAddressInterface = {
+  @Input() type!: kladrAddressType
+  @Input() address: KladrAddressInterface | undefined = {
     type: null,
     region: '',
     punkt: '',
@@ -26,17 +26,17 @@ export class KladrAddressComponent implements OnInit, OnChanges {
     korp: '',
     str: '',
   }
-  @Input() touched: number
+  @Input() touched: number = 0
   @Output() changed: EventEmitter<KladrAddressInterface> = new EventEmitter<KladrAddressInterface>()
 
-  regionOptions: selectOptionsType
+  regionOptions!: selectOptionsType
   punktList: autocompleteListType = []
   streetList: autocompleteListType = []
 
-  isLoadingPunktList: boolean
-  isLoadingStreetList: boolean
+  isLoadingPunktList!: boolean
+  isLoadingStreetList!: boolean
 
-  form: FormGroup
+  form!: FormGroup
 
   constructor(
     private kladrAddress: KladrAddressService,
@@ -185,7 +185,7 @@ export class KladrAddressComponent implements OnInit, OnChanges {
       str = '',
     } = this.address
 
-    this.form.get('type').setValue(type)
+    this.form.get('type')?.setValue(type)
     this.regionControl.setValue(region)
     this.punktControl.setValue(punkt)
     this.punktCodeControl.setValue(punktCode)

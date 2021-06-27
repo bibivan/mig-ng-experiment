@@ -7,7 +7,7 @@ import { numberFormat } from '../helpers/helper'
 })
 export class CurrencyRubPipe implements PipeTransform {
 
-  transform(value: number): string {
+  transform(value: number = 0): string {
     if (!value) { return '' }
 
     return numberFormat(value) + ' ₽'

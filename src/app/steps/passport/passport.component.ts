@@ -16,13 +16,13 @@ import { KladrAddressService } from '../../shared/kladr-address/kladr-address.se
   styleUrls: ['./passport.component.scss']
 })
 export class PassportComponent implements OnInit {
-  @Input() order: OrderInterface
+  @Input() order!: OrderInterface | null
 
-  form: FormGroup
+  form!: FormGroup
   formTouched = 0
   formProgressValue = 0
 
-  isOpenSnilsModal: boolean
+  isOpenSnilsModal: boolean = false
 
   constructor(
     private app: AppService,
@@ -44,7 +44,7 @@ export class PassportComponent implements OnInit {
 
   buildForm(): void {
     let serialNumberPassport = null
-    if (this.order) {
+    if (this.order?.serialPassport && this.order?.numberPassport) {
       serialNumberPassport = this.order.serialPassport + this.order.numberPassport
     }
 
@@ -140,6 +140,7 @@ export class PassportComponent implements OnInit {
       addressData = this.addressRegistrationGroup
     }
 
+    // @ts-ignore
     this.kladrAddress.setKladrAddressValues(addressData, data)
   }
 
@@ -195,8 +196,9 @@ export class PassportComponent implements OnInit {
     const addressFields = this.kladrAddress.getKladrFields()
 
     addressFields.forEach((item: string) => {
-      this.addressRegistrationGroup.get(item).setValidators(validators[item])
-      this.addressRegistrationGroup.get(item).updateValueAndValidity()
+      // @ts-ignore
+      this.addressRegistrationGroup?.get(item)?.setValidators(validators[item])
+      this.addressRegistrationGroup?.get(item)?.updateValueAndValidity()
     })
   }
 
@@ -242,11 +244,11 @@ export class PassportComponent implements OnInit {
   }
 
   get addressFactGroup(): FormGroup {
-    return this.form.get('address').get('Fact') as FormGroup
+    return this.form.get('address')?.get('Fact') as FormGroup
   }
 
   get addressRegistrationGroup(): FormGroup {
-    return this.form.get('address').get('Registration') as FormGroup
+    return this.form.get('address')?.get('Registration') as FormGroup
   }
 
   get liveRegFlagControl(): FormControl {

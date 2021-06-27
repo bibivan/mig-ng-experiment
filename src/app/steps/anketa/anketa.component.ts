@@ -1,15 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
+import { environment } from '../../../environments/environment'
 import { FormValidators } from '../../helpers/form-validators'
-import { clearMaskedValue } from '../../helpers/helper'
+import { clearMaskedValue, openExternalLink } from '../../helpers/helper'
 import {
   CheckPhoneRequestInterface,
   CheckPhoneResponseInterface,
+  CheckPromoCodeResponseInterface,
   SaveAnketaRequestInterface
 } from '../../services/api.model'
 import { ApiService } from '../../services/api.service'
 import { OrderInterface } from '../../services/app.model'
 import { AppService } from '../../services/app.service'
+import { CalculatorValueInterface } from '../../shared/calculator/calculator.model'
 import { CalculatorService } from '../../shared/calculator/calculator.service'
 import { FormProgressService } from '../../shared/form-progress/form-progress.service'
 import { checkPhoneTemplateType } from './anketa.model'
@@ -20,22 +23,26 @@ import { checkPhoneTemplateType } from './anketa.model'
   styleUrls: ['./anketa.component.scss']
 })
 export class AnketaComponent implements OnInit {
-  @Input() order: OrderInterface
+  @Input() order!: OrderInterface | null
 
-  form: FormGroup
+  form!: FormGroup
+  calculatorDefaultValue!: CalculatorValueInterface
 
   formProgressValue = 0
 
-  isAvailableSubmit: boolean
+  isVerifiedMobilePhone: boolean = false
 
-  isOpenModalCheckPhone: boolean
-  templateModalCheckPhone: checkPhoneTemplateType
+  isOpenModalCheckPhone: boolean = false
+  templateModalCheckPhone!: checkPhoneTemplateType
 
-  checkPhoneStatus: string
-  checkPhonePromotions: boolean
+  checkPhoneStatus: string = ''
+  checkPhonePromotions: boolean = false
   checkPhoneModalAvailableStatuses = ['107', '114']
 
-  isOpenAcceptModal: boolean
+  isLoadingPromoCode: boolean = false
+  promoCodeError: string = ''
+
+  isOpenAcceptModal: boolean = false
 
   constructor(
     private app: AppService,
@@ -51,8 +58,18 @@ export class AnketaComponent implements OnInit {
     this.form.valueChanges.subscribe(this.updateFormProgressValue.bind(this))
     this.updateFormProgressValue()
 
-    this.mobilePhoneControl.valueChanges.subscribe(() => { this.isAvailableSubmit = false })
+    this.mobilePhoneControl.valueChanges.subscribe(() => { this.isVerifiedMobilePhone = false })
     this.checkPhone(this.mobilePhoneControl.value)
+
+    if (this.order) {
+      this.calculatorDefaultValue = {
+        sum: this.order.sum || 5000,
+        term: {
+          value: this.order.term?.value || 10,
+          termUnit: this.order.term?.termUnit || 'Day'
+        }
+      }
+    }
 
     document.body.scrollTop = 0
   }
@@ -68,6 +85,7 @@ export class AnketaComponent implements OnInit {
       bankrupt: [true],
       accept: [true, [FormValidators.requiredCheckbox]],
       cessionAllowed: [true],
+      promoCode: []
     })
   }
 
@@ -76,7 +94,7 @@ export class AnketaComponent implements OnInit {
     if (this.form.invalid) { return }
 
     const data: SaveAnketaRequestInterface = Object.assign({},
-      { ABTest: this.order.ABTest },
+      { ABTest: this.order?.ABTest },
       this.calculator.getCalculatorValue(),
       this.form.value
     )
@@ -97,7 +115,7 @@ export class AnketaComponent implements OnInit {
   }
 
   checkPhone(phone: string): void {
-    this.isAvailableSubmit = false
+    this.isVerifiedMobilePhone = false
 
     if (this.mobilePhoneControl.invalid) {
       return
@@ -114,7 +132,7 @@ export class AnketaComponent implements OnInit {
         }
 
         this.checkPhoneStatus = data.order.status
-        this.checkPhonePromotions = data.promotions
+        this.checkPhonePromotions = !!data.promotions
 
         if (this.checkPhoneModalAvailableStatuses.includes(this.checkPhoneStatus)) {
           this.openModalCheckPhone()
@@ -126,17 +144,51 @@ export class AnketaComponent implements OnInit {
     )
   }
 
+  checkPromoCode(): void {
+    const promoCode = this.promoCodeControl.value
+    this.promoCodeError = ''
+
+    if (promoCode === '') {
+      this.isLoadingPromoCode = false
+      return
+    }
+
+    this.isLoadingPromoCode = true
+
+    const sum = this.calculator.getCalculatorValue().sum || 0
+    const body = { promoCode, sum }
+
+    this.appApi.checkPromoCode(body).subscribe(
+      (data: CheckPromoCodeResponseInterface) => {
+        this.isLoadingPromoCode = false
+        this.promoCodeError = data?.errorText || ''
+        if (this.promoCodeError) {
+          this.promoCodeControl.setValue('')
+          this.promoCodeControl.markAsUntouched()
+        }
+      },
+      () => {
+        this.isLoadingPromoCode = false
+        this.promoCodeError = 'Ошибка проверки промокода, повторите ввод'
+      }
+    )
+  }
+
+  onFocusPromoCode(): void {
+    this.promoCodeError = ''
+  }
+
   updateAvailableSubmit(): void {
     if (this.checkPhoneStatus === '1') {
-      this.isAvailableSubmit = true
+      this.isVerifiedMobilePhone = true
     } else {
-      this.isAvailableSubmit = false
+      this.isVerifiedMobilePhone = false
     }
   }
 
   openErrorModalCheckPhone(): void {
-    this.checkPhoneStatus = null
-    this.checkPhonePromotions = null
+    this.checkPhoneStatus = ''
+    this.checkPhonePromotions = false
     this.openModalCheckPhone()
   }
 
@@ -171,7 +223,9 @@ export class AnketaComponent implements OnInit {
   }
 
   onClickAuthButton(): void {
-    console.log('auth')
+    const siteUrl = environment.siteUrl
+    const mobilePhone = clearMaskedValue(this.mobilePhoneControl.value)
+    openExternalLink(`${ siteUrl }/login?login=${ mobilePhone }`, '_self')
   }
 
   get mobilePhoneControl(): FormControl {
@@ -210,4 +264,7 @@ export class AnketaComponent implements OnInit {
     return this.form.get('cessionAllowed') as FormControl
   }
 
+  get promoCodeControl(): FormControl {
+    return this.form.get('promoCode') as FormControl
+  }
 }

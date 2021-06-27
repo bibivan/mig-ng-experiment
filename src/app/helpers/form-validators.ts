@@ -21,7 +21,7 @@ export interface ErrorObject {
 }
 
 export class FormValidators {
-  static required(control: FormControl): ErrorObject {
+  static required(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (value === '') {
       return { required: 'Поле обязательно для заполнения' }
@@ -30,7 +30,7 @@ export class FormValidators {
     return null
   }
 
-  static requiredCheckbox(control: FormControl): ErrorObject {
+  static requiredCheckbox(control: FormControl): ErrorObject | null {
     if (!control.value) {
       return { requiredCheckbox: 'Поле обязательно для заполнения' }
     }
@@ -38,7 +38,18 @@ export class FormValidators {
     return null
   }
 
-  static password(control: FormControl): ErrorObject {
+  static minLength(minLength: number): any {
+    return (control: FormControl): ErrorObject | null => {
+      const value = getClearValue(control.value)
+      if (minLength && value.length < minLength) {
+        return { compare: `Не менее ${ minLength } знаков` }
+      }
+
+      return null
+    }
+  }
+
+  static password(control: FormControl): ErrorObject | null {
     const regPass = /^[a-zA-Z0-9]+$/i
 
     const value = getClearValue(control.value)
@@ -60,7 +71,7 @@ export class FormValidators {
   }
 
   static passwordRepeat(password: string): any {
-    return (control: FormControl): ErrorObject => {
+    return (control: FormControl): ErrorObject | null => {
       const validatePassword = this.password(control)
 
       if (validatePassword) {
@@ -75,7 +86,7 @@ export class FormValidators {
     }
   }
 
-  static email(control: FormControl): ErrorObject {
+  static email(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (value && !validateEmail(value)) {
       return { email: 'Укажите корректный адрес электронной почты' }
@@ -84,7 +95,7 @@ export class FormValidators {
     return null
   }
 
-  static mobilePhone(control: FormControl): ErrorObject {
+  static mobilePhone(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (value && !validateMobilePhone(value)) {
       return { phone: 'Укажите корректный номер телефона' }
@@ -94,7 +105,7 @@ export class FormValidators {
   }
 
   static stacPhone(mobilePhoneControl: FormControl): any {
-    return (control: FormControl): ErrorObject => {
+    return (control: FormControl): ErrorObject | null => {
       if (!control.value) {
         return null
       }
@@ -114,7 +125,7 @@ export class FormValidators {
     }
   }
 
-  static contractNumber(control: FormControl): ErrorObject {
+  static contractNumber(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (value && !validateContractNumber(value)) {
       return { contractNumber: 'Укажите корректный номер договора' }
@@ -123,7 +134,7 @@ export class FormValidators {
     return null
   }
 
-  static makePaymentNumber(control: FormControl): ErrorObject {
+  static makePaymentNumber(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     const availableValueLength = [10, 11, 13]
     if (!value || !availableValueLength.includes(value.length)) {
@@ -152,7 +163,7 @@ export class FormValidators {
   }
 
   static money(min: number = 0, max: number = 9999999999): any {
-    return (control: FormControl): ErrorObject => {
+    return (control: FormControl): ErrorObject | null => {
       const value = +control.value
       if (value < min) {
         return { money: `Минимальная сумма операции - ${ numberFormat(min) } ₽` }
@@ -167,7 +178,7 @@ export class FormValidators {
   }
 
   static kladr(code: string): any {
-    return (): ErrorObject => {
+    return (): ErrorObject | null => {
       if (!code) {
         return { compare: `Выберите вариант из списка` }
       }
@@ -176,7 +187,7 @@ export class FormValidators {
     }
   }
 
-  static date(control: FormControl): ErrorObject {
+  static date(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
 
     if (!value) {
@@ -189,14 +200,14 @@ export class FormValidators {
 
     const dateMoment = getMomentDate(value)
 
-    if (dateMoment.isValid() === false) {
+    if (dateMoment?.isValid() === false) {
       return { date: 'Укажите верную дату' }
     }
 
     return null
   }
 
-  static dateBirthday(control: FormControl): ErrorObject {
+  static dateBirthday(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (!value) { return null }
 
@@ -208,7 +219,7 @@ export class FormValidators {
     const dateCur = getMomentDate(value)
     const dateNow = moment()
 
-    if (dateCur.isValid() === false || dateCur > dateNow) {
+    if (!dateCur || !dateCur.isValid() || dateCur > dateNow) {
       return { date: 'Укажите верную дату' }
     }
 
@@ -226,7 +237,7 @@ export class FormValidators {
   }
 
   static datePassport(dateBirthdayControl: FormControl): any {
-    return (control: FormControl): ErrorObject => {
+    return (control: FormControl): ErrorObject | null => {
       const validateDateBirthday = FormValidators.dateBirthday(dateBirthdayControl) || FormValidators.required(dateBirthdayControl)
       if (validateDateBirthday) {
         return { datePassport: 'Укажите корректную дату рождения' }
@@ -252,14 +263,14 @@ export class FormValidators {
         ageForPassport = 45
       }
 
-      const datePassportMinMoment = dateBirthdayMoment.add(ageForPassport, 'years')
-      const datePassportMinText = datePassportMinMoment.format('DD.MM.YYYY')
+      const datePassportMinMoment = dateBirthdayMoment?.add(ageForPassport, 'years')
+      const datePassportMinText = datePassportMinMoment?.format('DD.MM.YYYY')
 
       const datePassportValue = control.value.toString()
       const datePassportMoment = getMomentDate(datePassportValue)
 
-      const diff = datePassportMoment.diff(dateBirthdayMoment, 'years', true)
-      if (diff < 0) {
+      const diff = datePassportMoment?.diff(dateBirthdayMoment, 'years', true)
+      if (!diff || diff < 0) {
         return { datePassport: `Дата должна быть не ранее ${ datePassportMinText }` }
       }
 
@@ -268,7 +279,7 @@ export class FormValidators {
   }
 
   static dateWorkStart(dateBirthdayControl: FormControl): any {
-    return (control: FormControl): ErrorObject => {
+    return (control: FormControl): ErrorObject | null => {
       const value = getClearValue(control.value)
       if (!value) { return null }
 
@@ -283,7 +294,7 @@ export class FormValidators {
       const dateNow = moment()
       const dateWorkStartMoment = getMomentDate(dateWorkStartValue)
 
-      if (FormValidators.date(dateWorkStartControl) || dateWorkStartMoment > dateNow) {
+      if (FormValidators.date(dateWorkStartControl) || !dateWorkStartMoment || dateWorkStartMoment > dateNow) {
         return { dateWorkStart: 'Укажите корректную дату' }
       }
 
@@ -300,7 +311,7 @@ export class FormValidators {
     }
   }
 
-  static passportCode(control: FormControl): ErrorObject {
+  static passportCode(control: FormControl): ErrorObject | null {
     const regPassportCode = /(\d{3}-\d{3})/
     const value = getClearValue(control.value)
     if (value && value.search(regPassportCode) === -1) {
@@ -309,7 +320,7 @@ export class FormValidators {
     return null
   }
 
-  static passportSerialNumber(control: FormControl): ErrorObject {
+  static passportSerialNumber(control: FormControl): ErrorObject | null {
     const regPassportSerialNumber = /(\d{10})/
     let value = getClearValue(control.value)
     value = value.replace(/[-\s]/g, '')
@@ -320,7 +331,7 @@ export class FormValidators {
     return null
   }
 
-  static noneEnglish(control: FormControl): ErrorObject {
+  static noneEnglish(control: FormControl): ErrorObject | null {
     const regNoneEnglish = /[a-zA-Z]/i
     const value = getClearValue(control.value)
     if (value && value.search(regNoneEnglish) !== -1) {
@@ -330,7 +341,7 @@ export class FormValidators {
     return null
   }
 
-  static textRus(control: FormControl): ErrorObject {
+  static textRus(control: FormControl): ErrorObject | null {
     const regNameRus = /^[А-Яа-яЁё\-'\s]+$/i
     const value = getClearValue(control.value)
 
@@ -343,7 +354,7 @@ export class FormValidators {
     return null
   }
 
-  static numberRus(control: FormControl): ErrorObject {
+  static numberRus(control: FormControl): ErrorObject | null {
     const regNumberRus = /^[а-яА-ЯёЁ0-9\-\/]+$/
     const value = getClearValue(control.value)
     if (value && value.search(regNumberRus) === -1) {
@@ -352,7 +363,7 @@ export class FormValidators {
     return null
   }
 
-  static cardSum(control: FormControl): ErrorObject {
+  static cardSum(control: FormControl): ErrorObject | null {
     const regCardSum = /^[0-9\.\,]+$/
     const value = getClearValue(control.value)
     if (value && value.search(regCardSum) === -1) {
@@ -362,7 +373,7 @@ export class FormValidators {
     return null
   }
 
-  static snils(control: FormControl): ErrorObject {
+  static snils(control: FormControl): ErrorObject | null {
     const value = getClearValue(control.value)
     if (value && !validateSnils(value)) {
       return { snils: 'Укажите корректный номер СНИЛС' }

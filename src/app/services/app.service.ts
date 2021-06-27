@@ -29,7 +29,7 @@ import {
   SendSMSResponseInterface
 } from './api.model'
 import { ApiService } from './api.service'
-import { appPagesType, AppStateInterface, ContractInterface } from './app.model'
+import { appPagesType, AppStateInterface, ContractInterface, modalsType } from './app.model'
 import { AuthenticationService } from './authentication.service'
 
 @Injectable({
@@ -46,19 +46,15 @@ export class AppService {
     contractSMS: {
       code: '',
       countSendSMS: 0,
-      seconds: null,
+      seconds: 0,
     },
     isInit: false,
-    isOpenInsuranceInfoHint: false,
-    isOpenInsuranceTermHint: false,
-    isOpenPersonalAccountHint: false,
-    isOpenRefusalLoanModal: false,
-    isOpenSumLoanHint: false,
+    openModal: null,
     order: null,
     page: null,
     products: null,
-    status: null,
-    statusReason: null,
+    status: '',
+    statusReason: '',
     toast: {
       caption: '',
       isOpen: false,
@@ -70,9 +66,9 @@ export class AppService {
 
   countError = 0
 
-  timerAnketaSMSSub: Subscription
-  timerToastSub: Subscription
-  timerContractSMSSub: Subscription
+  timerAnketaSMSSub!: Subscription
+  timerToastSub!: Subscription
+  timerContractSMSSub!: Subscription
 
   private readonly timeoutGetStatus = 15000
   private readonly timeoutNextRequest = 2000
@@ -209,9 +205,12 @@ export class AppService {
           return
         }
 
-        this.state.anketaSMS.limit = !response.repeatSendSMS
-        this.state.anketaSMS.seconds = response.smsSeconds
-        this.state.anketaSMS.code = ''
+        if (this.state.anketaSMS) {
+          this.state.anketaSMS.limit = !response.repeatSendSMS
+          this.state.anketaSMS.seconds = response.smsSeconds || 0
+          this.state.anketaSMS.code = ''
+        }
+
         this.updateTimerAnketaSMS()
         this.setPage('sms')
         this.openToastSendSMS()
@@ -223,19 +222,17 @@ export class AppService {
   checkSMS(code: string): void {
     this.showPreloader()
 
-    this.state.anketaSMS.code = code
+    if (this.state.anketaSMS) {
+      this.state.anketaSMS.code = code
+    }
 
     const body: CheckSMSRequestInterface = { code }
+
     this.api.checkSMS(body).subscribe(
       (response: CheckSMSResponseInterface) => {
-        if (!response) {
-          this.errorHandler(this.checkSMS.bind(this, code))
-          return
-        }
-
         this.resetCountError()
 
-        const orderStatus = response?.order?.status
+        const orderStatus = response?.order?.status || ''
         if (orderStatus === '2.3') {
           this.executeRequest(this.couca_2_3.bind(this))
           return
@@ -272,7 +269,7 @@ export class AppService {
       () => {
         this.resetCountError()
         this.setPage('passport')
-        this.openPersonalAccountHint()
+        this.openModal('personal_account')
       },
       () => this.errorHandler(this.couca_3_5.bind(this))
     )
@@ -656,9 +653,11 @@ export class AppService {
       (response: Scas_5_6_ResponseInterface) => {
         this.resetCountError()
 
-        this.state.contractSMS.countSendSMS++
+        if (this.state.contractSMS) {
+          this.state.contractSMS.countSendSMS++
+        }
 
-        const orderStatus = response?.order?.status
+        const orderStatus = response?.order?.status || ''
         const finalStatuses = ['99', '5.11']
         if (finalStatuses.includes(orderStatus)) {
           this.state.status = orderStatus
@@ -679,9 +678,12 @@ export class AppService {
       (response: Scas_5_61_ResponseInterface) => {
         this.resetCountError()
 
-        this.state.contractSMS.countSendSMS++
+        if (this.state.contractSMS) {
+          this.state.contractSMS.countSendSMS++
+        }
 
-        const orderStatus = response?.order?.status
+
+        const orderStatus = response?.order?.status || ''
         const finalStatuses = ['99', '5.11']
         if (finalStatuses.includes(orderStatus)) {
           this.state.status = orderStatus
@@ -698,13 +700,15 @@ export class AppService {
   scas_5_7(body: Scas_5_7_RequestInterface): void {
     this.showPreloader()
 
-    this.state.contractSMS.code = body.code
+    if (this.state.contractSMS) {
+      this.state.contractSMS.code = body.code
+    }
 
     this.api.scas_5_7(body).subscribe(
       (response: Scas_5_7_ResponseInterface) => {
         this.resetCountError()
 
-        const orderStatus = response?.order?.status
+        const orderStatus = response?.order?.status || ''
         const finalStatuses = ['99', '5.11']
         if (finalStatuses.includes(orderStatus)) {
           this.state.status = orderStatus
@@ -809,8 +813,8 @@ export class AppService {
 
     this.updateOrder({ needIdentifyBy, paymentKey })
 
-    this.state.status = orderStatus
-    this.state.statusReason = orderStatusReason
+    this.state.status = orderStatus || ''
+    this.state.statusReason = orderStatusReason || ''
 
     if (isGetClientLoyaltyStatus) {
       this.getClientLoyalty()
@@ -857,57 +861,17 @@ export class AppService {
   openToastSendSMS(): void {
     this.openToast(
       'Введите код из SMS',
-      `Мы отправили вам код на номер <span class="nobr">${ formattedMobilePhone(this.state.order.mobilePhone) }</span>`
+      `Мы отправили вам код на номер <span class="nobr">${ formattedMobilePhone(this.state.order?.mobilePhone || '') }</span>`
     )
   }
 
-  openPersonalAccountHint(): void {
-    this.state.isOpenPersonalAccountHint = true
+  openModal(type: modalsType): void {
+    this.state.openModal = type
     this.refreshState()
   }
 
-  closePersonalAccountHint(): void {
-    this.state.isOpenPersonalAccountHint = false
-    this.refreshState()
-  }
-
-  openInsuranceTermHint(): void {
-    this.state.isOpenInsuranceTermHint = true
-    this.refreshState()
-  }
-
-  closeInsuranceTermHint(): void {
-    this.state.isOpenInsuranceTermHint = false
-    this.refreshState()
-  }
-
-  openInsuranceInfoHint(): void {
-    this.state.isOpenInsuranceInfoHint = true
-    this.refreshState()
-  }
-
-  closeInsuranceInfoHint(): void {
-    this.state.isOpenInsuranceInfoHint = false
-    this.refreshState()
-  }
-
-  openSumLoanHint(): void {
-    this.state.isOpenSumLoanHint = true
-    this.refreshState()
-  }
-
-  closeSumLoanHint(): void {
-    this.state.isOpenSumLoanHint = false
-    this.refreshState()
-  }
-
-  openRefusalLoanModal(): void {
-    this.state.isOpenRefusalLoanModal = true
-    this.refreshState()
-  }
-
-  closeRefusalLoanModal(): void {
-    this.state.isOpenRefusalLoanModal = false
+  closeModal(): void {
+    this.state.openModal = null
     this.refreshState()
   }
 
@@ -917,7 +881,7 @@ export class AppService {
   }
 
   private updateTimerAnketaSMS(): void {
-    if (this.state.anketaSMS.limit) {
+    if (this.state.anketaSMS?.limit) {
       this.stopTimerAnketaSMS()
       return
     }
@@ -925,8 +889,13 @@ export class AppService {
     this.stopTimerAnketaSMS()
 
     this.timerAnketaSMSSub = interval(1000).subscribe(() => {
-      this.state.anketaSMS.seconds--
-      if (this.state.anketaSMS.seconds === 0) { this.stopTimerAnketaSMS() }
+      if (this.state.anketaSMS) {
+        this.state.anketaSMS.seconds--
+      }
+
+      if (this.state.anketaSMS?.seconds === 0) {
+        this.stopTimerAnketaSMS()
+      }
 
       this.refreshState()
     })
@@ -940,15 +909,20 @@ export class AppService {
     this.stopTimerAnketaSMS()
 
     this.timerContractSMSSub = interval(1000).subscribe(() => {
-      this.state.contractSMS.seconds--
-      if (this.state.contractSMS.seconds === 0) { this.stopTimerContractSMS() }
+      if (this.state.contractSMS) {
+        this.state.contractSMS.seconds--
+      }
+      if (this.state.contractSMS?.seconds === 0) { this.stopTimerContractSMS() }
 
       this.refreshState()
     })
   }
 
   private startTimerContractSMS(): void {
-    this.state.contractSMS.seconds = 300
+    if (this.state.contractSMS !== null) {
+      this.state.contractSMS.seconds = 300
+    }
+
     this.updateTimerContractSMS()
   }
 

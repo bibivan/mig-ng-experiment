@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SumLoanHintComponent {
-  @Input() sum: number
+  @Input() sum!: number
   @Output() clickedButton: EventEmitter<any> = new EventEmitter<any>()
 
 }

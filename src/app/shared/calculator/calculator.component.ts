@@ -10,10 +10,10 @@ import { CalculatorService } from './calculator.service'
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorComponent implements OnInit, OnDestroy {
-  @Input() defaultValue: CalculatorValueInterface
+  @Input() defaultValue!: CalculatorValueInterface
 
-  state: CalculatorStateInterface
-  stateSub: Subscription
+  state!: CalculatorStateInterface
+  stateSub!: Subscription
 
   sumControl: FormControl = new FormControl('')
   termControl: FormControl = new FormControl('')

@@ -15,9 +15,9 @@ import { getMockup } from './get-mockup'
   providedIn: 'root'
 })
 export class AuthenticationService {
-  token: string
+  token: string = ''
   private countRefreshToken = 0
-  private refreshTokenTimeout: any
+  private refreshTokenTimeout!: any
 
   constructor(
     private api: ApiService
@@ -37,7 +37,7 @@ export class AuthenticationService {
     )
   }
 
-  refreshToken(): Observable<RefreshTokenResponseInterface> {
+  refreshToken(): Observable<RefreshTokenResponseInterface | null> {
     const refreshToken = localStorage.getItem('refresh_token')
     if (!refreshToken) {
       localStorage.setItem('logout-event', 'logout-' + Math.random())
@@ -67,7 +67,7 @@ export class AuthenticationService {
   }
 
   deleteToken(): void {
-    this.token = null
+    this.token = ''
     localStorage.removeItem('refresh_token')
   }
 

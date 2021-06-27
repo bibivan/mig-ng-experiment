@@ -1,23 +1,23 @@
 import { FormValidators } from './form-validators'
 
 export interface WorkBlockValidatorsInterface {
-  companyName: Array<any>,
-  companyStart: Array<any>,
-  incomeWork: Array<any>,
-  paymentCredit: Array<any>,
-  workPhone: Array<any>,
+  companyName: Array<any> | null,
+  companyStart: Array<any> | null,
+  incomeWork: Array<any> | null,
+  paymentCredit: Array<any> | null,
+  workPhone: Array<any> | null,
 }
 
 export interface KladrValidatorsInterface {
-  flat: Array<any>,
-  home: Array<any>,
-  korp: Array<any>,
-  punkt: Array<any>,
-  punktCode: Array<any>,
-  region: Array<any>,
-  str: Array<any>,
-  street: Array<any>,
-  streetCode: Array<any>,
+  flat: Array<any> | null,
+  home: Array<any> | null,
+  korp: Array<any> | null,
+  punkt: Array<any> | null,
+  punktCode: Array<any> | null,
+  region: Array<any> | null,
+  str: Array<any> | null,
+  street: Array<any> | null,
+  streetCode: Array<any> | null,
 }
 
 export class ClassificatorValidateRules {

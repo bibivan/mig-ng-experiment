@@ -13,7 +13,7 @@ export class TermLoanPipe implements PipeTransform {
     Week: ['неделя', 'недели', 'недель'],
   }
 
-  transform(term: TermLoanInterface): string {
+  transform(term: TermLoanInterface | undefined): string {
     if (!term) { return '' }
 
     const { value, termUnit } = term

@@ -17,8 +17,8 @@ import { inputRadioButtonListType } from './input-radio.model'
 })
 
 export class InputRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() items: inputRadioButtonListType
-  @Input() errorMessage = ''
+  @Input() items!: inputRadioButtonListType
+  @Input() errorMessage: string = ''
 
   value: any = ''
 

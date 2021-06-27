@@ -18,15 +18,15 @@ import { selectOptionsType } from './select.model'
   ],
 })
 export class SelectComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() disabled: boolean
-  @Input() readonly: boolean
-  @Input() mandatory: boolean
-  @Input() placeholder: ''
-  @Input() errorMessage = ''
-  @Input() options: selectOptionsType
+  @Input() disabled: boolean = false
+  @Input() readonly: boolean = false
+  @Input() mandatory: boolean = false
+  @Input() placeholder: string = ''
+  @Input() errorMessage: string = ''
+  @Input() options!: selectOptionsType
 
   value: any = ''
-  focused: boolean
+  focused: boolean = false
 
   private sub = new Subscription()
   formControl = new FormControl('')

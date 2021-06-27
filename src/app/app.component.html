@@ -59,23 +59,23 @@
             <div [innerHTML]="state.toast.text"></div>
         </app-toast>
 
-        <app-modal *ngIf="state.isOpenPersonalAccountHint" [small]="true" [bottomMobile]="true">
-            <app-personal-account-hint (clickedButton)="closePersonalAccountHint()"></app-personal-account-hint>
+        <app-modal *ngIf="state.openModal === 'personal_account'" [small]="true" [bottomMobile]="true">
+            <app-personal-account-hint (clickedButton)="closeModal()"></app-personal-account-hint>
         </app-modal>
 
-        <app-modal *ngIf="state.isOpenInsuranceTermHint" [small]="true" [bottomMobile]="true">
-            <app-insurance-term-hint (clickedButton)="closeInsuranceTermHint()"></app-insurance-term-hint>
+        <app-modal *ngIf="state.openModal === 'insurance_term'" [small]="true" [bottomMobile]="true">
+            <app-insurance-term-hint (clickedButton)="closeModal()"></app-insurance-term-hint>
         </app-modal>
 
-        <app-modal *ngIf="state.isOpenInsuranceInfoHint" [small]="true" [bottomMobile]="true">
-            <app-insurance-info-hint (clickedButton)="closeInsuranceInfoHint()"></app-insurance-info-hint>
+        <app-modal *ngIf="state.openModal === 'insurance_info'" [small]="true" [bottomMobile]="true">
+            <app-insurance-info-hint (clickedButton)="closeModal()"></app-insurance-info-hint>
         </app-modal>
 
-        <app-modal *ngIf="state.isOpenSumLoanHint" [small]="true" [bottomMobile]="true">
-            <app-sum-loan-hint (clickedButton)="closeSumLoanHint()"></app-sum-loan-hint>
+        <app-modal *ngIf="state.openModal === 'sum_loan'" [small]="true" [bottomMobile]="true">
+            <app-sum-loan-hint (clickedButton)="closeModal()"></app-sum-loan-hint>
         </app-modal>
 
-        <app-modal *ngIf="state.isOpenRefusalLoanModal" [small]="true" [bottomMobile]="true">
+        <app-modal *ngIf="state.openModal === 'refusal_loan'" [small]="true" [bottomMobile]="true">
             <app-refusal-loan></app-refusal-loan>
         </app-modal>
     </ng-template>

@@ -8,8 +8,8 @@ import { AuthenticationService } from '../../services/authentication.service'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonFilesComponent implements OnInit {
-  @Input() url: string
-  @Input() urlWithGetParams: boolean
+  @Input() url: string = ''
+  @Input() urlWithGetParams: boolean = false
 
   hrefLink = ''
 

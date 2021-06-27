@@ -41,7 +41,7 @@ export class CalculatorService {
   }
   state$: Subject<CalculatorStateInterface> = new Subject<CalculatorStateInterface>()
 
-  private currentTermUnitId: termUnitIdType
+  private currentTermUnitId!: termUnitIdType
 
   private termSettings = {
     day: {
@@ -138,19 +138,22 @@ export class CalculatorService {
   }
 
   setCalculatorValue(value: CalculatorValueInterface): void {
-    this.state.sum = value.sum
+    this.state.sum = value.sum || 10000
     this.state.term = Object.assign({}, value.term)
   }
 
   private getTermSettings(): CalculatorTermSettingsInterface {
     let result: CalculatorTermSettingsInterface
 
+    // @ts-ignore
     Object.values(this.termSettings).filter((item: CalculatorTermSettingsInterface) => {
       if (this.state.sum >= item.sumMin && this.state.sum <= item.sumMax) {
         result = item
       }
+
     })
 
+    // @ts-ignore
     return result
   }
 
@@ -205,7 +208,7 @@ export class CalculatorService {
     )
   }
 
-  private updateTermSliderLabel(termValue): void {
+  private updateTermSliderLabel(termValue: number = 0): void {
     const termLabels = this.state.term.termUnit === 'Week' ? ['неделя', 'недели', 'недель'] : ['день', 'дня', 'дней']
     this.state.termSliderLabel = ' ' + declOfNum(termValue, termLabels)
   }

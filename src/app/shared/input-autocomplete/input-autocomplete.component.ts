@@ -20,20 +20,20 @@ import { autocompleteListType } from './input-autocomplete.model'
   ],
 })
 export class InputAutocompleteComponent implements OnInit, OnDestroy {
-  @Input() readonly: boolean
-  @Input() mandatory: boolean
-  @Input() placeholder = ''
-  @Input() errorMessage = ''
-  @Input() errorMessageHidden = false
-  @Input() isLoading: boolean
-  @Input() autocompleteList: autocompleteListType
+  @Input() readonly: boolean = false
+  @Input() mandatory: boolean = false
+  @Input() placeholder: string = ''
+  @Input() errorMessage: string = ''
+  @Input() errorMessageHidden: boolean = false
+  @Input() isLoading: boolean = false
+  @Input() autocompleteList!: autocompleteListType
   @Output() valueSelected: EventEmitter<string> = new EventEmitter<string>()
 
   value: any = ''
-  focused = false
-  isPassword: boolean
-  maskConfig: MaskConfigInterface
-  disabled: boolean
+  focused: boolean = false
+  isPassword: boolean = false
+  maskConfig!: MaskConfigInterface
+  disabled: boolean = false
 
   private sub = new Subscription()
   formControl = new FormControl('')

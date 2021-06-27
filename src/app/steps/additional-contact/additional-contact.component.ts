@@ -14,9 +14,9 @@ import { selectOptionsType } from '../../shared/select/select.model'
   styleUrls: ['./additional-contact.component.scss']
 })
 export class AdditionalContactComponent implements OnInit {
-  @Input() order: OrderInterface
+  @Input() order!: OrderInterface | null
 
-  form: FormGroup
+  form!: FormGroup
   formProgressValue = 0
 
   contactsStatusOptions: selectOptionsType = ClassificatorSelectOptions.getContactsStatus(true)
