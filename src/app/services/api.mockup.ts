@@ -85,19 +85,20 @@ export class ApiMockup {
         education: 'Higher',
         email: 'helloworld@mail.ru',
         familyStatus: 'Married Status',
+        formAction: '',
         incomeAdd: 10000,
         incomeWork: 15000,
         lastname: 'Кейдж',
         liveRegFlag: false,
         mobilePhone: '9999999999',
         name: 'Константин',
-        needIdentifyBy: null,
+        needIdentifyBy: 8,
         numberChild: 0,
         numberPassport: '682468',
         orderStatus: '',
         patronymic: 'Константинович',
         paymentCredit: 5300,
-        paymentKey: null,
+        paymentKey: 16,
         placeBirthday: 'гор долгопрудный',
         prevLastname: '',
         serialPassport: '4512',
@@ -248,7 +249,7 @@ export class ApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
-  static clientSmevIdentity = {
+  static smevIdentity = {
     success: {},
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
@@ -530,5 +531,10 @@ export class ApiMockup {
     successInvalidPromoCode: {
       errorText: 'Промокод не существует'
     }
+  }
+
+  static step99 = {
+    success: {},
+    error: throwError({ RESULT_CODE: 'ERROR' })
   }
 }

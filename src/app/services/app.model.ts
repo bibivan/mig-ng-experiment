@@ -22,6 +22,7 @@ export interface AppStateInterface {
   openModal: modalsType | null,
   order: OrderInterface | null,
   page: appPagesType | null,
+  preloaderRequest: string,
   products: productListType | null,
   status: string,
   statusReason: string,

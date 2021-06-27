@@ -119,7 +119,7 @@ export interface SavePassportRequestInterface {
   wherePassport: string,
 }
 
-export interface ClientSmevIdentityRequestInterface {
+export interface SmevIdentityRequestInterface {
   snils: string
 }
 

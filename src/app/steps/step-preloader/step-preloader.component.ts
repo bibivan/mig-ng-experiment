@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { OrderInterface } from '../../services/app.model'
 
 @Component({
   selector: 'app-step-preloader',
@@ -7,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StepPreloaderComponent {
-
+  @Input() order!: OrderInterface | null
+  @Input() preloaderRequest = ''
 }

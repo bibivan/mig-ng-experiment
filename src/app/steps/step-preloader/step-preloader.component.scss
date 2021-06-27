@@ -23,40 +23,6 @@
     background-repeat: no-repeat;
   }
 
-  .sign {
-    display: block;
-    height: 74px;
-
-    &.bfrs {
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-image: url('./img/BFRS.svg');
-    }
-  }
-
-  .quote {
-    display: block;
-    position: relative;
-    padding-top: 40px;
-    margin-top: $indent40;
-    margin-bottom: $indent30;
-    @extend .text-1;
-    line-height: 1.5em;
-
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 23px;
-      height: 20px;
-      background-image: url('./img/quote.svg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-  }
-
   .name {
     @extend .text-2;
     color: $colorPrimary;

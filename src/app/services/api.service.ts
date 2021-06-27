@@ -11,7 +11,7 @@ import {
   CheckPromoCodeResponseInterface,
   CheckSMSRequestInterface,
   CheckSMSResponseInterface,
-  ClientSmevIdentityRequestInterface,
+  SmevIdentityRequestInterface,
   Couca_6_9_ResponseInterface,
   GetApplicationContractResponseInterface,
   GetPNEUrlResponseInterface,
@@ -163,10 +163,10 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  clientSmevIdentity(body: ClientSmevIdentityRequestInterface): Observable<any> {
-    const mockupData = getMockup('/clientSmevIdentity', ApiMockup.clientSmevIdentity.success, body)
+  smevIdentity(body: SmevIdentityRequestInterface): Observable<any> {
+    const mockupData = getMockup('/SmevIdentity', ApiMockup.smevIdentity.success, body)
     const requestData = {
-      path: '/clientSmevIdentity',
+      path: '/SmevIdentity',
       mockupData,
       body
     }
@@ -445,6 +445,16 @@ export class ApiService {
       path: '/creditApplication/anketa/checkPromoCode',
       mockupData,
       body
+    }
+
+    return this.post(requestData)
+  }
+
+  step99(): Observable<any> {
+    const mockupData = getMockup('/step99', ApiMockup.step99.success)
+    const requestData = {
+      path: '/step99',
+      mockupData,
     }
 
     return this.post(requestData)

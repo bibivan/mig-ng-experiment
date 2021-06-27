@@ -4,7 +4,7 @@ import { formattedMobilePhone, numberFormat, openExternalLink } from '../helpers
 import {
   CheckSMSRequestInterface,
   CheckSMSResponseInterface,
-  ClientSmevIdentityRequestInterface,
+  SmevIdentityRequestInterface,
   Couca_1_31_ResponseInterface,
   Couca_5_0_1_ResponseInterface,
   Couca_6_9_ResponseInterface,
@@ -52,6 +52,7 @@ export class AppService {
     openModal: null,
     order: null,
     page: null,
+    preloaderRequest: '',
     products: null,
     status: '',
     statusReason: '',
@@ -98,6 +99,7 @@ export class AppService {
 
   // инициализация формы - первичное получение информации по заявке
   private init(): void {
+    this.showPreloader('init')
     this.api.initOrderForm().subscribe(
       (response: InitOrderFormResponseInterface) => {
         this.resetCountError()
@@ -111,17 +113,204 @@ export class AppService {
 
   // процесс дозаписи
   private routeInitForm(): void {
+    const { action = '', formAction = '', status = '', statusReason = '', ucdbId = '' } = this.state?.order || {}
+    const availableFormActions = ['App_RegCard', 'App_HoldAmmount', 'App_SNILSInput', 'App_IdentifyInProgress']
+
+    // маршрутизация по formAction в приоритете
+    if (availableFormActions.indexOf(formAction) !== -1) {
+      switch (formAction) {
+        case 'App_RegCard':
+          this.getPNEUrl()
+          break
+
+        case 'App_HoldAmmount':
+          this.setPage('hold_amount')
+          break
+
+        case 'App_SNILSInput':
+          this.setPage('snils')
+          break
+
+        case 'App_IdentifyInProgress':
+          this.setErrorPage('5.5')
+          break
+
+        case 'App_SELFYInputAfterEDS2':
+          break
+      }
+
+      return
+    }
+
+    if (!action) {
+      this.setPage('anketa')
+      return
+    }
+
+    switch (action) {
+      case 'saveAnketa':
+        if (ucdbId) {
+          this.executeRequest(this.couca_100.bind(this))
+        } else {
+          this.executeRequest(this.getUcdbId.bind(this))
+        }
+        break
+
+      case 'getUcdbId':
+        this.executeRequest(this.couca_100.bind(this))
+        break
+
+      case 'couca_100':
+        this.executeRequest(this.getStatusAnketa.bind(this))
+        break
+
+      case 'getStatusAnketa':
+        this.executeRequest(this.sendSMS.bind(this))
+        break
+
+      case 'sendSMS':
+        if (status === '2.3') {
+          this.executeRequest(this.couca_2_3.bind(this))
+        } else {
+          this.setPage('sms')
+        }
+        break
+
+      case 'checkSMS':
+        if (status === '2.3') {
+          this.executeRequest(this.couca_2_3.bind(this))
+        } else if (status === '3.5') {
+          this.executeRequest(this.couca_3_5.bind(this))
+        } else {
+          this.setPage('sms')
+        }
+        break
+
+      case 'couca_2_3':
+        this.setErrorPage('2.3')
+        break
+
+      case 'couca_3_5':
+        this.setPage('passport')
+        this.openModal('personal_account')
+        break
+
+      case 'savePassport':
+        // вызов smevIdentity без ожидания ответа
+        this.smevIdentity({ snils: this.state.order?.snils || '' })
+        this.executeRequest(this.couca_3_6.bind(this))
+        break
+
+      case 'couca_3_6':
+        this.setPage('employment_and_income')
+        break
+
+      case 'saveEmploymentAndIncome':
+        this.setPage('additional_contact')
+        break
+
+      case 'saveAdditionalContact':
+        this.executeRequest(this.couca_3_7.bind(this))
+        break
+
+      case 'couca_3_7':
+        this.executeRequest(this.getStatusFullAnketa.bind(this))
+        break
+
+      case 'getStatusFullAnketa':
+        this.executeRequest(this.getStatusFullAnketa.bind(this))
+        break
+
+      case 'saveSNILS':
+        this.executeRequest(this.couca_5_0_1.bind(this))
+        break
+
+      case 'couca_5_0_1':
+        this.executeRequest(this.getStatusSNILS.bind(this))
+        break
+
+      case 'getStatusSNILS':
+        this.executeRequest(this.getStatusSNILS.bind(this), this.timeoutGetStatus)
+        break
+
+      case 'getProductOfferList':
+        this.executeRequest(this.getProductOfferList.bind(this))
+        break
+
+      case 'couca_6_9':
+        this.setErrorPage('6.9')
+        break
+
+      case 'saveProduct':
+        this.executeRequest(this.coucaProduct.bind(this))
+        break
+
+      case 'coucaProduct':
+        this.executeRequest(this.getStatusProducts.bind(this), this.timeoutGetStatus)
+        break
+
+      case 'getStatusProducts':
+        this.executeRequest(this.getStatusProducts.bind(this), this.timeoutGetStatus)
+        break
+
+      case 'getPNEUrl':
+        this.executeRequest(this.getPNEUrl.bind(this))
+        break
+
+      case 'getStatusCardRegistration':
+        this.executeRequest(this.getApplicationContract.bind(this))
+        break
+
+      case 'saveHoldAmount':
+        this.executeRequest(this.couca_1_31.bind(this))
+        break
+
+      case 'couca_1_31':
+        this.executeRequest(this.getStatusHoldAmount.bind(this))
+        break
+
+      case 'getStatusHoldAmount':
+        this.executeRequest(this.getStatusHoldAmount.bind(this))
+        break
+
+      case 'getApplicationContract':
+        this.executeRequest(this.getApplicationContract.bind(this))
+        break
+
+      case 'scas_5_6':
+        this.executeRequest(this.getStatusSendSMSContract.bind(this))
+        break
+
+      case 'scas_5_61':
+        this.executeRequest(this.getStatusSendSMSContract.bind(this))
+        break
+
+      case 'scas_5_7':
+        this.executeRequest(this.getStatusCheckSMSContract.bind(this))
+        break
+
+      case 'getStatusSendSMSContract':
+        this.executeRequest(this.getStatusSendSMSContract.bind(this))
+        break
+
+      case 'getStatusCheckSMSContract':
+        this.executeRequest(this.getStatusCheckSMSContract.bind(this))
+        break
+
+      default:
+        this.step99()
+    }
+
     const hash = window.location.hash
     if (hash === '#ariuspay') {
       this.getStatusCardRegistration()
       return
     }
-    // this.setPage('anketa')
-    this.setErrorPage('3.3')
+    this.setPage('anketa')
   }
 
   saveAnketa(data: SaveAnketaRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveAnketa')
     this.updateOrder(data)
 
     this.api.saveAnketa(data).subscribe(
@@ -138,7 +327,7 @@ export class AppService {
   }
 
   private getUcdbId(): void {
-    this.showPreloader()
+    this.showPreloader('getUcdbId')
 
     this.api.getUcdbId().subscribe(
       (response: GetUcdbIdResponseInterface) => {
@@ -157,7 +346,7 @@ export class AppService {
   }
 
   private couca_100(): void {
-    this.showPreloader()
+    this.showPreloader('couca_100')
 
     this.api.couca_100().subscribe(
       () => {
@@ -169,7 +358,7 @@ export class AppService {
   }
 
   private getStatusAnketa(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusAnketa')
 
     this.api.getStatusAnketa().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -190,7 +379,7 @@ export class AppService {
   }
 
   sendSMS(): void {
-    this.showPreloader()
+    this.showPreloader('sendSMS')
     this.api.sendSMS().subscribe(
       (response: SendSMSResponseInterface) => {
         if (!response) {
@@ -221,7 +410,7 @@ export class AppService {
   }
 
   checkSMS(code: string): void {
-    this.showPreloader()
+    this.showPreloader('checkSMS')
 
     if (this.state.anketaSMS) {
       this.state.anketaSMS.code = code
@@ -251,7 +440,7 @@ export class AppService {
   }
 
   private couca_2_3(): void {
-    this.showPreloader()
+    this.showPreloader('couca_2_3')
 
     this.api.couca_2_3().subscribe(
       () => {
@@ -264,7 +453,7 @@ export class AppService {
   }
 
   private couca_3_5(): void {
-    this.showPreloader()
+    this.showPreloader('couca_3_5')
 
     this.api.couca_3_5().subscribe(
       () => {
@@ -276,18 +465,22 @@ export class AppService {
     )
   }
 
-  clientSmevIdentity(data: ClientSmevIdentityRequestInterface): void {
+  smevIdentity(data: SmevIdentityRequestInterface): void {
     // Вызов сервиса SOAP /client/SmevIdentity (CliS)
     // без ожидания ответа и обработки результата
-    this.api.clientSmevIdentity(data).subscribe()
+    this.api.smevIdentity(data).subscribe()
   }
 
   savePassport(data: SavePassportRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('savePassport')
     this.updateOrder(data)
 
     this.api.savePassport(data).subscribe(
       () => {
+        this.resetCountError()
+        // вызов smevIdentity без ожидания ответа
+        this.smevIdentity({ snils: this.state.order?.snils || '' })
+
         this.executeRequest(this.couca_3_6.bind(this))
       },
       () => this.errorHandler(this.savePassport.bind(this, data))
@@ -295,7 +488,7 @@ export class AppService {
   }
 
   private couca_3_6(): void {
-    this.showPreloader()
+    this.showPreloader('couca_3_6')
 
     this.api.couca_3_6().subscribe(
       () => {
@@ -307,7 +500,7 @@ export class AppService {
   }
 
   saveEmploymentAndIncome(data: SaveEmploymentAndIncomeRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveEmploymentAndIncome')
     this.updateOrder(data)
 
     this.api.saveEmploymentAndIncome(data).subscribe(
@@ -319,7 +512,7 @@ export class AppService {
   }
 
   saveAdditionalContact(data: SaveAdditionalContactRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveAdditionalContact')
     this.updateOrder(data)
 
     this.api.saveAdditionalContact(data).subscribe(
@@ -331,7 +524,7 @@ export class AppService {
   }
 
   private couca_3_7(): void {
-    this.showPreloader()
+    this.showPreloader('couca_3_7')
 
     this.api.couca_3_7().subscribe(
       () => {
@@ -343,7 +536,7 @@ export class AppService {
   }
 
   private getStatusFullAnketa(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusFullAnketa')
 
     this.api.getStatusFullAnketa().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -369,7 +562,7 @@ export class AppService {
   }
 
   saveSNILS(data: SaveSNILSRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveSNILS')
     this.updateOrder(data)
 
     this.api.saveSNILS(data).subscribe(
@@ -381,7 +574,7 @@ export class AppService {
   }
 
   private couca_5_0_1(): void {
-    this.showPreloader()
+    this.showPreloader('couca_5_0_1')
 
     this.api.couca_5_0_1().subscribe(
       (response: Couca_5_0_1_ResponseInterface) => {
@@ -409,7 +602,7 @@ export class AppService {
   }
 
   private getStatusSNILS(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusSNILS')
 
     this.api.getStatusSNILS().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -435,7 +628,7 @@ export class AppService {
   }
 
   private getProductOfferList(): void {
-    this.showPreloader()
+    this.showPreloader('getProductOfferList')
 
     this.api.getProductOfferList().subscribe(
       (response: GetProductOfferListResponseInterface) => {
@@ -454,7 +647,7 @@ export class AppService {
   }
 
   couca_6_9(data: Couca_6_9_ResponseInterface): void {
-    this.showPreloader()
+    this.showPreloader('couca_6_9')
 
     this.api.couca_6_9(data).subscribe(
       () => {
@@ -467,7 +660,7 @@ export class AppService {
   }
 
   saveProduct(data: SaveProductRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveProduct')
 
     this.api.saveProduct(data).subscribe(
       () => {
@@ -479,7 +672,7 @@ export class AppService {
   }
 
   private coucaProduct(): void {
-    this.showPreloader()
+    this.showPreloader('coucaProduct')
 
     this.api.coucaProduct().subscribe(
       () => {
@@ -491,7 +684,7 @@ export class AppService {
   }
 
   private getStatusProducts(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusProducts')
 
     this.api.getStatusProducts().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -512,7 +705,7 @@ export class AppService {
   }
 
   private getPNEUrl(): void {
-    this.showPreloader()
+    this.showPreloader('getPNEUrl')
 
     this.api.getPNEUrl().subscribe(
       (response: GetPNEUrlResponseInterface) => {
@@ -529,7 +722,7 @@ export class AppService {
   }
 
   private getStatusCardRegistration(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusCardRegistration')
 
     this.api.getStatusCardRegistration().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -562,7 +755,7 @@ export class AppService {
   }
 
   saveHoldAmount(data: SaveHoldAmountRequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('saveHoldAmount')
 
     this.api.saveHoldAmount(data).subscribe(
       () => {
@@ -574,7 +767,7 @@ export class AppService {
   }
 
   private couca_1_31(): void {
-    this.showPreloader()
+    this.showPreloader('couca_1_31')
 
     this.api.couca_1_31().subscribe(
       (response: Couca_1_31_ResponseInterface) => {
@@ -602,7 +795,7 @@ export class AppService {
   }
 
   private getStatusHoldAmount(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusHoldAmount')
 
     this.api.getStatusHoldAmount().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -629,7 +822,7 @@ export class AppService {
   }
 
   getApplicationContract(): void {
-    this.showPreloader()
+    this.showPreloader('getApplicationContract')
 
     this.api.getApplicationContract().subscribe(
       (response: GetApplicationContractResponseInterface) => {
@@ -648,7 +841,7 @@ export class AppService {
   }
 
   scas_5_6(): void {
-    this.showPreloader()
+    this.showPreloader('scas_5_6')
 
     this.api.scas_5_6().subscribe(
       (response: Scas_5_6_ResponseInterface) => {
@@ -673,7 +866,7 @@ export class AppService {
   }
 
   scas_5_61(): void {
-    this.showPreloader()
+    this.showPreloader('scas_5_61')
 
     this.api.scas_5_61().subscribe(
       (response: Scas_5_61_ResponseInterface) => {
@@ -699,7 +892,7 @@ export class AppService {
   }
 
   scas_5_7(body: Scas_5_7_RequestInterface): void {
-    this.showPreloader()
+    this.showPreloader('scas_5_7')
 
     if (this.state.contractSMS) {
       this.state.contractSMS.code = body.code
@@ -724,7 +917,7 @@ export class AppService {
   }
 
   private getStatusSendSMSContract(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusSendSMSContract')
 
     this.api.getStatusSendSMSContract().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -746,7 +939,7 @@ export class AppService {
   }
 
   private getStatusCheckSMSContract(): void {
-    this.showPreloader()
+    this.showPreloader('getStatusCheckSMSContract')
 
     this.api.getStatusCheckSMSContract().subscribe(
       (response: GetStatusResponseInterface) => {
@@ -772,6 +965,15 @@ export class AppService {
 
   private getClientLoyalty(): void {
 
+  }
+
+  private step99(): void {
+    this.showPreloader()
+
+    this.api.step99().subscribe(
+      () => this.setErrorPage('99'),
+      () => this.setErrorPage('99')
+    )
   }
 
   private executeRequest(method: any, time = this.timeoutNextRequest): void {
@@ -945,7 +1147,8 @@ export class AppService {
     this.state$.next(this.state)
   }
 
-  private showPreloader(): void {
+  private showPreloader(preloaderRequest = ''): void {
+    this.state.preloaderRequest = preloaderRequest
     this.setPage('preloader')
   }
 
