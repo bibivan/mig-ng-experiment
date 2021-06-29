@@ -7,7 +7,7 @@ import {
   SmevIdentityRequestInterface,
   Couca_1_31_ResponseInterface,
   Couca_5_0_1_ResponseInterface,
-  Couca_6_9_ResponseInterface,
+  Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetPNEUrlResponseInterface,
   GetProductOfferListResponseInterface,
@@ -636,7 +636,7 @@ export class AppService {
     )
   }
 
-  couca_6_9(data: Couca_6_9_ResponseInterface): void {
+  couca_6_9(data: Couca_6_9_RequestInterface): void {
     this.showPreloader('couca_6_9')
 
     this.api.couca_6_9(data).subscribe(

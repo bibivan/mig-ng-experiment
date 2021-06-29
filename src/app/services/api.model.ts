@@ -147,11 +147,8 @@ export interface GetProductOfferListResponseInterface {
 }
 
 // tslint:disable-next-line:class-name
-export interface Couca_6_9_ResponseInterface {
-  checkSMS: boolean,
-  order: {
-    status: string
-  },
+export interface Couca_6_9_RequestInterface {
+  reason: string
 }
 
 export interface SaveProductRequestInterface {

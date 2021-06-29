@@ -12,7 +12,7 @@ import {
   CheckSMSRequestInterface,
   CheckSMSResponseInterface,
   SmevIdentityRequestInterface,
-  Couca_6_9_ResponseInterface,
+  Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetPNEUrlResponseInterface,
   GetProductOfferListResponseInterface,
@@ -294,7 +294,7 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  couca_6_9(body: Couca_6_9_ResponseInterface): Observable<any> {
+  couca_6_9(body: Couca_6_9_RequestInterface): Observable<any> {
     const mockupData = getMockup('/couca_6_9', ApiMockup.couca_6_9.success, body)
     const requestData = {
       path: '/couca_6_9',
