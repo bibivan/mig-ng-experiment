@@ -9,10 +9,7 @@
 
     <ng-template #form>
         <div [ngSwitch]="state.page">
-            <app-step-preloader *ngSwitchCase="'preloader'"
-                                [order]="state.order"
-                                [preloaderRequest]="state.preloaderRequest"
-            ></app-step-preloader>
+            <app-step-preloader *ngSwitchCase="'preloader'"></app-step-preloader>
 
             <app-anketa *ngSwitchCase="'anketa'"
                         [order]="state.order"
