@@ -91,7 +91,7 @@ export class AppService {
     this.authentication.getToken().subscribe(
       () => {
         this.resetCountError()
-        this.initForm()
+        this.init()
       },
       () => this.errorHandler(this.getToken.bind(this)),
     )
