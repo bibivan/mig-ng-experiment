@@ -269,8 +269,13 @@ export class FormValidators {
       const datePassportValue = control.value.toString()
       const datePassportMoment = getMomentDate(datePassportValue)
 
-      const diff = datePassportMoment?.diff(dateBirthdayMoment, 'years', true)
-      if (!diff || diff < 0) {
+      const diff = datePassportMoment?.diff(dateBirthdayMoment, 'years', true) || 0
+
+      if (!datePassportMoment || !datePassportMoment.isValid() || datePassportMoment > dateNow) {
+        return { datePassport: `Укажите корректную дату` }
+      }
+
+      if (diff < 0) {
         return { datePassport: `Дата должна быть не ранее ${ datePassportMinText }` }
       }
 
