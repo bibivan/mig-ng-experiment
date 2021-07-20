@@ -120,12 +120,12 @@ export class ApiMockup {
     successEmpty: {
       order: {} as OrderInterface
     },
-    successAppHoldAmmount: {
-      order: Object.assign({}, orderMockup, { formAction: 'App_HoldAmmount' })
-    },
-    successAppSNILSInput: {
-      order: Object.assign({}, orderMockup, { formAction: 'App_SNILSInput' })
-    },
+    // successAppHoldAmmount: {
+    //   order: Object.assign({}, orderMockup, { formAction: 'App_HoldAmmount' })
+    // },
+    // successAppSNILSInput: {
+    //   order: Object.assign({}, orderMockup, { formAction: 'App_SNILSInput' })
+    // },
     successSendSMS: {
       order: Object.assign({}, orderMockup, { action: 'sendSMS' })
     },
@@ -365,7 +365,7 @@ export class ApiMockup {
     error: throwError({ RESULT_CODE: 'ERROR' })
   }
 
-  static getProductOfferList = {
+  static getProducts = {
     success: {
       order: {
         productOfferList: productsMockup.success

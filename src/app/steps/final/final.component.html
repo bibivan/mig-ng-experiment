@@ -94,7 +94,7 @@
                 <ng-container *ngIf="order?.needIdentifyBy === 16">
                     <p>Скоро с вами свяжется курьер, чтобы приехать на подписание документов.</p>
                 </ng-container>
-                <ng-container *ngIf="order?.needIdentifyBy === 8 || order?.formAction === 'App_IdentifyInProgress'">
+                <ng-container *ngIf="order?.needIdentifyBy === 8">
                     <p>Финальное решение вы получите в SMS в течение часа.</p>
                     <p>Вся информация о займе будет доступна в <span class="link" (click)="onButtonSiteClick('/login/')">личном кабинете</span>.</p>
                 </ng-container>

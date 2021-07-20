@@ -71,12 +71,6 @@ export interface SaveAnketaRequestInterface {
   term: TermLoanInterface,
 }
 
-export interface SaveAnketaResponseInterface {
-  order?: {
-    ucdbId: string
-  }
-}
-
 export interface GetUcdbIdResponseInterface {
   order: {
     ucdbId: string
@@ -140,7 +134,7 @@ export interface SaveAdditionalContactRequestInterface {
   contactsStatus: string,
 }
 
-export interface GetProductOfferListResponseInterface {
+export interface GetProductsResponseInterface {
   order: {
     productOfferList: productListType
   }

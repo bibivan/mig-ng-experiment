@@ -15,13 +15,12 @@ import {
   Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetPNEUrlResponseInterface,
-  GetProductOfferListResponseInterface,
+  GetProductsResponseInterface,
   GetStatusResponseInterface,
   GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface,
-  SaveAnketaResponseInterface,
   SaveEmploymentAndIncomeRequestInterface,
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
@@ -91,7 +90,7 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  saveAnketa(body: SaveAnketaRequestInterface): Observable<SaveAnketaResponseInterface> {
+  saveAnketa(body: SaveAnketaRequestInterface): Observable<any> {
     const mockupData = getMockup('/saveAnketa', ApiMockup.saveAnketa.success, body)
     const requestData = {
       path: '/saveAnketa',
@@ -284,10 +283,10 @@ export class ApiService {
     return this.post(requestData)
   }
 
-  getProductOfferList(): Observable<GetProductOfferListResponseInterface> {
-    const mockupData = getMockup('/getProductOfferList', ApiMockup.getProductOfferList.success)
+  getProducts(): Observable<GetProductsResponseInterface> {
+    const mockupData = getMockup('/getProducts', ApiMockup.getProducts.success)
     const requestData = {
-      path: '/getProductOfferList',
+      path: '/getProducts',
       mockupData
     }
 

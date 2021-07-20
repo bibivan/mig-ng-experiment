@@ -241,7 +241,8 @@ export function validateSnils(snils: string): boolean {
     return false
   }
 
-  if (+clearSnils <= 1001998) {
+  const snilsWithoutDigit = clearSnils.slice(0, -2)
+  if (+snilsWithoutDigit <= 1001998) {
     return true
   }
 

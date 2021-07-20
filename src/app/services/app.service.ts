@@ -10,13 +10,12 @@ import {
   Couca_6_9_RequestInterface,
   GetApplicationContractResponseInterface,
   GetPNEUrlResponseInterface,
-  GetProductOfferListResponseInterface,
+  GetProductsResponseInterface,
   GetStatusResponseInterface,
   GetUcdbIdResponseInterface,
   InitOrderFormResponseInterface,
   SaveAdditionalContactRequestInterface,
   SaveAnketaRequestInterface,
-  SaveAnketaResponseInterface,
   SaveEmploymentAndIncomeRequestInterface,
   SaveHoldAmountRequestInterface,
   SavePassportRequestInterface,
@@ -113,31 +112,7 @@ export class AppService {
 
   // процесс дозаписи
   private routeInitForm(): void {
-    const { action = '', formAction = '', status = '', statusReason = '', ucdbId = '' } = this.state?.order || {}
-    const availableFormActions = ['App_RegCard', 'App_HoldAmmount', 'App_SNILSInput', 'App_IdentifyInProgress']
-
-    // маршрутизация по formAction в приоритете
-    if (availableFormActions.indexOf(formAction) !== -1) {
-      switch (formAction) {
-        case 'App_RegCard':
-          this.getPNEUrl()
-          break
-
-        case 'App_HoldAmmount':
-          this.setPage('hold_amount')
-          break
-
-        case 'App_SNILSInput':
-          this.setPage('snils')
-          break
-
-        case 'App_IdentifyInProgress':
-          this.setErrorPage('5.5')
-          break
-      }
-
-      return
-    }
+    const { action = '', status = '', statusReason = '', ucdbId = '' } = this.state?.order || {}
 
     if (!action) {
       this.setPage('anketa')
@@ -304,9 +279,9 @@ export class AppService {
     this.updateOrder(data)
 
     this.api.saveAnketa(data).subscribe(
-      (response: SaveAnketaResponseInterface) => {
+      () => {
         this.resetCountError()
-        if (response.order?.ucdbId) {
+        if (this.state.order?.ucdbId) {
           this.executeRequest(this.couca_100.bind(this))
         } else {
           this.executeRequest(this.getUcdbId.bind(this))
@@ -620,8 +595,8 @@ export class AppService {
   private getProductOfferList(): void {
     this.showPreloader('getProductOfferList')
 
-    this.api.getProductOfferList().subscribe(
-      (response: GetProductOfferListResponseInterface) => {
+    this.api.getProducts().subscribe(
+      (response: GetProductsResponseInterface) => {
         const products = response?.order?.productOfferList || []
         if (!products || !products.length) {
           this.errorHandler(this.getProductOfferList.bind(this))
